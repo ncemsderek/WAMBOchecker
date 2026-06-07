@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>NCEMS Apparatus Check</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" />
+<style>
+:root {
+  --g-deep: #1C3A1C;
+  --g-dark: #254D25;
+  --g-mid:  #2E6B2E;
+  --g-accent: #3A8A3A;
+  --g-light: #C8E6C8;
+  --g-pale: #EBF5EB;
+  --g-text-on: #EBF5EB;
+  --g-sub-on: #A8CFA8;
+  --warn:    #B87E0A;
+  --warn-bg: #FFF4DE;
+  --bad:     #C13E3E;
+  --bad-bg:  #FCEBEB;
+  --info:    #1F5C8B;
+  --text:    #1C3A1C;
+  --text-muted: #5F5E5A;
+  --border:  #E4E1DA;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: #F4F2EC;
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+.app { max-width: 480px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; }
+.header {
+  background: var(--g-deep); color: var(--g-text-on);
+  padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 10;
+}
+.header h1 { font-size: 17px; font-weight: 500; margin: 0; flex: 1; }
+.header button.back { background: transparent; border: none; color: var(--g-text-on); cursor: pointer; padding: 4px; font-size: 22px; }
+.header .meta { font-size: 11px; color: var(--g-sub-on); letter-spacing: 0.4px; text-align: right; }
+.body { padding: 16px; padding-bottom: 100px; }
+.label-eyebrow { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 6px; letter-spacing: 0.3px; text-transform: uppercase; }
+.section-title { font-size: 15px; font-weight: 500; color: var(--text); margin: 0 0 6px; }
+.section-hint { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+.divider { border: none; border-top: 0.5px solid var(--border); margin: 22px 0 16px; }
+.btn-primary { width: 100%; padding: 14px; background: var(--g-deep); color: var(--g-text-on); border: none; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-secondary { width: 100%; padding: 12px; background: #fff; color: var(--g-deep); border: 1.5px solid var(--g-deep); border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: inherit; }
+.tile { display: block; background: var(--g-mid); color: var(--g-text-on); padding: 28px 20px; border-radius: 16px; margin-bottom: 12px; cursor: pointer; border: none; width: 100%; text-align: left; font-family: inherit; }
+.tile.secondary { background: #fff; color: var(--g-deep); border: 1.5px solid var(--g-deep); }
+.tile h2 { margin: 0 0 6px; font-size: 22px; font-weight: 500; }
+.tile p { margin: 0; font-size: 13px; opacity: 0.85; }
+.unit-card { display: flex; align-items: center; padding: 18px; background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; cursor: pointer; gap: 12px; font-family: inherit; width: 100%; text-align: left; }
+.unit-card:hover { background: var(--g-pale); }
+.unit-card .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--g-accent); flex-shrink: 0; }
+.unit-card .dot.pending { background: var(--warn); }
+.unit-card .name { flex: 1; font-size: 17px; font-weight: 500; color: var(--text); }
+.unit-card .status { font-size: 12px; color: var(--text-muted); }
+input[type=text], input[type=number], textarea, select { width: 100%; border: 1px solid var(--g-light); border-radius: 8px; padding: 10px 12px; font-size: 15px; color: var(--text); background: #fff; font-family: inherit; outline: none; }
+input:focus, textarea:focus, select:focus { border-color: var(--g-accent); }
+textarea { min-height: 70px; resize: vertical; }
+.unit-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.unit-btn { padding: 10px 0; border: 1.5px solid var(--g-light); background: #fff; color: var(--text); border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; text-align: center; font-family: inherit; }
+.unit-btn.active { background: var(--g-mid); color: var(--g-text-on); border-color: var(--g-mid); }
+.half-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.half-btn { padding: 16px 6px; border: 1.5px solid var(--g-light); background: #fff; color: var(--text); border-radius: 10px; cursor: pointer; font-family: inherit; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.half-btn i { font-size: 20px; color: var(--g-accent); }
+.half-btn span { font-size: 13px; font-weight: 500; }
+.half-btn.active { background: var(--g-mid); color: var(--g-text-on); border-color: var(--g-mid); }
+.half-btn.active i { color: var(--g-text-on); }
+.select-wrap { position: relative; }
+.select-wrap select { padding-right: 36px; -webkit-appearance: none; appearance: none; cursor: pointer; }
+.select-wrap i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; pointer-events: none; }
+.sync-note { background: var(--g-pale); border-radius: 8px; padding: 10px 12px; display: flex; gap: 10px; }
+.sync-note i { color: var(--g-mid); font-size: 18px; flex-shrink: 0; }
+.sync-note p { font-size: 12px; color: var(--text); margin: 0; line-height: 1.5; }
+.legend { display: flex; gap: 14px; font-size: 11px; padding: 8px 12px; background: var(--g-pale); border-radius: 6px; margin-bottom: 12px; flex-wrap: wrap; color: var(--text); }
+.legend span { display: flex; align-items: center; gap: 5px; }
+.legend .ldot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.wnl-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid var(--g-pale); gap: 10px; }
+.wnl-row:last-of-type { border-bottom: none; }
+.wnl-name { font-size: 14px; color: var(--text); flex: 1; }
+.wnl-btns { display: flex; gap: 6px; flex-shrink: 0; }
+.wnl-btns button { padding: 7px 12px; border: 1px solid var(--g-light); background: #fff; border-radius: 6px; font-size: 12px; font-weight: 500; color: var(--text-muted); cursor: pointer; font-family: inherit; min-width: 64px; }
+.wnl-btns button.ok.on { background: var(--g-mid); color: var(--g-text-on); border-color: var(--g-mid); }
+.wnl-btns button.bad.on { background: var(--warn); color: #fff; border-color: var(--warn); }
+.abnormal-detail { background: var(--warn-bg); border-left: 3px solid var(--warn); padding: 12px; margin: 4px 0 10px; border-radius: 0 6px 6px 0; }
+.abnormal-detail textarea { width: 100%; min-height: 50px; border: 1px solid #E4D4A8; background: #fff; font-size: 13px; }
+.abnormal-detail label.cb { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; color: var(--text); cursor: pointer; }
+.abnormal-detail input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--info); cursor: pointer; }
+.fuel-row { display: flex; gap: 6px; }
+.fuel-row button { flex: 1; padding: 12px 0; border: 1px solid var(--g-light); background: #fff; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; font-family: inherit; }
+.fuel-row button.on { background: var(--g-mid); color: var(--g-text-on); border-color: var(--g-mid); }
+.fuel-row button.partial.on { background: var(--warn); color: #fff; border-color: var(--warn); }
+.tire-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tire-cell .tlabel { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; letter-spacing: 0.3px; text-transform: uppercase; }
+.tire-cell input.flag { border-color: var(--bad); background: var(--bad-bg); color: #7E2020; }
+.tire-cell .flag-msg { font-size: 11px; color: var(--bad); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+.compartment-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+.compartment-card.checked { border-color: var(--g-accent); background: var(--g-pale); }
+.compartment-card.flagged { border-color: var(--warn); background: var(--warn-bg); }
+.compartment-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.compartment-name { font-size: 14px; font-weight: 500; color: var(--text); flex: 1; }
+.input-with-suffix { display: flex; align-items: center; border: 1px solid var(--g-light); border-radius: 8px; padding: 0 12px; background: #fff; }
+.input-with-suffix input { flex: 1; border: none; outline: none; font-size: 22px; font-weight: 500; padding: 10px 0; color: var(--text); background: transparent; width: 100%; font-family: inherit; }
+.input-with-suffix span { font-size: 13px; color: var(--text-muted); }
+.photo-add { margin-top: 8px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--g-pale); border: 1px dashed var(--g-accent); border-radius: 8px; color: var(--g-mid); font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+.photo-add input { display: none; }
+.photo-preview { margin-top: 6px; font-size: 12px; color: var(--g-mid); display: flex; align-items: center; gap: 4px; }
+.device-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 0.5px solid var(--g-pale); }
+.device-row:last-child { border-bottom: none; }
+.device-row .name { font-size: 15px; color: var(--text); flex: 1; }
+.device-row.flagged { background: var(--bad-bg); border-radius: 6px; padding: 12px; margin: 4px 0; border: 1px solid #F5C0C0; border-bottom: 1px solid #F5C0C0; }
+.device-row.flagged .name { color: #7E2020; font-weight: 500; }
+.yn-toggle { display: inline-flex; border: 1px solid var(--g-light); border-radius: 8px; overflow: hidden; }
+.yn-toggle button { background: #fff; border: none; padding: 8px 16px; font-size: 13px; color: var(--text-muted); cursor: pointer; border-right: 1px solid var(--g-light); font-family: inherit; font-weight: 500; }
+.yn-toggle button:last-child { border-right: none; }
+.yn-toggle button.on.yes { background: var(--g-mid); color: var(--g-text-on); }
+.yn-toggle button.on.no { background: var(--bad); color: #fff; }
+.cooler-detail { background: var(--warn-bg); border-left: 3px solid var(--warn); padding: 12px; margin-top: 8px; border-radius: 0 6px 6px 0; }
+.cooler-detail .field { margin-bottom: 10px; }
+.cooler-detail .field:last-child { margin-bottom: 0; }
+.cooler-detail label { font-size: 12px; color: var(--text); font-weight: 500; display: block; margin-bottom: 4px; }
+.footer { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; background: #fff; border-top: 1px solid var(--border); padding: 12px 16px; display: flex; gap: 8px; box-sizing: border-box; }
+.footer button { flex: 1; }
+.success { text-align: center; padding: 60px 24px; }
+.success i { font-size: 64px; color: var(--g-accent); }
+.success h2 { margin: 16px 0 8px; font-size: 22px; color: var(--text); font-weight: 500; }
+.success p { color: var(--text-muted); font-size: 14px; }
+.loading { padding: 60px; text-align: center; color: var(--text-muted); }
+.flag-banner { background: var(--bad-bg); border: 1px solid #F5C0C0; border-radius: 8px; padding: 10px 12px; display: flex; gap: 10px; align-items: center; margin-bottom: 16px; }
+.flag-banner i { color: var(--bad); font-size: 18px; }
+.flag-banner p { margin: 0; font-size: 13px; color: #7E2020; }
+.flag-banner strong { font-weight: 500; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 0.5px solid var(--g-pale); }
+.summary-row:last-child { border-bottom: none; }
+.summary-row .k { color: var(--text-muted); }
+.summary-row .v { color: var(--text); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="loading">Loading…</div>
+</div>
+
+<script>
+'use strict';
+
+const CONFIG = {
+  dataUrl: './units.json',
+  submitUrl: null,
+  version: '1.0.0',
+};
+
+const state = {
+  screen: 'home',
+  data: null,
+  unitId: null,
+  initials: '',
+  half: null,
+  date: new Date().toISOString().split('T')[0],
+  startedAt: null,
+  mileage: '',
+  walkAround: { notes: '', photoName: null },
+  mechanical: {},
+  fuel: 'Full',
+  tires: {},
+  tread: { status: 'wnl', notes: '', fixed: false },
+  outsideCompartments: {},
+  electronics: {},
+  cooler: { inRange: null, reading: '', photoName: null },
+  insideCompartments: {},
+};
+
+function getUnit() { return state.data.units.find(u => u.id === state.unitId); }
+function getTemplate() { const u = getUnit(); return u ? state.data.templates[u.templateId] : null; }
+function todayStr() { const d = new Date(); return d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
+function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+function $$(sel, ctx) { return Array.from((ctx || document).querySelectorAll(sel)); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function go(screen) {
+  state.screen = screen;
+  window.scrollTo(0, 0);
+  render();
+}
+
+async function init() {
+  try {
+    const res = await fetch(CONFIG.dataUrl + '?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    state.data = await res.json();
+  } catch (e) {
+    console.error('Failed to load units.json:', e);
+    document.getElementById('app').innerHTML = '<div class="loading">Failed to load units.json. Make sure it sits next to index.html.</div>';
+    return;
+  }
+  render();
+}
+
+function header(title, backTo, meta) {
+  return `<div class="header">
+    ${backTo ? `<button class="back" data-back="${backTo}" aria-label="Back"><i class="ti ti-arrow-left"></i></button>` : ''}
+    <h1>${esc(title)}</h1>
+    ${meta ? `<span class="meta">${esc(meta)}</span>` : ''}
+  </div>`;
+}
+
+function renderHome() {
+  return header('NCEMS Apparatus Check') + `
+    <div class="body">
+      <button class="tile" data-go="ambulance-picker">
+        <h2>Ambulances</h2>
+        <p>M25A, M25B, M19, M18, M14</p>
+      </button>
+      <button class="tile secondary" data-go="other-picker">
+        <h2>Other Units</h2>
+        <p>SQ51 and future units</p>
+      </button>
+    </div>
+  `;
+}
+
+function renderAmbulancePicker() {
+  const ambs = state.data.units.filter(u => u.type === 'medic');
+  return header('Pick a unit', 'home') + `
+    <div class="body">
+      ${ambs.map(u => `
+        <button class="unit-card" data-pick-unit="${u.id}">
+          <span class="dot ${u.ready ? '' : 'pending'}"></span>
+          <span class="name">${esc(u.shopNumber)}</span>
+          <span class="status">${u.ready ? 'Ready' : 'Setup needed'}</span>
+          <i class="ti ti-chevron-right" style="color:var(--text-muted)"></i>
+        </button>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderOtherPicker() {
+  const other = state.data.units.filter(u => u.type !== 'medic');
+  return header('Other units', 'home') + `
+    <div class="body">
+      ${other.map(u => `
+        <button class="unit-card" data-pick-unit="${u.id}">
+          <span class="dot ${u.ready ? '' : 'pending'}"></span>
+          <span class="name">${esc(u.shopNumber)}</span>
+          <span class="status">${u.ready ? 'Ready' : 'Setup needed'}</span>
+          <i class="ti ti-chevron-right" style="color:var(--text-muted)"></i>
+        </button>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderStart() {
+  const u = getUnit();
+  const ambs = state.data.units.filter(x => x.type === u.type);
+  const canStart = state.unitId && state.initials && state.half;
+  return header('Start daily check', 'home') + `
+    <div class="body">
+      <div style="margin-bottom: 18px;">
+        <div class="label-eyebrow">Date</div>
+        <div style="font-size: 17px; font-weight: 500;">${esc(todayStr())}</div>
+      </div>
+
+      <div style="margin-bottom: 18px;">
+        <div class="label-eyebrow">Which unit?</div>
+        <div class="unit-row" id="unit-row">
+          ${ambs.map(x => `<button class="unit-btn ${x.id === state.unitId ? 'active' : ''}" data-unit="${x.id}">${esc(x.shopNumber)}</button>`).join('')}
+        </div>
+      </div>
+
+      <div style="margin-bottom: 18px;">
+        <div class="label-eyebrow">Your initials</div>
+        <div class="select-wrap">
+          <select id="initials-select">
+            <option value="">— pick one —</option>
+            ${state.data.crewRoster.map(c => `<option value="${esc(c.initials)}" ${c.initials === state.initials ? 'selected' : ''}>${esc(c.initials)} — ${esc(c.name)}</option>`).join('')}
+          </select>
+          <i class="ti ti-chevron-down"></i>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <div class="label-eyebrow">Which half are you doing?</div>
+        <div class="half-row" id="half-row">
+          <button class="half-btn ${state.half === 'outside' ? 'active' : ''}" data-half="outside">
+            <i class="ti ti-truck"></i><span>Outside</span>
+          </button>
+          <button class="half-btn ${state.half === 'inside' ? 'active' : ''}" data-half="inside">
+            <i class="ti ti-home"></i><span>Inside</span>
+          </button>
+          <button class="half-btn ${state.half === 'both' ? 'active' : ''}" data-half="both">
+            <i class="ti ti-checkbox"></i><span>Both</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sync-note">
+        <i class="ti ti-users"></i>
+        <p>Your partner can do the other half on their phone. Halves auto-merge by unit + date when both submit.</p>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="btn-primary" id="start-btn" ${canStart ? '' : 'disabled'}>
+        Start check <i class="ti ti-arrow-right"></i>
+      </button>
+    </div>
+  `;
+}
+
+function wnlRow(item, stateObj) {
+  const v = stateObj[item.id] || { status: '', notes: '', fixed: false };
+  return `
+    <div class="wnl-row" data-row="${item.id}">
+      <span class="wnl-name">${esc(item.name)}</span>
+      <div class="wnl-btns">
+        <button class="ok ${v.status === 'wnl' ? 'on' : ''}" data-wnl-set="wnl">WNL</button>
+        <button class="bad ${v.status === 'bad' ? 'on' : ''}" data-wnl-set="bad">Abnormal</button>
+      </div>
+    </div>
+    ${v.status === 'bad' ? `
+      <div class="abnormal-detail">
+        <textarea data-wnl-notes placeholder="What was wrong? e.g. topped off — was low at arrival">${esc(v.notes)}</textarea>
+        <label class="cb">
+          <input type="checkbox" data-wnl-fixed ${v.fixed ? 'checked' : ''} />
+          <span>Fixed on the spot</span>
+        </label>
+      </div>
+    ` : ''}
+  `;
+}
+
+function renderOutside() {
+  const t = getTemplate();
+  const u = getUnit();
+  return header('Outside check', state.half === 'both' ? null : 'start', `${u.shopNumber} · ${state.initials}`) + `
+    <div class="body">
+
+      <div style="margin-bottom: 20px;">
+        <div class="label-eyebrow">Starting mileage</div>
+        <div class="input-with-suffix">
+          <input type="number" id="mileage" value="${esc(state.mileage)}" placeholder="142308" />
+          <span>mi</span>
+        </div>
+      </div>
+
+      <h3 class="section-title">Walk-around</h3>
+      <div class="section-hint">Rig looks clean? Leave blank. New damage, jot it here.</div>
+      <textarea id="walk-notes" placeholder="e.g. small dent on driver-side rear bumper">${esc(state.walkAround.notes)}</textarea>
+      <label class="photo-add">
+        <i class="ti ti-camera"></i>
+        ${state.walkAround.photoName ? esc(state.walkAround.photoName) : 'Add photo of damage'}
+        <input type="file" accept="image/*" capture="environment" id="walk-photo" />
+      </label>
+
+      <hr class="divider" />
+      <h3 class="section-title">Pre-trip mechanical</h3>
+      <div class="legend">
+        <span><span class="ldot" style="background:var(--g-mid)"></span>WNL · Within Normal Limits</span>
+        <span><span class="ldot" style="background:var(--warn)"></span>Abnormal</span>
+      </div>
+      <div id="mech-section">
+        ${t.outsideMechanical.map(it => wnlRow(it, state.mechanical)).join('')}
+      </div>
+
+      <hr class="divider" />
+      <h3 class="section-title">Fuel level</h3>
+      <div class="section-hint">Should read Full at shift start.</div>
+      <div class="fuel-row" id="fuel-row">
+        ${t.fuelOptions.map(opt => {
+          const isFull = opt === 'Full';
+          const isOn = state.fuel === opt;
+          return `<button class="${isFull ? '' : 'partial'} ${isOn ? 'on' : ''}" data-fuel="${esc(opt)}">${esc(opt)}</button>`;
+        }).join('')}
+      </div>
+
+      <hr class="divider" />
+      <h3 class="section-title">Tire pressure</h3>
+      <div class="section-hint">PSI per tire. Out-of-range flags red.</div>
+      <div class="tire-grid" id="tire-grid">
+        ${t.tirePositions.map(p => {
+          const v = state.tires[p.id] || '';
+          const num = parseInt(v, 10);
+          const flagged = !isNaN(num) && (num < p.min || num > p.max);
+          return `
+            <div class="tire-cell" data-tire="${p.id}">
+              <div class="tlabel">${esc(p.label)}</div>
+              <input type="number" class="${flagged ? 'flag' : ''}" data-tire-min="${p.min}" data-tire-max="${p.max}" value="${esc(v)}" placeholder="${p.min}-${p.max}" />
+              ${flagged ? `<div class="flag-msg"><i class="ti ti-alert-circle"></i>Out of range (${p.min}–${p.max})</div>` : ''}
+            </div>
+          `;
+        }).join('')}
+      </div>
+
+      <hr class="divider" />
+      <h3 class="section-title">Tire tread &amp; condition</h3>
+      <div id="tread-section">
+        ${wnlRow({ id: 'tread', name: 'All tires' }, { tread: state.tread })}
+      </div>
+
+      <hr class="divider" />
+      <h3 class="section-title">Outside compartments</h3>
+      <div class="section-hint">Open each, check inventory.</div>
+      <div id="outside-comp-section">
+        ${t.outsideCompartments.map(c => compartmentCard(c, state.outsideCompartments)).join('')}
+      </div>
+
+    </div>
+    <div class="footer">
+      <button class="btn-primary" id="outside-next">
+        ${state.half === 'both' ? 'Continue to inside' : 'Submit outside check'} <i class="ti ti-arrow-right"></i>
+      </button>
+    </div>
+  `;
+}
+
+function compartmentCard(c, stateObj) {
+  const v = stateObj[c.id] || { status: '', notes: '', fixed: false, photoName: null };
+  const cls = v.status === 'wnl' ? 'checked' : v.status === 'bad' ? 'flagged' : '';
+  return `
+    <div class="compartment-card ${cls}" data-comp="${c.id}">
+      <div class="compartment-header">
+        <span class="compartment-name">${esc(c.name)}</span>
+        <div class="wnl-btns">
+          <button class="ok ${v.status === 'wnl' ? 'on' : ''}" data-comp-set="wnl">WNL</button>
+          <button class="bad ${v.status === 'bad' ? 'on' : ''}" data-comp-set="bad">Abnormal</button>
+        </div>
+      </div>
+      ${v.status === 'bad' ? `
+        <div class="abnormal-detail">
+          <textarea data-comp-notes placeholder="What's missing or wrong?">${esc(v.notes)}</textarea>
+          <label class="photo-add" style="margin-top:8px;">
+            <i class="ti ti-camera"></i>
+            ${v.photoName ? esc(v.photoName) : 'Add photo'}
+            <input type="file" accept="image/*" capture="environment" data-comp-photo />
+          </label>
+          <label class="cb">
+            <input type="checkbox" data-comp-fixed ${v.fixed ? 'checked' : ''} />
+            <span>Fixed on the spot</span>
+          </label>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function renderInside() {
+  const t = getTemplate();
+  const u = getUnit();
+  const cooler = t.cooler;
+  return header('Inside check', state.half === 'both' ? null : 'start', `${u.shopNumber} · ${state.initials}`) + `
+    <div class="body">
+
+      <h3 class="section-title">Electronics on board</h3>
+      <div class="section-hint">Critical devices flag the unit if missing.</div>
+      ${t.electronics.map(d => {
+        const val = state.electronics[d.id] || '';
+        const flagged = d.critical && val === 'no';
+        return `
+          <div class="device-row ${flagged ? 'flagged' : ''}" data-device="${d.id}">
+            <span class="name">${esc(d.name)}${d.critical ? ' <i class="ti ti-shield" style="color:var(--bad);font-size:13px;vertical-align:middle"></i>' : ''}</span>
+            <div class="yn-toggle">
+              <button class="yes ${val === 'yes' ? 'on' : ''}" data-dev-set="yes">Yes</button>
+              <button class="no ${val === 'no' ? 'on' : ''}" data-dev-set="no">No</button>
+            </div>
+          </div>
+        `;
+      }).join('')}
+
+      ${cooler ? `
+        <hr class="divider" />
+        <h3 class="section-title">Cooler temperature</h3>
+        <div class="section-hint">Reading between ${cooler.minC}°C and ${cooler.maxC}°C?</div>
+        <div style="display:flex;gap:8px;margin-top:10px;" id="cooler-yn">
+          <button class="btn-secondary" data-cooler="yes" style="${state.cooler.inRange === 'yes' ? 'background:var(--g-mid);color:var(--g-text-on);border-color:var(--g-mid);' : ''}">Yes</button>
+          <button class="btn-secondary" data-cooler="no" style="${state.cooler.inRange === 'no' ? 'background:var(--bad);color:#fff;border-color:var(--bad);' : ''}">No</button>
+        </div>
+        ${state.cooler.inRange === 'no' ? `
+          <div class="cooler-detail">
+            <div class="field">
+              <label>Current reading (°C)</label>
+              <input type="number" id="cooler-reading" value="${esc(state.cooler.reading)}" placeholder="e.g. 11" step="0.1" />
+            </div>
+            <div class="field">
+              <label class="photo-add" style="margin-top:0;">
+                <i class="ti ti-camera"></i>
+                ${state.cooler.photoName ? esc(state.cooler.photoName) : 'Photo of thermometer'}
+                <input type="file" accept="image/*" capture="environment" id="cooler-photo" />
+              </label>
+            </div>
+          </div>
+        ` : ''}
+      ` : ''}
+
+      <hr class="divider" />
+      <h3 class="section-title">Inside compartments</h3>
+      <div class="section-hint">Open each, check inventory.</div>
+      <div id="inside-comp-section">
+        ${t.insideCompartments.map(c => compartmentCard(c, state.insideCompartments)).join('')}
+      </div>
+
+    </div>
+    <div class="footer">
+      <button class="btn-primary" id="inside-submit">
+        Submit check <i class="ti ti-check"></i>
+      </button>
+    </div>
+  `;
+}
+
+function renderSubmitted() {
+  const u = getUnit();
+  const flags = collectFlags();
+  return header('Check complete', null, '') + `
+    <div class="body">
+      <div class="success">
+        <i class="ti ti-circle-check-filled"></i>
+        <h2>Submitted</h2>
+        <p>${esc(u.shopNumber)} · ${esc(todayStr())} · ${esc(state.initials)} (${state.half})</p>
+      </div>
+
+      ${flags.length ? `
+        <div class="flag-banner">
+          <i class="ti ti-alert-triangle"></i>
+          <p><strong>${flags.length} item${flags.length > 1 ? 's' : ''} flagged.</strong> Supervisor will see the report.</p>
+        </div>
+      ` : ''}
+
+      <h3 class="section-title">Summary</h3>
+      <div class="summary-row"><span class="k">Unit</span><span class="v">${esc(u.shopNumber)}</span></div>
+      <div class="summary-row"><span class="k">Date</span><span class="v">${esc(todayStr())}</span></div>
+      <div class="summary-row"><span class="k">Crew</span><span class="v">${esc(state.initials)}</span></div>
+      <div class="summary-row"><span class="k">Half</span><span class="v">${esc(state.half)}</span></div>
+      ${state.mileage ? `<div class="summary-row"><span class="k">Mileage</span><span class="v">${esc(state.mileage)}</span></div>` : ''}
+      ${flags.length ? `<div class="summary-row"><span class="k">Flagged</span><span class="v">${flags.length}</span></div>` : `<div class="summary-row"><span class="k">Flagged</span><span class="v">None</span></div>`}
+
+      <div style="margin-top: 24px;">
+        <button class="btn-primary" data-go="home">Done</button>
+      </div>
+    </div>
+  `;
+}
+
+function collectFlags() {
+  const flags = [];
+  Object.entries(state.mechanical).forEach(([id, v]) => { if (v.status === 'bad' && !v.fixed) flags.push(id); });
+  if (state.tread.status === 'bad' && !state.tread.fixed) flags.push('tread');
+  Object.entries(state.tires).forEach(([id, v]) => {
+    const t = getTemplate().tirePositions.find(p => p.id === id);
+    const num = parseInt(v, 10);
+    if (t && !isNaN(num) && (num < t.min || num > t.max)) flags.push('tire:' + id);
+  });
+  Object.entries(state.outsideCompartments).forEach(([id, v]) => { if (v.status === 'bad' && !v.fixed) flags.push('out:' + id); });
+  Object.entries(state.insideCompartments).forEach(([id, v]) => { if (v.status === 'bad' && !v.fixed) flags.push('in:' + id); });
+  const t = getTemplate();
+  t.electronics.forEach(d => { if (d.critical && state.electronics[d.id] === 'no') flags.push('dev:' + d.id); });
+  if (state.cooler.inRange === 'no') flags.push('cooler');
+  if (state.fuel !== 'Full') flags.push('fuel');
+  return flags;
+}
+
+function render() {
+  const app = document.getElementById('app');
+  switch (state.screen) {
+    case 'home': app.innerHTML = renderHome(); bindCommon(); break;
+    case 'ambulance-picker': app.innerHTML = renderAmbulancePicker(); bindCommon(); bindPicker(); break;
+    case 'other-picker': app.innerHTML = renderOtherPicker(); bindCommon(); bindPicker(); break;
+    case 'start': app.innerHTML = renderStart(); bindCommon(); bindStart(); break;
+    case 'outside': app.innerHTML = renderOutside(); bindCommon(); bindOutside(); break;
+    case 'inside': app.innerHTML = renderInside(); bindCommon(); bindInside(); break;
+    case 'submitted': app.innerHTML = renderSubmitted(); bindCommon(); break;
+  }
+}
+
+function bindCommon() {
+  $$('[data-go]').forEach(el => el.addEventListener('click', () => go(el.dataset.go)));
+  $$('[data-back]').forEach(el => el.addEventListener('click', () => go(el.dataset.back)));
+}
+
+function bindPicker() {
+  $$('[data-pick-unit]').forEach(el => el.addEventListener('click', () => {
+    state.unitId = el.dataset.pickUnit;
+    state.startedAt = new Date().toISOString();
+    go('start');
+  }));
+}
+
+function bindStart() {
+  $$('#unit-row [data-unit]').forEach(b => b.addEventListener('click', () => {
+    state.unitId = b.dataset.unit;
+    render();
+  }));
+  const sel = $('#initials-select');
+  if (sel) sel.addEventListener('change', e => { state.initials = e.target.value; updateStartBtn(); });
+  $$('#half-row [data-half]').forEach(b => b.addEventListener('click', () => {
+    state.half = b.dataset.half;
+    render();
+  }));
+  const startBtn = $('#start-btn');
+  if (startBtn) startBtn.addEventListener('click', () => {
+    if (state.half === 'inside') go('inside'); else go('outside');
+  });
+}
+
+function updateStartBtn() {
+  const can = state.unitId && state.initials && state.half;
+  const b = $('#start-btn');
+  if (b) b.disabled = !can;
+}
+
+function bindOutside() {
+  const m = $('#mileage');
+  if (m) m.addEventListener('input', e => state.mileage = e.target.value);
+
+  const wn = $('#walk-notes');
+  if (wn) wn.addEventListener('input', e => state.walkAround.notes = e.target.value);
+
+  const wp = $('#walk-photo');
+  if (wp) wp.addEventListener('change', e => {
+    if (e.target.files[0]) { state.walkAround.photoName = e.target.files[0].name; render(); }
+  });
+
+  bindWnlRows('#mech-section', state.mechanical, () => render());
+
+  $$('#fuel-row [data-fuel]').forEach(b => b.addEventListener('click', () => {
+    state.fuel = b.dataset.fuel;
+    render();
+  }));
+
+  $$('#tire-grid input').forEach(inp => {
+    const cell = inp.closest('[data-tire]');
+    const tireId = cell.dataset.tire;
+    inp.addEventListener('input', () => {
+      state.tires[tireId] = inp.value;
+      render();
+    });
+  });
+
+  bindWnlRows('#tread-section', { tread: state.tread }, () => render(), v => state.tread = v);
+
+  bindCompartments('#outside-comp-section', state.outsideCompartments);
+
+  const next = $('#outside-next');
+  if (next) next.addEventListener('click', () => {
+    if (state.half === 'both') { go('inside'); }
+    else { submit(); }
+  });
+}
+
+function bindInside() {
+  $$('[data-device]').forEach(row => {
+    const id = row.dataset.device;
+    $$('[data-dev-set]', row).forEach(b => b.addEventListener('click', () => {
+      state.electronics[id] = b.dataset.devSet;
+      render();
+    }));
+  });
+
+  $$('#cooler-yn [data-cooler]').forEach(b => b.addEventListener('click', () => {
+    state.cooler.inRange = b.dataset.cooler;
+    render();
+  }));
+
+  const cr = $('#cooler-reading');
+  if (cr) cr.addEventListener('input', e => state.cooler.reading = e.target.value);
+
+  const cp = $('#cooler-photo');
+  if (cp) cp.addEventListener('change', e => {
+    if (e.target.files[0]) { state.cooler.photoName = e.target.files[0].name; render(); }
+  });
+
+  bindCompartments('#inside-comp-section', state.insideCompartments);
+
+  const sub = $('#inside-submit');
+  if (sub) sub.addEventListener('click', () => submit());
+}
+
+function bindWnlRows(rootSel, stateObj, onChange, setter) {
+  $$(rootSel + ' [data-row]').forEach(row => {
+    const id = row.dataset.row;
+    $$('[data-wnl-set]', row).forEach(b => b.addEventListener('click', () => {
+      const cur = stateObj[id] || { status: '', notes: '', fixed: false };
+      cur.status = b.dataset.wnlSet;
+      stateObj[id] = cur;
+      if (setter) setter(cur);
+      onChange();
+    }));
+    const detail = row.nextElementSibling;
+    if (detail && detail.classList && detail.classList.contains('abnormal-detail')) {
+      const ta = $('[data-wnl-notes]', detail);
+      const cb = $('[data-wnl-fixed]', detail);
+      if (ta) ta.addEventListener('input', e => {
+        stateObj[id].notes = e.target.value;
+        if (setter) setter(stateObj[id]);
+      });
+      if (cb) cb.addEventListener('change', e => {
+        stateObj[id].fixed = e.target.checked;
+        if (setter) setter(stateObj[id]);
+      });
+    }
+  });
+}
+
+function bindCompartments(rootSel, stateObj) {
+  $$(rootSel + ' [data-comp]').forEach(card => {
+    const id = card.dataset.comp;
+    $$('[data-comp-set]', card).forEach(b => b.addEventListener('click', () => {
+      const cur = stateObj[id] || { status: '', notes: '', fixed: false, photoName: null };
+      cur.status = b.dataset.compSet;
+      stateObj[id] = cur;
+      render();
+    }));
+    const ta = $('[data-comp-notes]', card);
+    if (ta) ta.addEventListener('input', e => { stateObj[id].notes = e.target.value; });
+    const cb = $('[data-comp-fixed]', card);
+    if (cb) cb.addEventListener('change', e => { stateObj[id].fixed = e.target.checked; });
+    const ph = $('[data-comp-photo]', card);
+    if (ph) ph.addEventListener('change', e => {
+      if (e.target.files[0]) { stateObj[id].photoName = e.target.files[0].name; render(); }
+    });
+  });
+}
+
+async function submit() {
+  const payload = buildPayload();
+  console.log('Submission payload:', payload);
+  if (CONFIG.submitUrl) {
+    try {
+      await fetch(CONFIG.submitUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch (e) {
+      console.error('Submit failed:', e);
+      alert('Submit failed: ' + e.message + '\nPayload logged to console.');
+      return;
+    }
+  } else {
+    console.warn('No CONFIG.submitUrl set — payload only logged, not sent.');
+  }
+  go('submitted');
+}
+
+function buildPayload() {
+  const u = getUnit();
+  return {
+    schemaVersion: 1,
+    appVersion: CONFIG.version,
+    unitId: state.unitId,
+    unitShopNumber: u.shopNumber,
+    date: state.date,
+    crewInitials: state.initials,
+    half: state.half,
+    startedAt: state.startedAt,
+    submittedAt: new Date().toISOString(),
+    outside: (state.half === 'outside' || state.half === 'both') ? {
+      mileage: state.mileage,
+      walkAround: state.walkAround,
+      mechanical: state.mechanical,
+      fuel: state.fuel,
+      tires: state.tires,
+      tread: state.tread,
+      compartments: state.outsideCompartments,
+    } : null,
+    inside: (state.half === 'inside' || state.half === 'both') ? {
+      electronics: state.electronics,
+      cooler: state.cooler,
+      compartments: state.insideCompartments,
+    } : null,
+    flags: collectFlags(),
+  };
+}
+
+init();
+</script>
+</body>
+</html>

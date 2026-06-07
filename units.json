@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "lastUpdated": "2026-06-07",
+  "agency": {
+    "name": "North Country EMS / Clark Fire 13",
+    "shortName": "NCEMS"
+  },
+  "crewRoster": [
+    { "initials": "SJ", "name": "Sam Jenkins" },
+    { "initials": "RM", "name": "Riley Madler" },
+    { "initials": "TC", "name": "Taylor Chen" },
+    { "initials": "JP", "name": "Jordan Park" }
+  ],
+  "units": [
+    { "id": "m25a", "shopNumber": "M25A", "type": "medic", "templateId": "m25-medic", "active": true, "ready": true },
+    { "id": "m25b", "shopNumber": "M25B", "type": "medic", "templateId": "m25-medic", "active": true, "ready": true },
+    { "id": "m19",  "shopNumber": "M19",  "type": "medic", "templateId": "m25-medic", "active": true, "ready": false },
+    { "id": "m18",  "shopNumber": "M18",  "type": "medic", "templateId": "m25-medic", "active": true, "ready": false },
+    { "id": "m14",  "shopNumber": "M14",  "type": "medic", "templateId": "m25-medic", "active": true, "ready": false },
+    { "id": "sq51", "shopNumber": "SQ51", "type": "rescue", "templateId": "sq51-rescue", "active": true, "ready": false }
+  ],
+  "templates": {
+    "m25-medic": {
+      "name": "Medic 25 (A/B)",
+      "outsideMechanical": [
+        { "id": "oil",         "name": "Oil level" },
+        { "id": "coolant",     "name": "Coolant" },
+        { "id": "brakeFluid",  "name": "Brake fluid" },
+        { "id": "transFluid",  "name": "Transmission fluid" },
+        { "id": "psFluid",     "name": "Power steering fluid" },
+        { "id": "wiperFluid",  "name": "Wiper fluid" },
+        { "id": "leaks",       "name": "Under-rig leaks" }
+      ],
+      "fuelOptions": ["1/4", "1/2", "3/4", "Full"],
+      "tirePositions": [
+        { "id": "frontL",     "label": "Front L",      "min": 75, "max": 80 },
+        { "id": "frontR",     "label": "Front R",      "min": 75, "max": 80 },
+        { "id": "rearLOuter", "label": "Rear L outer", "min": 80, "max": 85 },
+        { "id": "rearLInner", "label": "Rear L inner", "min": 80, "max": 85 },
+        { "id": "rearROuter", "label": "Rear R outer", "min": 80, "max": 85 },
+        { "id": "rearRInner", "label": "Rear R inner", "min": 80, "max": 85 }
+      ],
+      "outsideCompartments": [
+        { "id": "blue-c-collar",    "name": "Blue C-collar Bag",   "items": [] },
+        { "id": "orange-c-collar",  "name": "Orange C-collar Bag", "items": [] },
+        { "id": "rope-bag",         "name": "Rope Bag",            "items": [] },
+        { "id": "trauma-bag",       "name": "Trauma Bag",          "items": [] },
+        { "id": "water-rescue-bag", "name": "Water Rescue Bag",    "items": [] },
+        { "id": "compartment-1",    "name": "Compartment 1",       "items": [] },
+        { "id": "compartment-2",    "name": "Compartment 2",       "items": [] },
+        { "id": "compartment-3",    "name": "Compartment 3",       "items": [] },
+        { "id": "compartment-4",    "name": "Compartment 4",       "items": [] },
+        { "id": "compartment-5",    "name": "Compartment 5",       "items": [] },
+        { "id": "compartment-6",    "name": "Compartment 6",       "items": [] },
+        { "id": "compartment-7",    "name": "Compartment 7",       "items": [] }
+      ],
+      "electronics": [
+        { "id": "cellPhone", "name": "Cell phone", "critical": false },
+        { "id": "ipad",      "name": "iPad",       "critical": false },
+        { "id": "toughbook", "name": "Toughbook",  "critical": true }
+      ],
+      "cooler": { "minC": 4, "maxC": 9 },
+      "insideCompartments": [
+        { "id": "cab",                 "name": "Cab",                              "items": [] },
+        { "id": "action-area",         "name": "Action Area",                      "items": [] },
+        { "id": "airway-adjunct",      "name": "Airway Adjunct Pocket",            "items": [] },
+        { "id": "airway-roll",         "name": "Airway Roll",                      "items": [] },
+        { "id": "airway-bag-cric",     "name": "Airway Bag (Cricothyroidotomy)",   "items": [] },
+        { "id": "invasive-airway",     "name": "Invasive and Rescue Airway Pocket","items": [] },
+        { "id": "iv-tray",             "name": "IV Tray",                          "items": [] },
+        { "id": "lifepak-15",          "name": "Lifepak 15",                       "items": [] },
+        { "id": "medication-kit",      "name": "Medication Kit",                   "items": [] },
+        { "id": "middle-airway-bag",   "name": "Middle Airway Bag",                "items": [] },
+        { "id": "pediatric-igels",     "name": "Pediatric I-Gels",                 "items": [] },
+        { "id": "portable-suction",    "name": "Portable Suction",                 "items": [] },
+        { "id": "vacuum-splint-bag",   "name": "Vacuum Splint Bag",                "items": [] },
+        { "id": "bench-seat",          "name": "Bench Seat",                       "items": [] },
+        { "id": "cpr-seat",            "name": "CPR Seat",                         "items": [] },
+        { "id": "fridge",              "name": "Fridge",                           "items": [] },
+        { "id": "med-shelf",           "name": "Med Shelf",                        "items": [] },
+        { "id": "med-vault",           "name": "Med Vault", "items": [], "controlledSubstances": true },
+        { "id": "compartment-a",       "name": "Compartment A",                    "items": [] },
+        { "id": "compartment-b",       "name": "Compartment B",                    "items": [] },
+        { "id": "compartment-c",       "name": "Compartment C",                    "items": [] },
+        { "id": "compartment-d",       "name": "Compartment D",                    "items": [] },
+        { "id": "compartment-e",       "name": "Compartment E",                    "items": [] },
+        { "id": "compartment-f",       "name": "Compartment F",                    "items": [] }
+      ],
+      "controlledSubstanceHandling": {
+        "intro": "Medic is in charge of narcs. Confirm all present, or enter actual quantity.",
+        "substances": [
+          { "id": "fentanyl", "name": "Fentanyl",            "expectedVials": 8, "perVial": "100mcg", "increment": 100, "unit": "mcg" },
+          { "id": "versed",   "name": "Midazolam (Versed)",  "expectedVials": 5, "perVial": "5mg",    "increment": 5,   "unit": "mg" },
+          { "id": "ketamine", "name": "Ketamine",            "expectedVials": 2, "perVial": "500mg",  "increment": 500, "unit": "mg" }
+        ]
+      }
+    },
+    "sq51-rescue": {
+      "name": "Squad 51",
+      "outsideMechanical": [
+        { "id": "oil",        "name": "Oil level" },
+        { "id": "coolant",    "name": "Coolant" },
+        { "id": "brakeFluid", "name": "Brake fluid" },
+        { "id": "transFluid", "name": "Transmission fluid" },
+        { "id": "psFluid",    "name": "Power steering fluid" },
+        { "id": "wiperFluid", "name": "Wiper fluid" },
+        { "id": "leaks",      "name": "Under-rig leaks" }
+      ],
+      "fuelOptions": ["1/4", "1/2", "3/4", "Full"],
+      "tirePositions": [
+        { "id": "frontL", "label": "Front L", "min": 70, "max": 80 },
+        { "id": "frontR", "label": "Front R", "min": 70, "max": 80 },
+        { "id": "rearL",  "label": "Rear L",  "min": 70, "max": 80 },
+        { "id": "rearR",  "label": "Rear R",  "min": 70, "max": 80 }
+      ],
+      "outsideCompartments": [
+        { "id": "sq51-equipment-list", "name": "Equipment list (TBD)", "items": [] }
+      ],
+      "electronics": [
+        { "id": "radio",    "name": "Radios operational", "critical": true },
+        { "id": "siren-pa", "name": "Siren / PA",         "critical": true }
+      ],
+      "cooler": null,
+      "insideCompartments": [
+        { "id": "cab",         "name": "Cab",        "items": [] },
+        { "id": "rescue-comp", "name": "Rescue compartments (TBD)", "items": [] }
+      ]
+    }
+  },
+  "_notes": {
+    "csvPopulation": "Items arrays are empty placeholders. Populate from Vector Solutions CSV export grouped by Shelf/Compartment Name. Display names already match cleaned compartment labels.",
+    "fleetChange": "M12 removed. SQ51 sourced from Station 51 Daily Rescue Check paper form (see README section 5).",
+    "v2_sync": "First run merges crew submissions at submit time by unit+date. Live partner progress requires moving to Firebase/Supabase — see README section 10."
+  }
+}
