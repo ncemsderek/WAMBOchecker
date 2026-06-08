@@ -53,23 +53,35 @@
     .screen { display: none; min-height: 100vh; }
     .screen.active { display: block; }
 
-    /* ============ HOME SCREEN ============ */
+    /* ============ HOME SCREEN (locked, no scroll, fit to one screen) ============ */
     .home {
       background: linear-gradient(180deg, var(--g-deep) 0%, var(--g-mid) 100%);
       color: var(--white);
-      padding: 24px 20px 40px;
-      padding-top: calc(24px + env(safe-area-inset-top));
-      min-height: 100vh;
+      padding: 16px 20px;
+      padding-top: calc(12px + env(safe-area-inset-top));
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      height: 100vh;
+      height: 100dvh;
+      min-height: 0;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      overflow: hidden;
     }
+    .home.active { display: flex; }
     /* ── 3D flip card for logo / admin login ── */
     .logo-flip-wrap {
-      width: 280px;
-      max-width: 78%;
-      height: 280px;
-      margin: 0 auto 16px;
+      width: 240px;
+      max-width: 62%;
+      height: 240px;
+      max-height: 30vh;
+      margin: 0 auto 4px;
       perspective: 900px;
       cursor: pointer;
+      flex-shrink: 1;
     }
     .logo-flip-inner {
       position: relative;
@@ -168,22 +180,27 @@
       font-size: 14px;
       color: var(--g-light);
       font-weight: 600;
-      margin: 0 0 28px;
+      margin: 0 0 8px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      flex-shrink: 0;
     }
     .home-buttons {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 14px;
       max-width: 480px;
+      width: 100%;
       margin: 0 auto;
+      flex: 1 1 auto;
+      min-height: 0;
     }
     .home-btn {
       position: relative;
       display: block;
       width: 100%;
-      height: 180px;
+      flex: 1 1 0;
+      min-height: 110px;
       border-radius: 20px;
       overflow: hidden;
       border: 3px solid var(--white);
@@ -217,10 +234,11 @@
     .home-btn.others { background-image: url('./sar51.jpg'); }
 
     .home-footer {
-      margin-top: 32px;
+      margin-top: 8px;
       font-size: 12px;
       color: var(--g-light);
       opacity: 0.75;
+      flex-shrink: 0;
     }
 
     /* ============ HEADER (sub-screens) ============ */
@@ -513,17 +531,23 @@
       padding: 12px 14px;
     }
     .fuel-btn {
-      padding: 14px 8px;
+      padding: 12px 8px;
       border: 1.5px solid var(--border);
       background: var(--white);
       border-radius: 10px;
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 700;
       cursor: pointer;
       min-height: 56px;
       color: var(--text);
       transition: all 0.1s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
     }
+    .fuel-btn small { font-size: 11px; font-weight: 600; opacity: 0.7; }
     .fuel-btn:active { transform: scale(0.96); }
     .fuel-btn.active {
       background: var(--warn);
@@ -848,6 +872,51 @@
       font-style: italic;
     }
     .op-check-row .yn-buttons { display: flex; gap: 6px; }
+
+    /* unit notice banner */
+    .unit-notice {
+      margin: 0 0 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.35;
+      text-align: center;
+    }
+    .unit-notice.warn { background: #FBEAEA; color: var(--bad); border: 2px solid var(--bad); }
+    .unit-notice.info { background: var(--g-pale); color: var(--g-deep); border: 1.5px solid var(--g-accent); }
+
+    /* red tag */
+    .red-tag-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; background: #FBEAEA;
+      border: 1.5px solid var(--bad); border-radius: 8px; margin-bottom: 10px;
+    }
+    .red-tag-label { font-size: 14px; font-weight: 700; color: var(--bad); flex: 1; }
+    .red-tag-input {
+      width: 90px; padding: 10px; font-size: 18px; letter-spacing: 0.15em;
+      text-align: center; border: 1.5px solid var(--bad); border-radius: 8px; font-family: inherit;
+    }
+
+    /* controlled meds box */
+    .ctrl-box { margin: 12px 0; padding: 14px; border: 2px solid var(--info); border-radius: 10px; background: #EAF1F8; }
+    .ctrl-box-title { font-size: 14px; font-weight: 800; color: var(--info); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .ctrl-box-meds { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .ctrl-pill { background: var(--info); color: #fff; padding: 4px 12px; border-radius: 14px; font-size: 13px; font-weight: 700; }
+    .ctrl-box-note { font-size: 13px; color: var(--g-deep); line-height: 1.45; font-weight: 600; }
+
+    /* special checks (gurney) bad state */
+    .yn-row.special-bad { background: var(--warn-bg); border-radius: 8px; }
+
+    /* admin-edited marker (red font) */
+    .admin-edited { color: var(--bad) !important; }
+
+    /* unit button in-progress tint */
+    .unit-btn.in-progress { outline: 3px solid var(--warn); outline-offset: -3px; }
+    .unit-btn .progress-tag {
+      display: block; font-size: 11px; font-weight: 700; color: var(--warn);
+      background: rgba(255,255,255,0.92); border-radius: 6px; padding: 2px 6px; margin-top: 4px;
+    }
 
     /* Compartment mark-all in header (no expand needed) */
     .comp-header-mark-btn {
@@ -1336,7 +1405,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.3.1',
+  version: '2.4.0',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -1534,8 +1603,9 @@ function hasUnsavedWork() {
   return !!(c.initials || c.mileage || c.walkAround?.notes ||
             Object.keys(c.mechanical || {}).length ||
             Object.keys(c.fluids || {}).length ||
-            c.fuel || c.tireYN ||
-            Object.keys(c.electronics || {}).length ||
+            c.fuel || c.tireYN || c.oxygenYN ||
+            Object.keys(c.gurney || {}).length ||
+            Object.keys(c.opChecks || {}).length ||
             c.cooler?.answered ||
             Object.keys(c.compartments || {}).length ||
             Object.keys(c.rescueChecks || {}).length ||
@@ -1553,14 +1623,19 @@ function showAmbulancePicker() {
   intro.textContent = "Pick the ambulance you're checking today.";
   list.appendChild(intro);
 
+  const progress = unitsWithProgressToday();
+
   APP.data.ambulances.forEach(amb => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'unit-btn';
+    const inProg = progress[amb.id];
+    if (inProg) btn.classList.add('in-progress');
     btn.innerHTML = `
       <div>
         <div>${escapeHTML(amb.name)}</div>
         <div class="unit-meta">${escapeHTML(amb.type)}</div>
+        ${inProg ? '<span class="progress-tag">● Check in progress today</span>' : ''}
       </div>
       <div class="unit-btn-arrow">→</div>
     `;
@@ -1640,6 +1715,124 @@ function showRescuePicker() {
 /* ============================================================
    START AMBULANCE CHECK
    ============================================================ */
+/* ============================================================
+   AUTOSAVE — persist in-progress check to localStorage
+   Keyed by unit + date so a bump-out restores same-day work.
+   ============================================================ */
+const AUTOSAVE_PREFIX = 'wamboapp_autosave_v1::';
+
+function autosaveKey(c) {
+  const id = c.unitId || c.unitName || 'unit';
+  return AUTOSAVE_PREFIX + id + '::' + c.date;
+}
+
+function saveAutosave() {
+  const c = APP.check;
+  if (!c) return;
+  try {
+    // Strip the heavy _comps reference and any base64 photo blobs before saving
+    const slim = JSON.parse(JSON.stringify(c, (k, v) => {
+      if (k === '_comps') return undefined;
+      // don't persist giant base64 photos; keep only uploaded URLs
+      if (k === 'photo' && v && v.type === 'base64') return undefined;
+      return v;
+    }));
+    localStorage.setItem(autosaveKey(c), JSON.stringify({ savedAt: Date.now(), check: slim }));
+  } catch (e) { /* localStorage may be full or blocked; fail quietly */ }
+}
+
+function restoreAutosave() {
+  const c = APP.check;
+  if (!c) return;
+  let raw;
+  try { raw = localStorage.getItem(autosaveKey(c)); } catch (e) { return; }
+  if (!raw) return;
+  let parsed;
+  try { parsed = JSON.parse(raw); } catch (e) { return; }
+  const saved = parsed.check;
+  if (!saved) return;
+  // Merge saved fields back into current check (keep live _comps)
+  Object.keys(saved).forEach(k => {
+    if (k === '_comps') return;
+    APP.check[k] = saved[k];
+  });
+  // Re-render so restored values show, then repaint field states
+  renderAmbulanceCheck();
+  repaintRestoredState();
+  updateProgress();
+}
+
+function clearAutosave() {
+  const c = APP.check;
+  if (!c) return;
+  try { localStorage.removeItem(autosaveKey(c)); } catch (e) {}
+}
+
+/* Mark which units have an in-progress autosave for today (for button tint) */
+function unitsWithProgressToday() {
+  const today = new Date().toISOString().slice(0,10);
+  const out = {};
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith(AUTOSAVE_PREFIX) && key.endsWith('::' + today)) {
+        const id = key.slice(AUTOSAVE_PREFIX.length, key.length - ('::' + today).length);
+        out[id] = true;
+      }
+    }
+  } catch (e) {}
+  return out;
+}
+
+/* After restoring autosave, repaint the simple top-level field button states */
+function repaintRestoredState() {
+  const c = APP.check;
+  // initials/mileage
+  const ini = document.getElementById('meta-initials'); if (ini) ini.value = c.initials || '';
+  const mil = document.getElementById('meta-mileage'); if (mil) mil.value = c.mileage || '';
+  const wa = document.getElementById('walkaround-notes'); if (wa) wa.value = c.walkAround?.notes || '';
+  // fuel
+  if (c.fuel) document.querySelectorAll('.fuel-btn').forEach(b => b.classList.toggle('active', b.dataset.fuel === c.fuel));
+  // tire
+  if (c.tireYN) {
+    document.querySelectorAll('[data-tire-yn]').forEach(b => b.classList.toggle('active', b.dataset.tireYn === c.tireYN));
+    const td = document.getElementById('tire-detail'); if (td) td.style.display = c.tireYN === 'no' ? 'block' : 'none';
+    const tn = document.getElementById('tire-notes'); if (tn) tn.value = c.tireNotes || '';
+    const tf = document.getElementById('tire-fixed'); if (tf) tf.checked = !!c.tireFixed;
+  }
+  // oxygen
+  if (c.oxygenYN) {
+    document.querySelectorAll('[data-oxygen-yn]').forEach(b => b.classList.toggle('active', b.dataset.oxygenYn === c.oxygenYN));
+    const od = document.getElementById('oxygen-detail'); if (od) od.style.display = c.oxygenYN === 'no' ? 'block' : 'none';
+    const on = document.getElementById('oxygen-notes'); if (on) on.value = c.oxygenNotes || '';
+    const of = document.getElementById('oxygen-fixed'); if (of) of.checked = !!c.oxygenFixed;
+  }
+  // cooler
+  if (c.cooler?.answered) {
+    document.querySelectorAll('[data-cooler-yn]').forEach(b => b.classList.toggle('active', b.dataset.coolerYn === (c.cooler.ok ? 'yes' : 'no')));
+    const cd = document.getElementById('cooler-detail'); if (cd) cd.style.display = c.cooler.ok ? 'none' : 'block';
+    const cr = document.getElementById('cooler-reading'); if (cr) cr.value = c.cooler.reading || '';
+  }
+  // mechanical + fluids
+  ['mechanical','fluids'].forEach(bucket => {
+    Object.entries(c[bucket] || {}).forEach(([key, st]) => {
+      if (!st.status) return;
+      const row = document.querySelector(`.check-row[data-key="${cssEscape(key)}"][data-bucket="${bucket}"]`);
+      if (!row) return;
+      row.querySelectorAll('.check-btn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      const safeKey = key.replace(/[^a-zA-Z0-9]/g, '_');
+      const det = document.getElementById('detail-' + safeKey);
+      if (det) {
+        det.style.display = st.status === 'bad' ? 'block' : 'none';
+        const ta = det.querySelector('textarea'); if (ta) ta.value = st.notes || '';
+        const fx = det.querySelector('[data-fixed]'); if (fx) fx.checked = !!st.fixed;
+      }
+    });
+  });
+  // Note: compartment item states repaint when the user expands them (lazy),
+  // and ensureItemState already holds the restored values so counts stay correct.
+}
+
 function startAmbulanceCheck(unitId) {
   const amb = APP.data.ambulances.find(a => a.id === unitId);
   if (!amb) return;
@@ -1662,8 +1855,13 @@ function startAmbulanceCheck(unitId) {
     tireYN: null,
     tireNotes: '',
     tireFixed: false,
-    electronics: {},
+    oxygenYN: null,
+    oxygenNotes: '',
+    oxygenFixed: false,
     cooler: { answered: false, ok: null, reading: '', photo: null },
+    gurney: {},        // { checkLabel: 'yes'|'no' }
+    redTags: {},       // { compOrBagName: 'last4' }
+    opChecks: {},      // { 'comp||bag||item': 'yes'|'no' }
     // compartments: { compName: { items: {itemName: {status, notes, fixed}}, bags: { bagName: { items: {...} } } } }
     compartments: {},
     _comps: comps,
@@ -1671,6 +1869,7 @@ function startAmbulanceCheck(unitId) {
   renderAmbulanceCheck();
   showScreen('check');
   updateProgress();
+  restoreAutosave();    // restore any in-progress check for this unit+date
 }
 
 function renderAmbulanceCheck() {
@@ -1680,13 +1879,14 @@ function renderAmbulanceCheck() {
 
   const body = document.getElementById('check-body');
   body.innerHTML = `
+    ${renderUnitNotice()}
     ${renderMetaBlock()}
     ${renderWalkAroundSection()}
     ${renderMechanicalSection()}
     ${renderFluidsSection()}
     ${renderFuelSection()}
     ${renderTireSection()}
-    ${renderElectronicsSection()}
+    ${renderOxygenSection()}
     ${renderCoolerSection()}
     ${renderCompartmentSection('Exterior Compartments', 'exterior', c._comps.exterior)}
     ${renderCompartmentSection('Interior Compartments', 'interior', c._comps.interior)}
@@ -1695,6 +1895,15 @@ function renderAmbulanceCheck() {
     </div>
   `;
   attachAmbulanceHandlers();
+}
+
+function renderUnitNotice() {
+  const c = APP.check;
+  const notices = APP.data.unitNotices || {};
+  const n = notices[c.unitId] || notices[c.unitName];
+  if (!n || !n.text) return '';
+  const cls = n.style === 'warn' ? 'unit-notice warn' : 'unit-notice info';
+  return `<div class="${cls}">${escapeHTML(n.text)}</div>`;
 }
 
 /* ============================================================
@@ -1763,7 +1972,7 @@ function renderRescueGroup(title, group, items) {
 }
 
 function attachRescueHandlers() {
-  document.getElementById('rescue-initials').oninput = e => { APP.check.initials = e.target.value; updateProgress(); };
+  document.getElementById('rescue-initials').oninput = e => { e.target.value = e.target.value.toUpperCase(); APP.check.initials = e.target.value; updateProgress(); saveAutosave(); };
   document.getElementById('rescue-mileage').oninput = e => { APP.check.mileage = e.target.value; updateProgress(); };
   document.getElementById('rescue-comments').oninput = e => { APP.check.comments = e.target.value; };
 
@@ -1876,10 +2085,10 @@ function renderFuelSection() {
       <div class="section-head">Fuel Level</div>
       <div class="section-body">
         <div class="fuel-picker" id="fuel-picker">
-          <button class="fuel-btn" data-fuel="1/4">¼</button>
-          <button class="fuel-btn" data-fuel="1/2">½</button>
-          <button class="fuel-btn" data-fuel="3/4">¾</button>
-          <button class="fuel-btn full" data-fuel="Full">Full</button>
+          <button class="fuel-btn" data-fuel="1/4">¼<small>25%</small></button>
+          <button class="fuel-btn" data-fuel="1/2">½<small>50%</small></button>
+          <button class="fuel-btn" data-fuel="3/4">¾<small>75%</small></button>
+          <button class="fuel-btn full" data-fuel="Full">Full<small>100%</small></button>
         </div>
       </div>
     </div>
@@ -1891,42 +2100,48 @@ function renderTireSection() {
     <div class="section">
       <div class="section-head">Tire Pressure</div>
       <div class="section-body">
-        <div class="tire-yn-section">
-          <div class="tire-yn-label">Is tire pressure between 75–85 PSI on all tires?</div>
-          <div class="tire-yn-row">
-            <div class="yn-buttons">
-              <button class="yn-btn yes" data-tire-yn="yes" style="min-width:80px;">Yes</button>
-              <button class="yn-btn no" data-tire-yn="no" style="min-width:80px;">No</button>
-            </div>
+        <div class="yn-row" data-tire>
+          <div class="yn-label">Is tire pressure between 75–85 PSI on all tires?</div>
+          <div class="yn-buttons">
+            <button class="yn-btn yes" data-tire-yn="yes">Yes</button>
+            <button class="yn-btn no" data-tire-yn="no">No</button>
           </div>
-          <div id="tire-detail" style="display:none; margin-top:10px; padding:10px; background:var(--warn-bg); border-radius:8px; border-left:3px solid var(--warn);">
-            <textarea id="tire-notes" placeholder="Which tire(s) are out of range? Note the readings." style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
-            <label class="fixed-check" style="margin-top:8px;">
-              <input type="checkbox" id="tire-fixed" />
-              Fixed on the spot
-            </label>
-          </div>
+        </div>
+        <div id="tire-detail" style="display:none; margin-top:10px; padding:10px; background:var(--warn-bg); border-radius:8px; border-left:3px solid var(--warn);">
+          <textarea id="tire-notes" placeholder="Which tire(s) are out of range? Note the readings." style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
+          <label class="fixed-check" style="margin-top:8px;">
+            <input type="checkbox" id="tire-fixed" />
+            Fixed on the spot
+          </label>
         </div>
       </div>
     </div>
   `;
 }
 
-function renderElectronicsSection() {
-  let html = `<div class="section"><div class="section-head">Electronics</div><div class="section-body">`;
-  APP.data.electronicsDevices.forEach(dev => {
-    const badge = dev.critical ? '<span class="crit-badge">Critical</span>' : '';
-    html += `
-      <div class="yn-row" data-device="${dev.name}" data-critical="${dev.critical}">
-        <div class="yn-label">${dev.name}${badge}</div>
-        <div class="yn-buttons">
-          <button class="yn-btn yes" data-yn="yes">Yes</button>
-          <button class="yn-btn no" data-yn="no">No</button>
+function renderOxygenSection() {
+  const o = APP.data.oxygenCheck || { label: 'Is main O2 above 500 PSI?', minPsi: 500 };
+  return `
+    <div class="section">
+      <div class="section-head">Oxygen Level</div>
+      <div class="section-body">
+        <div class="yn-row" data-oxygen>
+          <div class="yn-label">${escapeHTML(o.label)}</div>
+          <div class="yn-buttons">
+            <button class="yn-btn yes" data-oxygen-yn="yes">Yes</button>
+            <button class="yn-btn no" data-oxygen-yn="no">No</button>
+          </div>
         </div>
-      </div>`;
-  });
-  html += `</div></div>`;
-  return html;
+        <div id="oxygen-detail" style="display:none; margin-top:10px; padding:10px; background:var(--warn-bg); border-radius:8px; border-left:3px solid var(--warn);">
+          <textarea id="oxygen-notes" placeholder="Note the actual O2 reading and which tank." style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
+          <label class="fixed-check" style="margin-top:8px;">
+            <input type="checkbox" id="oxygen-fixed" />
+            Swapped / Fixed on the spot
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function renderCoolerSection() {
@@ -1965,6 +2180,10 @@ function renderCompartmentSection(title, type, compartments) {
     const bags = comp.bags || [];
     const totalItems = comp.items.length + bags.reduce((n, b) => n + b.items.length, 0);
     const bagSummary = bags.length ? ` · ${bags.length} bag${bags.length>1?'s':''} inside` : '';
+    const hasItems = comp.items.length > 0 || (comp.bags && comp.bags.length > 0);
+    const markBtn = hasItems
+      ? `<button class="comp-header-mark-btn" type="button" data-header-mark="${escapeAttr(comp.name)}" data-header-safeid="${safeId}" title="Mark all items complete">ALL COMPLETE</button>`
+      : '';
     html += `
       <div class="compartment-card" data-compartment="${escapeAttr(comp.name)}" data-type="${type}" data-idx="${idx}" id="comp-${safeId}">
         <div class="compartment-head" data-comp-toggle="${safeId}">
@@ -1974,7 +2193,7 @@ function renderCompartmentSection(title, type, compartments) {
               <div class="compartment-counts" id="comp-counts-${safeId}">${totalItems} item${totalItems!==1?'s':''}${bagSummary}</div>
             </div>
           </div>
-          <button class="comp-header-mark-btn" type="button" data-header-mark="${escapeAttr(comp.name)}" data-header-safeid="${safeId}" title="Mark all items complete">✓ All</button>
+          ${markBtn}
           <div class="compartment-expand">▼</div>
         </div>
         <div class="compartment-body" id="comp-body-${safeId}">
@@ -1994,19 +2213,26 @@ function renderCompartmentBody(safeId, comp) {
   body.dataset.rendered = 'true';
 
   let html = '';
-  // Mark All Complete (covers direct items + all nested bag items)
-  html += `<button class="mark-all-btn" type="button" data-mark-all="${escapeAttr(comp.name)}">Mark All Complete</button>`;
 
-  // Compartment-level operational check (e.g. Portable Suction)
-  if (comp.operationalCheck) {
-    html += `
-      <div class="op-check-row" data-op-comp="${escapeAttr(comp.name)}" data-op-bag="" data-op-item="__comp_op__">
-        <div class="op-check-label">🔋 ${escapeHTML(comp.operationalCheck)}</div>
-        <div class="yn-buttons">
-          <button class="yn-btn yes" data-op-yn="yes" style="min-width:60px;">Yes</button>
-          <button class="yn-btn no" data-op-yn="no" style="min-width:60px;">No</button>
-        </div>
-      </div>`;
+  // ── Gurney special checks (Yes/No rows, no items) ──
+  if (comp.specialChecks && comp.specialChecks.length) {
+    html += `<div class="special-checks">`;
+    comp.specialChecks.forEach(sc => {
+      html += `
+        <div class="yn-row" data-special-comp="${escapeAttr(comp.name)}" data-special-label="${escapeAttr(sc.label)}">
+          <div class="yn-label">${escapeHTML(sc.label)}</div>
+          <div class="yn-buttons">
+            <button class="yn-btn yes" data-special-yn="yes">Yes</button>
+            <button class="yn-btn no" data-special-yn="no">No</button>
+          </div>
+        </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // ── Red tag input (for compartments flagged redTag) ──
+  if (comp.redTag) {
+    html += redTagHTML(comp.name);
   }
 
   // Direct items in the compartment
@@ -2018,10 +2244,29 @@ function renderCompartmentBody(safeId, comp) {
     html += `</div>`;
   }
 
+  // Compartment-level operational check (e.g. Portable Suction) — rendered AFTER items
+  if (comp.operationalCheck) {
+    html += opCheckHTML(comp.name, '', '__comp_op__', comp.operationalCheck);
+  }
+
+  // ── Controlled meds disclaimer box (e.g. Med Vault) ──
+  if (comp.controlledDisclaimer) {
+    const ctrlNames = comp.items.filter(it => it.controlled).map(it => it.name);
+    if (ctrlNames.length) {
+      html += `
+        <div class="ctrl-box">
+          <div class="ctrl-box-title">Controlled Substances</div>
+          <div class="ctrl-box-meds">${ctrlNames.map(n => `<span class="ctrl-pill">${escapeHTML(n)}</span>`).join('')}</div>
+          <div class="ctrl-box-note">${escapeHTML(comp.controlledDisclaimer)}</div>
+        </div>`;
+    }
+  }
+
   // Nested bags
   if (comp.bags && comp.bags.length > 0) {
     comp.bags.forEach((bag, bIdx) => {
       const bagSafeId = `${safeId}-bag-${bIdx}`;
+      const bagRedTag = bag.redTag ? redTagHTML(bag.name) : '';
       html += `
         <div class="bag-card" id="bag-${bagSafeId}" data-bag-name="${escapeAttr(bag.name)}">
           <div class="bag-head" data-bag-toggle="${bagSafeId}">
@@ -2029,10 +2274,11 @@ function renderCompartmentBody(safeId, comp) {
               <div class="bag-name"><span class="bag-icon">▸</span>${escapeHTML(bag.name)}</div>
               <div class="bag-counts">${bag.items.length} items</div>
             </div>
+            <button class="comp-header-mark-btn" type="button" data-bag-mark="${escapeAttr(bag.name)}" data-bag-mark-comp="${escapeAttr(comp.name)}" data-bag-mark-safeid="${safeId}">✓ All</button>
             <div class="bag-expand">▼</div>
           </div>
           <div class="bag-body">
-            <button class="mark-all-btn" type="button" data-mark-all="${escapeAttr(comp.name)}" data-mark-bag="${escapeAttr(bag.name)}">Mark All Complete</button>
+            ${bagRedTag}
             <div class="item-list" data-bag-name="${escapeAttr(bag.name)}">
               ${bag.items.map((it, itIdx) => itemRowHTML(it, comp.name, bag.name, itIdx)).join('')}
             </div>
@@ -2043,25 +2289,89 @@ function renderCompartmentBody(safeId, comp) {
 
   body.innerHTML = html;
   wireCompartmentBody(safeId, comp);
+  repaintCompartmentRestored(safeId, comp);
 }
 
-function itemRowHTML(it, compName, bagName, idx) {
-  const opCheck = it.operationalCheck ? `
-    <div class="op-check-row" data-op-comp="${escapeAttr(compName)}" data-op-bag="${escapeAttr(bagName)}" data-op-item="${escapeAttr(it.name)}">
-      <div class="op-check-label">🔋 ${escapeHTML(it.operationalCheck)}</div>
+/* Repaint saved item states inside a compartment when it first renders */
+function repaintCompartmentRestored(safeId, comp) {
+  const c = APP.check;
+  const body = document.getElementById('comp-body-' + safeId);
+  if (!body) return;
+  const cs = c.compartments[comp.name];
+  // Items + bags
+  body.querySelectorAll('.item-row').forEach(row => {
+    const bagName = row.dataset.bag;
+    const itemName = row.dataset.item;
+    let st = null;
+    if (cs) {
+      if (bagName) st = cs.bags?.[bagName]?.items?.[itemName];
+      else st = cs.items?.[itemName];
+    }
+    if (st && st.status) {
+      row.querySelectorAll('.item-btn').forEach(b => b.classList.toggle('active', b.dataset.itemStatus === st.status));
+      const det = row.querySelector('.item-detail');
+      if (det) {
+        det.style.display = st.status === 'abnormal' ? 'block' : 'none';
+        const ta = det.querySelector('textarea'); if (ta) ta.value = st.notes || '';
+        const fx = det.querySelector('[data-fixed]'); if (fx) fx.checked = !!st.fixed;
+      }
+    }
+  });
+  // Op checks
+  body.querySelectorAll('.op-check-row').forEach(row => {
+    const key = `${row.dataset.opComp}||${row.dataset.opBag}||${row.dataset.opItem}`;
+    const val = c.opChecks?.[key];
+    if (val) {
+      row.querySelectorAll('[data-op-yn]').forEach(b => b.classList.toggle('active', b.dataset.opYn === val));
+      if (val === 'no') row.style.background = 'var(--warn-bg)';
+    }
+  });
+  // Gurney special checks
+  body.querySelectorAll('[data-special-comp]').forEach(row => {
+    const label = row.dataset.specialLabel;
+    const val = c.gurney?.[label];
+    if (val) {
+      row.querySelectorAll('[data-special-yn]').forEach(b => b.classList.toggle('active', b.dataset.specialYn === val));
+      row.classList.toggle('special-bad', val === 'no');
+    }
+  });
+  // Red tags
+  body.querySelectorAll('.red-tag-input').forEach(inp => {
+    const v = c.redTags?.[inp.dataset.redtagFor];
+    if (v) inp.value = v;
+  });
+  updateCompartmentCounts(safeId, comp);
+}
+
+function redTagHTML(name) {
+  return `
+    <div class="red-tag-row" data-redtag-name="${escapeAttr(name)}">
+      <div class="red-tag-label">🔴 Red Tag # (last 4):</div>
+      <input type="text" class="red-tag-input" inputmode="numeric" maxlength="4" placeholder="0000" data-redtag-for="${escapeAttr(name)}" />
+    </div>`;
+}
+
+function opCheckHTML(compName, bagName, itemName, label) {
+  return `
+    <div class="op-check-row" data-op-comp="${escapeAttr(compName)}" data-op-bag="${escapeAttr(bagName)}" data-op-item="${escapeAttr(itemName)}">
+      <div class="op-check-label">🔋 ${escapeHTML(label)}</div>
       <div class="yn-buttons">
         <button class="yn-btn yes" data-op-yn="yes" style="min-width:60px;">Yes</button>
         <button class="yn-btn no" data-op-yn="no" style="min-width:60px;">No</button>
       </div>
-    </div>` : '';
+    </div>`;
+}
+
+function itemRowHTML(it, compName, bagName, idx) {
+  // operational check (battery/power) renders BELOW the item row
+  const opCheck = it.operationalCheck ? opCheckHTML(compName, bagName, it.name, it.operationalCheck) : '';
   return `
-    ${opCheck}
     <div class="item-row" data-comp="${escapeAttr(compName)}" data-bag="${escapeAttr(bagName)}" data-item="${escapeAttr(it.name)}">
       <div class="item-row-main">
         <div class="item-name">
           ${escapeHTML(it.name)}
           <span class="item-qty">×${it.qty}</span>
-          ${it.ctrl ? '<span class="item-ctrl-badge">CTRL</span>' : ''}
+          ${it.controlled ? '<span class="item-ctrl-badge">CTRL</span>' : ''}
         </div>
         <div class="item-buttons">
           <button class="item-btn complete" type="button" data-item-status="complete">✓</button>
@@ -2076,6 +2386,7 @@ function itemRowHTML(it, compName, bagName, idx) {
         </label>
       </div>
     </div>
+    ${opCheck}
   `;
 }
 
@@ -2100,17 +2411,48 @@ function wireCompartmentBody(safeId, comp) {
         c.opChecks[key] = val;
         if (val === 'no') row.style.background = 'var(--warn-bg)';
         else row.style.background = '';
-        updateProgress();
+        updateProgress(); saveAutosave();
       });
     });
   });
 
-  // Mark-all-complete buttons (compartment-level and bag-level)
-  body.querySelectorAll('[data-mark-all]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const compName = btn.dataset.markAll;
-      const bagName = btn.dataset.markBag || '';
-      markAllItemsAsComplete(safeId, compName, bagName, btn);
+  // Gurney special checks (Yes/No)
+  body.querySelectorAll('[data-special-comp]').forEach(row => {
+    const label = row.dataset.specialLabel;
+    row.querySelectorAll('[data-special-yn]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        row.querySelectorAll('[data-special-yn]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const val = btn.dataset.specialYn;
+        APP.check.gurney = APP.check.gurney || {};
+        APP.check.gurney[label] = val;
+        row.classList.toggle('special-bad', val === 'no');
+        updateProgress(); saveAutosave();
+      });
+    });
+  });
+
+  // Red tag inputs
+  body.querySelectorAll('.red-tag-input').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const name = e.target.dataset.redtagFor;
+      e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+      APP.check.redTags = APP.check.redTags || {};
+      APP.check.redTags[name] = e.target.value;
+      saveAutosave();
+    });
+  });
+
+  // Bag-level "All Complete" buttons (in bag header)
+  body.querySelectorAll('[data-bag-mark]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation(); // don't toggle the bag open/closed
+      const bagName = btn.dataset.bagMark;
+      const compName = btn.dataset.bagMarkComp;
+      const sid = btn.dataset.bagMarkSafeid;
+      markAllItemsAsComplete(sid, compName, bagName, null);
+      btn.classList.add('done');
+      btn.textContent = '✓ Done';
     });
   });
 
@@ -2140,17 +2482,18 @@ function wireCompartmentBody(safeId, comp) {
         state.status = status;
         detail.style.display = (status === 'abnormal') ? 'block' : 'none';
         updateCompartmentCounts(safeId, comp);
-        updateProgress();
+        updateProgress(); saveAutosave();
       });
     });
     textarea.addEventListener('input', e => {
       const state = ensureItemState(compName, bagName, itemName);
       state.notes = e.target.value;
+      saveAutosave();
     });
     fixedBox.addEventListener('change', e => {
       const state = ensureItemState(compName, bagName, itemName);
       state.fixed = e.target.checked;
-      updateProgress();
+      updateProgress(); saveAutosave();
     });
   });
 }
@@ -2257,9 +2600,13 @@ function cssEscape(s) {
    HANDLERS (ambulance check)
    ============================================================ */
 function attachAmbulanceHandlers() {
-  document.getElementById('meta-initials').oninput = e => { APP.check.initials = e.target.value; updateProgress(); };
-  document.getElementById('meta-mileage').oninput = e => { APP.check.mileage = e.target.value; updateProgress(); };
-  document.getElementById('walkaround-notes').oninput = e => { APP.check.walkAround.notes = e.target.value; };
+  document.getElementById('meta-initials').oninput = e => {
+    e.target.value = e.target.value.toUpperCase();
+    APP.check.initials = e.target.value;
+    updateProgress(); saveAutosave();
+  };
+  document.getElementById('meta-mileage').oninput = e => { APP.check.mileage = e.target.value; updateProgress(); saveAutosave(); };
+  document.getElementById('walkaround-notes').oninput = e => { APP.check.walkAround.notes = e.target.value; saveAutosave(); };
   document.getElementById('walkaround-photo').onchange = e => handlePhoto(e, 'walkAround', 'walkaround-photo-preview');
 
   // WNL rows (mechanical, fluids) - filter to only rows with data-key
@@ -2276,17 +2623,19 @@ function attachAmbulanceHandlers() {
         APP.check[bucket][key] = APP.check[bucket][key] || {};
         APP.check[bucket][key].status = status;
         document.getElementById('detail-' + safeKey).style.display = status === 'bad' ? 'block' : 'none';
-        updateProgress();
+        updateProgress(); saveAutosave();
       };
     });
     const detail = document.getElementById('detail-' + safeKey);
     detail.querySelector('textarea').oninput = e => {
       APP.check[bucket][key] = APP.check[bucket][key] || {};
       APP.check[bucket][key].notes = e.target.value;
+      saveAutosave();
     };
     detail.querySelector('[data-fixed]').onchange = e => {
       APP.check[bucket][key] = APP.check[bucket][key] || {};
       APP.check[bucket][key].fixed = e.target.checked;
+      saveAutosave();
     };
   });
 
@@ -2296,7 +2645,7 @@ function attachAmbulanceHandlers() {
       document.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       APP.check.fuel = btn.dataset.fuel;
-      updateProgress();
+      updateProgress(); saveAutosave();
     };
   });
 
@@ -2308,29 +2657,29 @@ function attachAmbulanceHandlers() {
       const val = btn.dataset.tireYn;
       APP.check.tireYN = val;
       document.getElementById('tire-detail').style.display = val === 'no' ? 'block' : 'none';
-      updateProgress();
+      updateProgress(); saveAutosave();
     };
   });
   const tireNotesEl = document.getElementById('tire-notes');
   const tireFixedEl = document.getElementById('tire-fixed');
-  if (tireNotesEl) tireNotesEl.oninput = e => { APP.check.tireNotes = e.target.value; };
-  if (tireFixedEl) tireFixedEl.onchange = e => { APP.check.tireFixed = e.target.checked; updateProgress(); };
+  if (tireNotesEl) tireNotesEl.oninput = e => { APP.check.tireNotes = e.target.value; saveAutosave(); };
+  if (tireFixedEl) tireFixedEl.onchange = e => { APP.check.tireFixed = e.target.checked; updateProgress(); saveAutosave(); };
 
-  // Electronics
-  document.querySelectorAll('[data-device]').forEach(row => {
-    const dev = row.dataset.device;
-    const critical = row.dataset.critical === 'true';
-    row.querySelectorAll('.yn-btn').forEach(btn => {
-      btn.onclick = () => {
-        const val = btn.dataset.yn;
-        row.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        APP.check.electronics[dev] = val === 'yes';
-        row.classList.toggle('critical-bad', critical && val === 'no');
-        updateProgress();
-      };
-    });
+  // Oxygen — Yes/No
+  document.querySelectorAll('[data-oxygen-yn]').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('[data-oxygen-yn]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const val = btn.dataset.oxygenYn;
+      APP.check.oxygenYN = val;
+      document.getElementById('oxygen-detail').style.display = val === 'no' ? 'block' : 'none';
+      updateProgress(); saveAutosave();
+    };
   });
+  const o2NotesEl = document.getElementById('oxygen-notes');
+  const o2FixedEl = document.getElementById('oxygen-fixed');
+  if (o2NotesEl) o2NotesEl.oninput = e => { APP.check.oxygenNotes = e.target.value; saveAutosave(); };
+  if (o2FixedEl) o2FixedEl.onchange = e => { APP.check.oxygenFixed = e.target.checked; updateProgress(); saveAutosave(); };
 
   // Cooler
   document.querySelectorAll('[data-cooler-yn]').forEach(btn => {
@@ -2341,10 +2690,10 @@ function attachAmbulanceHandlers() {
       APP.check.cooler.answered = true;
       APP.check.cooler.ok = val === 'yes';
       document.getElementById('cooler-detail').style.display = val === 'no' ? 'block' : 'none';
-      updateProgress();
+      updateProgress(); saveAutosave();
     };
   });
-  document.getElementById('cooler-reading').oninput = e => { APP.check.cooler.reading = e.target.value; };
+  document.getElementById('cooler-reading').oninput = e => { APP.check.cooler.reading = e.target.value; saveAutosave(); };
   document.getElementById('cooler-photo').onchange = e => handlePhoto(e, 'cooler', 'cooler-photo-preview');
 
   // Compartments — lazy render on first expand
@@ -2362,7 +2711,8 @@ function attachAmbulanceHandlers() {
       markAllCompartmentComplete(safeId, comp);
       // Stay done — don't revert
       btn.classList.add('done');
-      btn.textContent = '✓ Done';
+      btn.textContent = '✓ ALL DONE';
+      saveAutosave();
     });
   });
   document.querySelectorAll('.compartment-head[data-comp-toggle]').forEach(head => {
@@ -2474,18 +2824,24 @@ function updateProgress() {
       done++;
       if (c.tireYN === 'no' && !c.tireFixed) flags++;
     }
-    // Electronics
-    APP.data.electronicsDevices.forEach(dev => {
-      total++;
-      if (c.electronics[dev.name] !== undefined) {
-        done++;
-        if (dev.critical && c.electronics[dev.name] === false) flags++;
-      }
-    });
+    // Oxygen — Yes/No
+    total++;
+    if (c.oxygenYN) {
+      done++;
+      if (c.oxygenYN === 'no' && !c.oxygenFixed) flags++;
+    }
     // Cooler
     total++; if (c.cooler.answered) { done++; if (c.cooler.ok === false) flags++; }
-    // Compartments — count total items (direct + nested bag items)
+    // Compartments — count total items (direct + nested bag items) + special checks
     [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+      // Gurney-style special checks
+      if (comp.specialChecks && comp.specialChecks.length) {
+        comp.specialChecks.forEach(sc => {
+          total++;
+          const v = c.gurney?.[sc.label];
+          if (v) { done++; if (v === 'no') flags++; }
+        });
+      }
       const compItems = comp.items.length + (comp.bags || []).reduce((n, b) => n + b.items.length, 0);
       total += compItems;
       const cs = c.compartments[comp.name];
@@ -2505,6 +2861,8 @@ function updateProgress() {
         });
       }
     });
+    // Operational checks (battery/power) flag if No
+    Object.values(c.opChecks || {}).forEach(v => { if (v === 'no') flags++; });
   } else if (c.type === 'rescue') {
     total += 2; // initials, mileage
     if (c.initials) done++;
@@ -2551,12 +2909,12 @@ function showSubmitModal() {
     });
     total++; if (c.fuel) done++;
     total++; if (c.tireYN) done++;
-    APP.data.electronicsDevices.forEach(dev => {
-      total++;
-      if (c.electronics[dev.name] !== undefined) done++;
-    });
+    total++; if (c.oxygenYN) done++;
     total++; if (c.cooler.answered) done++;
     [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+      if (comp.specialChecks && comp.specialChecks.length) {
+        comp.specialChecks.forEach(sc => { total++; if (c.gurney?.[sc.label]) done++; });
+      }
       const compItems = comp.items.length + (comp.bags || []).reduce((n, b) => n + b.items.length, 0);
       total += compItems;
       const cs = c.compartments[comp.name];
@@ -2615,6 +2973,7 @@ async function submitCheck() {
       to_email: APP.data.submissionEmail || 'd.boyce@northcountryems.org',
     };
     await emailjs.send(APP.data.emailjs.serviceId, APP.data.emailjs.templateId, params);
+    clearAutosave();
     showSuccess(summary);
   } catch (err) {
     console.error('Submit failed:', err);
@@ -2653,13 +3012,18 @@ function buildSummary() {
       if (c.tireNotes) fl += `\n    Notes: ${c.tireNotes}`;
       addFlag(fl);
     }
-    // Electronics
-    APP.data.electronicsDevices.forEach(dev => {
-      if (dev.critical && c.electronics[dev.name] === false) {
-        addFlag(`  [ CRITICAL ] ${dev.name} — not operational`);
-      } else if (c.electronics[dev.name] === false) {
-        addFlag(`  [ ABNORMAL ] ${dev.name} — No`);
-      }
+    // Oxygen
+    if (c.oxygenYN === 'no' && !c.oxygenFixed) {
+      let fl = `  [ ABNORMAL ] Oxygen — below minimum PSI`;
+      if (c.oxygenNotes) fl += `\n    Notes: ${c.oxygenNotes}`;
+      addFlag(fl);
+    }
+    // Gurney special checks
+    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+      if (!comp.specialChecks) return;
+      comp.specialChecks.forEach(sc => {
+        if (c.gurney?.[sc.label] === 'no') addFlag(`  [ ABNORMAL ] ${comp.name} — ${sc.label}: No`);
+      });
     });
     // Cooler
     if (c.cooler.answered && !c.cooler.ok) {
@@ -2781,15 +3145,15 @@ function buildSummary() {
       lines.push(tl); lines.push('');
     }
 
-    // Electronics
-    const filledElec = APP.data.electronicsDevices.filter(d => c.electronics[d.name] !== undefined);
-    if (filledElec.length) {
-      lines.push('Electronics:');
-      filledElec.forEach(dev => {
-        const v = c.electronics[dev.name];
-        lines.push(`  ${dev.name}: ${v ? 'Yes ✓' : 'No ⚠'}${dev.critical && !v ? ' [CRITICAL]' : ''}`);
-      });
-      lines.push('');
+    // Oxygen
+    if (c.oxygenYN) {
+      const minPsi = APP.data.oxygenCheck?.minPsi || 500;
+      let ol = `Oxygen (above ${minPsi} PSI): ${c.oxygenYN === 'yes' ? 'Yes ✓' : 'Below minimum ⚠'}`;
+      if (c.oxygenYN === 'no') {
+        if (c.oxygenFixed) ol += ' (Swapped/Fixed)';
+        if (c.oxygenNotes) ol += `\n  Notes: ${c.oxygenNotes}`;
+      }
+      lines.push(ol); lines.push('');
     }
 
     // Cooler
@@ -2798,6 +3162,27 @@ function buildSummary() {
       if (!c.cooler.ok && c.cooler.reading) cl += `  Reading: ${c.cooler.reading}°C`;
       if (c.cooler?.photo?.url) cl += `\n  Photo: ${c.cooler.photo.url}`;
       lines.push(cl); lines.push('');
+    }
+
+    // Gurney / special checks
+    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+      if (!comp.specialChecks) return;
+      const any = comp.specialChecks.some(sc => c.gurney?.[sc.label]);
+      if (!any) return;
+      lines.push(comp.name + ':');
+      comp.specialChecks.forEach(sc => {
+        const v = c.gurney?.[sc.label];
+        if (v) lines.push(`  ${sc.label}: ${v === 'yes' ? 'Yes ✓' : 'No ⚠'}`);
+      });
+      lines.push('');
+    });
+
+    // Red tags
+    const redTags = Object.entries(c.redTags || {}).filter(([, v]) => v);
+    if (redTags.length) {
+      lines.push('Red Tags (last 4):');
+      redTags.forEach(([name, num]) => lines.push(`  ${name}: #${num}`));
+      lines.push('');
     }
 
     // Operational checks

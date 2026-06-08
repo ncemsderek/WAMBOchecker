@@ -1,5 +1,5 @@
 {
-  "version": "2.3.1",
+  "version": "2.4.0",
   "submissionEmail": "d.boyce@northcountryems.org",
   "emailjs": {
     "serviceId": "service_uqfd3sj",
@@ -125,20 +125,6 @@
       "max": 85
     }
   ],
-  "electronicsDevices": [
-    {
-      "name": "Cell phone",
-      "critical": false
-    },
-    {
-      "name": "iPad",
-      "critical": false
-    },
-    {
-      "name": "Toughbook",
-      "critical": false
-    }
-  ],
   "rescueRigChecks": {
     "exterior": [
       "Initial walk-around (damage/leaks/hazards)",
@@ -223,7 +209,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -237,9 +224,17 @@
               "operationalCheck": "Turns on and battery is charged"
             },
             {
+              "name": "Axe",
+              "qty": 1
+            },
+            {
               "name": "Dry Chemical Extinguisher",
               "qty": 1,
               "ctrl": false
+            },
+            {
+              "name": "Halligan",
+              "qty": 1
             },
             {
               "name": "Rope bag",
@@ -349,7 +344,7 @@
               "ctrl": false
             },
             {
-              "name": "Sawzall",
+              "name": "Reciprocating Saw",
               "qty": 1,
               "ctrl": false,
               "operationalCheck": "Turns on and battery is good"
@@ -454,7 +449,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Orange C-collar bag",
@@ -489,7 +485,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Vacuum Splint Bag",
@@ -514,7 +511,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -761,7 +759,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -778,6 +777,32 @@
         }
       ],
       "interior": [
+        {
+          "name": "Gurney",
+          "specialChecks": [
+            {
+              "label": "Clean",
+              "type": "yesno"
+            },
+            {
+              "label": "Made",
+              "type": "yesno"
+            },
+            {
+              "label": "Restraints",
+              "type": "yesno"
+            },
+            {
+              "label": "Charging while plugged (solid green)",
+              "type": "yesno"
+            },
+            {
+              "label": "Fast Stretcher (Tarp)",
+              "type": "yesno"
+            }
+          ],
+          "items": []
+        },
         {
           "name": "Action Area",
           "items": [
@@ -1234,17 +1259,20 @@
             {
               "name": "Fentanyl",
               "qty": 8,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Ketamine",
               "qty": 2,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Midazolam",
               "qty": 5,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Sodium Thiosulfate",
@@ -1256,7 +1284,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "controlledDisclaimer": "Controlled medications shall be signed off in the safe daily by a paramedic. If covering consecutive shifts, must be signed off by two people."
         },
         {
           "name": "Airway Bag",
@@ -1350,7 +1379,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Invasive and Rescue Airway Pocket",
@@ -1730,7 +1760,7 @@
           ]
         },
         {
-          "name": "Lifepak 15",
+          "name": "Lifepak 35",
           "items": [
             {
               "name": "12 Lead",
@@ -2262,7 +2292,8 @@
               "qty": 2,
               "ctrl": false
             }
-          ]
+          ],
+          "redTag": true
         },
         {
           "name": "Portable Suction",
@@ -2728,7 +2759,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -2742,9 +2774,17 @@
               "operationalCheck": "Turns on and battery is charged"
             },
             {
+              "name": "Axe",
+              "qty": 1
+            },
+            {
               "name": "Dry Chemical Extinguisher",
               "qty": 1,
               "ctrl": false
+            },
+            {
+              "name": "Halligan",
+              "qty": 1
             },
             {
               "name": "Rope bag",
@@ -2854,7 +2894,7 @@
               "ctrl": false
             },
             {
-              "name": "Sawzall",
+              "name": "Reciprocating Saw",
               "qty": 1,
               "ctrl": false,
               "operationalCheck": "Turns on and battery is good"
@@ -2959,7 +2999,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Orange C-collar bag",
@@ -2994,7 +3035,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Vacuum Splint Bag",
@@ -3019,7 +3061,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -3266,7 +3309,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -3283,6 +3327,32 @@
         }
       ],
       "interior": [
+        {
+          "name": "Gurney",
+          "specialChecks": [
+            {
+              "label": "Clean",
+              "type": "yesno"
+            },
+            {
+              "label": "Made",
+              "type": "yesno"
+            },
+            {
+              "label": "Restraints",
+              "type": "yesno"
+            },
+            {
+              "label": "Charging while plugged (solid green)",
+              "type": "yesno"
+            },
+            {
+              "label": "Fast Stretcher (Tarp)",
+              "type": "yesno"
+            }
+          ],
+          "items": []
+        },
         {
           "name": "Action Area",
           "items": [
@@ -3739,17 +3809,20 @@
             {
               "name": "Fentanyl",
               "qty": 8,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Ketamine",
               "qty": 2,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Midazolam",
               "qty": 5,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Sodium Thiosulfate",
@@ -3761,7 +3834,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "controlledDisclaimer": "Controlled medications shall be signed off in the safe daily by a paramedic. If covering consecutive shifts, must be signed off by two people."
         },
         {
           "name": "Airway Bag",
@@ -3855,7 +3929,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Invasive and Rescue Airway Pocket",
@@ -4235,7 +4310,7 @@
           ]
         },
         {
-          "name": "Lifepak 15",
+          "name": "Lifepak 35",
           "items": [
             {
               "name": "12 Lead",
@@ -4767,7 +4842,8 @@
               "qty": 2,
               "ctrl": false
             }
-          ]
+          ],
+          "redTag": true
         },
         {
           "name": "Portable Suction",
@@ -5203,6 +5279,14 @@
               "ctrl": false
             },
             {
+              "name": "Axe",
+              "qty": 1
+            },
+            {
+              "name": "Halligan",
+              "qty": 1
+            },
+            {
               "name": "Hurst Jaws of Life",
               "qty": 1,
               "ctrl": false,
@@ -5233,7 +5317,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -5374,7 +5459,7 @@
               "ctrl": false
             },
             {
-              "name": "Sawzall",
+              "name": "Reciprocating Saw",
               "qty": 1,
               "ctrl": false,
               "operationalCheck": "Turns on and battery is good"
@@ -5489,7 +5574,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Orange C-collar bag",
@@ -5524,7 +5610,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -5771,12 +5858,39 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         }
       ],
       "interior": [
+        {
+          "name": "Gurney",
+          "specialChecks": [
+            {
+              "label": "Clean",
+              "type": "yesno"
+            },
+            {
+              "label": "Made",
+              "type": "yesno"
+            },
+            {
+              "label": "Restraints",
+              "type": "yesno"
+            },
+            {
+              "label": "Charging while plugged (solid green)",
+              "type": "yesno"
+            },
+            {
+              "label": "Fast Stretcher (Tarp)",
+              "type": "yesno"
+            }
+          ],
+          "items": []
+        },
         {
           "name": "Bench Seat",
           "items": [
@@ -5963,27 +6077,32 @@
             {
               "name": "Fentanyl",
               "qty": 8,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Fentanyl",
               "qty": 8,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Ketamine",
               "qty": 2,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Midazolam",
               "qty": 5,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Midazolam",
               "qty": 5,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Sodium Thiosulfate",
@@ -5995,7 +6114,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "controlledDisclaimer": "Controlled medications shall be signed off in the safe daily by a paramedic. If covering consecutive shifts, must be signed off by two people."
         },
         {
           "name": "Other Equipment",
@@ -6135,7 +6255,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Invasive and Rescue Airway Pocket",
@@ -6530,7 +6651,7 @@
           ]
         },
         {
-          "name": "Lifepak 15",
+          "name": "Lifepak 35",
           "items": [
             {
               "name": "12 Lead",
@@ -7062,7 +7183,8 @@
               "qty": 2,
               "ctrl": false
             }
-          ]
+          ],
+          "redTag": true
         },
         {
           "name": "Portable Suction",
@@ -7648,6 +7770,14 @@
               "ctrl": false
             },
             {
+              "name": "Axe",
+              "qty": 1
+            },
+            {
+              "name": "Halligan",
+              "qty": 1
+            },
+            {
               "name": "Hurst Jaws of Life",
               "qty": 1,
               "ctrl": false,
@@ -7678,7 +7808,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -7809,7 +7940,7 @@
               "ctrl": false
             },
             {
-              "name": "Sawzall",
+              "name": "Reciprocating Saw",
               "qty": 1,
               "ctrl": false,
               "operationalCheck": "Turns on and battery is good"
@@ -7914,7 +8045,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Orange C-collar bag",
@@ -7949,7 +8081,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Vacuum Splint Bag",
@@ -7974,7 +8107,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -8221,12 +8355,39 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         }
       ],
       "interior": [
+        {
+          "name": "Gurney",
+          "specialChecks": [
+            {
+              "label": "Clean",
+              "type": "yesno"
+            },
+            {
+              "label": "Made",
+              "type": "yesno"
+            },
+            {
+              "label": "Restraints",
+              "type": "yesno"
+            },
+            {
+              "label": "Charging while plugged (solid green)",
+              "type": "yesno"
+            },
+            {
+              "label": "Fast Stretcher (Tarp)",
+              "type": "yesno"
+            }
+          ],
+          "items": []
+        },
         {
           "name": "Action Area",
           "items": [
@@ -8398,22 +8559,26 @@
             {
               "name": "Fentanyl",
               "qty": 8,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Ketamine",
               "qty": 2,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Midazolam",
               "qty": 5,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Midazolam",
               "qty": 5,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Sodium Thiosulfate",
@@ -8425,7 +8590,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "controlledDisclaimer": "Controlled medications shall be signed off in the safe daily by a paramedic. If covering consecutive shifts, must be signed off by two people."
         },
         {
           "name": "Random Items",
@@ -8560,7 +8726,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Invasive and Rescue Airway Pocket",
@@ -8775,7 +8942,7 @@
           ]
         },
         {
-          "name": "Lifepak 15",
+          "name": "Lifepak 35",
           "items": [
             {
               "name": "12 Lead",
@@ -9307,7 +9474,8 @@
               "qty": 2,
               "ctrl": false
             }
-          ]
+          ],
+          "redTag": true
         },
         {
           "name": "Portable Suction",
@@ -9909,6 +10077,14 @@
               "operationalCheck": "Turns on and battery is charged"
             },
             {
+              "name": "Axe",
+              "qty": 1
+            },
+            {
+              "name": "Halligan",
+              "qty": 1
+            },
+            {
               "name": "Hurst Jaws of Life",
               "qty": 1,
               "ctrl": false,
@@ -9939,7 +10115,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -10069,7 +10246,7 @@
               "ctrl": false
             },
             {
-              "name": "Sawzall",
+              "name": "Reciprocating Saw",
               "qty": 1,
               "ctrl": false,
               "operationalCheck": "Turns on and battery is good"
@@ -10179,7 +10356,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Orange C-collar bag",
@@ -10214,7 +10392,8 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Vacuum Splint Bag",
@@ -10239,7 +10418,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         },
@@ -10481,12 +10661,39 @@
                   "qty": 2,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             }
           ]
         }
       ],
       "interior": [
+        {
+          "name": "Gurney",
+          "specialChecks": [
+            {
+              "label": "Clean",
+              "type": "yesno"
+            },
+            {
+              "label": "Made",
+              "type": "yesno"
+            },
+            {
+              "label": "Restraints",
+              "type": "yesno"
+            },
+            {
+              "label": "Charging while plugged (solid green)",
+              "type": "yesno"
+            },
+            {
+              "label": "Fast Stretcher (Tarp)",
+              "type": "yesno"
+            }
+          ],
+          "items": []
+        },
         {
           "name": "Action Area",
           "items": [
@@ -10958,17 +11165,20 @@
             {
               "name": "Fentanyl",
               "qty": 8,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Ketamine",
               "qty": 2,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Midazolam",
               "qty": 5,
-              "ctrl": true
+              "ctrl": true,
+              "controlled": true
             },
             {
               "name": "Sodium Thiosulfate",
@@ -10980,7 +11190,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "controlledDisclaimer": "Controlled medications shall be signed off in the safe daily by a paramedic. If covering consecutive shifts, must be signed off by two people."
         },
         {
           "name": "Other Equipment",
@@ -11105,7 +11316,8 @@
                   "qty": 1,
                   "ctrl": false
                 }
-              ]
+              ],
+              "redTag": true
             },
             {
               "name": "Invasive and Rescue Airway Pocket",
@@ -11335,7 +11547,7 @@
           ]
         },
         {
-          "name": "Lifepak 15",
+          "name": "Lifepak 35",
           "items": [
             {
               "name": "12 Lead",
@@ -11867,7 +12079,8 @@
               "qty": 2,
               "ctrl": false
             }
-          ]
+          ],
+          "redTag": true
         },
         {
           "name": "Portable Suction",
@@ -12276,5 +12489,31 @@
   "cloudinary": {
     "cloudName": "dyptma0w8",
     "uploadPreset": "vehiclecheck"
+  },
+  "oxygenCheck": {
+    "label": "Is main O2 above 500 PSI?",
+    "minPsi": 500
+  },
+  "unitNotices": {
+    "M25A": {
+      "text": "\u26a0 REMINDER: Must activate engine brake every time you drive",
+      "style": "warn"
+    },
+    "M25B": {
+      "text": "\u26a0 REMINDER: Must activate engine brake every time you drive",
+      "style": "warn"
+    },
+    "M19": {
+      "text": "\u26a0 REMINDER: Must activate engine brake every time you drive",
+      "style": "warn"
+    },
+    "M14": {
+      "text": "\u26a0 REMINDER: Must activate engine brake every time you drive",
+      "style": "warn"
+    },
+    "M18": {
+      "text": "Engine brake is automatically on",
+      "style": "info"
+    }
   }
 }
