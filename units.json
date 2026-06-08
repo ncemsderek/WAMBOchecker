@@ -1,5 +1,5 @@
 {
-  "version": "2.0.2",
+  "version": "2.1.0",
   "submissionEmail": "d.boyce@northcountryems.org",
   "emailjs": {
     "serviceId": "service_uqfd3sj",
@@ -68,7 +68,6 @@
     "Brakes (foot & parking)",
     "Horn",
     "Mirrors clean & adjusted",
-    "Wipers & washers",
     "Headlights",
     "Brake lights",
     "Turn signals",
@@ -137,7 +136,7 @@
     },
     {
       "name": "Toughbook",
-      "critical": true
+      "critical": false
     }
   ],
   "rescueRigChecks": {
@@ -203,6 +202,28 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Water Rescue Bag",
+              "items": [
+                {
+                  "name": "PFD",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue Helmet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Throw Bags",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -222,6 +243,78 @@
               "name": "Rope bag",
               "qty": 1,
               "ctrl": false
+            }
+          ],
+          "bags": [
+            {
+              "name": "Rope Bag",
+              "items": [
+                {
+                  "name": "200 ft rope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Anchor Strap",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Blue Webbing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Carabiners",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Double Pulleys",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Edge Protection",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Leather Gloves",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "MPD",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Patient Harness",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Prussics",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Red Webbing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue 8",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescuer Harness",
+                  "qty": 3,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -323,6 +416,103 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Blue C-collar Bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Vacuum Splint Bag",
+              "items": [
+                {
+                  "name": "large vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "medium vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "small vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "vacuum pump",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -338,6 +528,238 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Trauma Bag",
+              "items": [
+                {
+                  "name": "10 gtt set",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "12x30 trauma dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "16g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "18g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "2\" kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "20g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "22g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "24g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "4\" Kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "4x4 dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "5x9 Dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Band-aides",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bioclusive",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "BP Cuff Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "CAT tourniquet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Coban Dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cold Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Combat Gauze",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Emergency Blanket",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Gloves (S,M,L)",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hot pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hypothermic Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Israeli Bandage",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lactated Ringers 1000ml",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lever Lock",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 18g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 23g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 25g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle Twin Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Normal Saline 10ml flush",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Oral Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Ring Cutter",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Saline Lock",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "SAM Splint",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Small Sharps Container",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Stethoscope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 1cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 3cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trauma Sheers",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Triangle Bandage",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -346,421 +768,6 @@
             {
               "name": "Lucas",
               "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Blue C-collar Bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Orange C-collar bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Rope Bag",
-          "items": [
-            {
-              "name": "200 ft rope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Anchor Strap",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Blue Webbing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Carabiners",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Double Pulleys",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Edge Protection",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Leather Gloves",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "MPD",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Patient Harness",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Prussics",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Red Webbing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue 8",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescuer Harness",
-              "qty": 3,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Trauma Bag",
-          "items": [
-            {
-              "name": "10 gtt set",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "12x30 trauma dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "16g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "18g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "2\" kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "20g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "22g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "24g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "4\" Kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "4x4 dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "5x9 Dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Band-aides",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Bioclusive",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "BP Cuff Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "CAT tourniquet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Coban Dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cold Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Combat Gauze",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Emergency Blanket",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Gloves (S,M,L)",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Hot pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Hypothermic Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Israeli Bandage",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Lactated Ringers 1000ml",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Lever Lock",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 18g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 23g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 25g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle Twin Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Normal Saline 10ml flush",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Oral Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Ring Cutter",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Saline Lock",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "SAM Splint",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Small Sharps Container",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Stethoscope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 1cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 3cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Trauma Sheers",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Triangle Bandage",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Vacuum Splint Bag",
-          "items": [
-            {
-              "name": "large vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "medium vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "small vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "vacuum pump",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Water Rescue Bag",
-          "items": [
-            {
-              "name": "PFD",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue Helmet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Throw Bags",
-              "qty": 2,
               "ctrl": false
             }
           ]
@@ -2689,6 +2696,28 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Water Rescue Bag",
+              "items": [
+                {
+                  "name": "PFD",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue Helmet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Throw Bags",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -2708,6 +2737,78 @@
               "name": "Rope bag",
               "qty": 1,
               "ctrl": false
+            }
+          ],
+          "bags": [
+            {
+              "name": "Rope Bag",
+              "items": [
+                {
+                  "name": "200 ft rope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Anchor Strap",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Blue Webbing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Carabiners",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Double Pulleys",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Edge Protection",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Leather Gloves",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "MPD",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Patient Harness",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Prussics",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Red Webbing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue 8",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescuer Harness",
+                  "qty": 3,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -2809,6 +2910,103 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Blue C-collar Bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Vacuum Splint Bag",
+              "items": [
+                {
+                  "name": "large vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "medium vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "small vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "vacuum pump",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -2824,6 +3022,238 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Trauma Bag",
+              "items": [
+                {
+                  "name": "10 gtt set",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "12x30 trauma dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "16g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "18g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "2\" kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "20g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "22g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "24g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "4\" Kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "4x4 dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "5x9 Dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Band-aides",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bioclusive",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "BP Cuff Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "CAT tourniquet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Coban Dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cold Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Combat Gauze",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Emergency Blanket",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Gloves (S,M,L)",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hot pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hypothermic Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Israeli Bandage",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lactated Ringers 1000ml",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lever Lock",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 18g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 23g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 25g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle Twin Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Normal Saline 10ml flush",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Oral Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Ring Cutter",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Saline Lock",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "SAM Splint",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Small Sharps Container",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Stethoscope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 1cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 3cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trauma Sheers",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Triangle Bandage",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -2832,421 +3262,6 @@
             {
               "name": "Lucas",
               "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Blue C-collar Bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Orange C-collar bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Rope Bag",
-          "items": [
-            {
-              "name": "200 ft rope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Anchor Strap",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Blue Webbing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Carabiners",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Double Pulleys",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Edge Protection",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Leather Gloves",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "MPD",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Patient Harness",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Prussics",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Red Webbing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue 8",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescuer Harness",
-              "qty": 3,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Trauma Bag",
-          "items": [
-            {
-              "name": "10 gtt set",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "12x30 trauma dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "16g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "18g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "2\" kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "20g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "22g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "24g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "4\" Kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "4x4 dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "5x9 Dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Band-aides",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Bioclusive",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "BP Cuff Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "CAT tourniquet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Coban Dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cold Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Combat Gauze",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Emergency Blanket",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Gloves (S,M,L)",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Hot pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Hypothermic Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Israeli Bandage",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Lactated Ringers 1000ml",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Lever Lock",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 18g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 23g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 25g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle Twin Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Normal Saline 10ml flush",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Oral Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Ring Cutter",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Saline Lock",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "SAM Splint",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Small Sharps Container",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Stethoscope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 1cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 3cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Trauma Sheers",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Triangle Bandage",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Vacuum Splint Bag",
-          "items": [
-            {
-              "name": "large vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "medium vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "small vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "vacuum pump",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Water Rescue Bag",
-          "items": [
-            {
-              "name": "PFD",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue Helmet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Throw Bags",
-              "qty": 2,
               "ctrl": false
             }
           ]
@@ -5175,6 +5190,28 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Water Rescue Bag",
+              "items": [
+                {
+                  "name": "PFD",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue Helmet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Throw Bags",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -5199,6 +5236,78 @@
               "name": "Trail Bags",
               "qty": 2,
               "ctrl": false
+            }
+          ],
+          "bags": [
+            {
+              "name": "Rope Bag",
+              "items": [
+                {
+                  "name": "200 ft rope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Anchor Strap",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Blue Webbing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Carabiners",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Double Pulleys",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Edge Protection",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Leather Gloves",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "MPD",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Patient Harness",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Prussics",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Red Webbing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue 8",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescuer Harness",
+                  "qty": 3,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -5320,6 +5429,78 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Blue C-collar Bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -5335,395 +5516,237 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
-        },
-        {
-          "name": "Blue C-collar Bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Orange C-collar bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Rope Bag",
-          "items": [
-            {
-              "name": "200 ft rope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Anchor Strap",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Blue Webbing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Carabiners",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Double Pulleys",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Edge Protection",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Leather Gloves",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "MPD",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Patient Harness",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Prussics",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Red Webbing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue 8",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescuer Harness",
-              "qty": 3,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Trauma Bag",
-          "items": [
-            {
-              "name": "10 gtt set",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "12x30 trauma dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "16g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "18g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "2\" kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "20g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "22g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "24g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "4\" Kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "4x4 dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "5x9 Dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Band-aides",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Bioclusive",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "BP Cuff Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "CAT tourniquet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Coban Dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cold Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Combat Gauze",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Emergency Blanket",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Gloves (S,M,L)",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Hot pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Hypothermic Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Israeli Bandage",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Lactated Ringers 1000ml",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Lever Lock",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 18g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 23g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 25g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle Twin Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Normal Saline 10ml flush",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Oral Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Ring Cutter",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Saline Lock",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "SAM Splint",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Small Sharps Container",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Stethoscope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 1cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 3cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Trauma Sheers",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Triangle Bandage",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Water Rescue Bag",
-          "items": [
-            {
-              "name": "PFD",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue Helmet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Throw Bags",
-              "qty": 2,
-              "ctrl": false
+          ],
+          "bags": [
+            {
+              "name": "Trauma Bag",
+              "items": [
+                {
+                  "name": "10 gtt set",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "12x30 trauma dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "16g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "18g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "2\" kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "20g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "22g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "24g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "4\" Kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "4x4 dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "5x9 Dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Band-aides",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bioclusive",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "BP Cuff Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "CAT tourniquet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Coban Dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cold Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Combat Gauze",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Emergency Blanket",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Gloves (S,M,L)",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hot pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hypothermic Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Israeli Bandage",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lactated Ringers 1000ml",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lever Lock",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 18g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 23g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 25g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle Twin Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Normal Saline 10ml flush",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Oral Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Ring Cutter",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Saline Lock",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "SAM Splint",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Small Sharps Container",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Stethoscope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 1cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 3cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trauma Sheers",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Triangle Bandage",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         }
@@ -7601,6 +7624,28 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Water Rescue Bag",
+              "items": [
+                {
+                  "name": "PFD",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue Helmet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Throw Bags",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -7630,6 +7675,78 @@
               "name": "Water Rescue Bag",
               "qty": 1,
               "ctrl": false
+            }
+          ],
+          "bags": [
+            {
+              "name": "Rope Bag",
+              "items": [
+                {
+                  "name": "200 ft rope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Anchor Strap",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Blue Webbing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Carabiners",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Double Pulleys",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Edge Protection",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Leather Gloves",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "MPD",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Patient Harness",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Prussics",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Red Webbing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue 8",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescuer Harness",
+                  "qty": 3,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -7726,6 +7843,103 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Blue C-collar Bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Vacuum Splint Bag",
+              "items": [
+                {
+                  "name": "large vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "medium vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "small vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "vacuum pump",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -7741,420 +7955,237 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
-        },
-        {
-          "name": "Blue C-collar Bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Orange C-collar bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Rope Bag",
-          "items": [
-            {
-              "name": "200 ft rope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Anchor Strap",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Blue Webbing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Carabiners",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Double Pulleys",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Edge Protection",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Leather Gloves",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "MPD",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Patient Harness",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Prussics",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Red Webbing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue 8",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescuer Harness",
-              "qty": 3,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Trauma Bag",
-          "items": [
-            {
-              "name": "10 gtt set",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "12x30 trauma dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "16g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "18g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "2\" kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "20g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "22g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "24g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "4\" Kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "4x4 dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "5x9 Dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Band-aides",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Bioclusive",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "BP Cuff Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "CAT tourniquet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Coban Dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cold Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Combat Gauze",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Emergency Blanket",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Gloves (S,M,L)",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Hot pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Hypothermic Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Israeli Bandage",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Lactated Ringers 1000ml",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Lever Lock",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 18g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 23g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 25g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle Twin Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Normal Saline 10ml flush",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Oral Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Ring Cutter",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Saline Lock",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "SAM Splint",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Small Sharps Container",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Stethoscope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 1cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 3cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Trauma Sheers",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Triangle Bandage",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Vacuum Splint Bag",
-          "items": [
-            {
-              "name": "large vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "medium vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "small vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "vacuum pump",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Water Rescue Bag",
-          "items": [
-            {
-              "name": "PFD",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue Helmet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Throw Bags",
-              "qty": 2,
-              "ctrl": false
+          ],
+          "bags": [
+            {
+              "name": "Trauma Bag",
+              "items": [
+                {
+                  "name": "10 gtt set",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "12x30 trauma dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "16g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "18g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "2\" kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "20g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "22g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "24g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "4\" Kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "4x4 dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "5x9 Dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Band-aides",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bioclusive",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "BP Cuff Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "CAT tourniquet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Coban Dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cold Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Combat Gauze",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Emergency Blanket",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Gloves (S,M,L)",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hot pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hypothermic Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Israeli Bandage",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lactated Ringers 1000ml",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lever Lock",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 18g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 23g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 25g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle Twin Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Normal Saline 10ml flush",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Oral Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Ring Cutter",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Saline Lock",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "SAM Splint",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Small Sharps Container",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Stethoscope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 1cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 3cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trauma Sheers",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Triangle Bandage",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         }
@@ -9842,6 +9873,28 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Water Rescue Bag",
+              "items": [
+                {
+                  "name": "PFD",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue Helmet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Throw Bags",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -9866,6 +9919,78 @@
               "name": "Water Rescue Bag",
               "qty": 1,
               "ctrl": false
+            }
+          ],
+          "bags": [
+            {
+              "name": "Rope Bag",
+              "items": [
+                {
+                  "name": "200 ft rope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Anchor Strap",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Blue Webbing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Carabiners",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Double Pulleys",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Edge Protection",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Leather Gloves",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "MPD",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Patient Harness",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Prussics",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Red Webbing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescue 8",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Rescuer Harness",
+                  "qty": 3,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -9972,6 +10097,103 @@
               "qty": 1,
               "ctrl": false
             }
+          ],
+          "bags": [
+            {
+              "name": "Blue C-collar Bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "items": [
+                {
+                  "name": "2'' Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Vacuum Splint Bag",
+              "items": [
+                {
+                  "name": "large vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "medium vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "small vacuum splint",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "vacuum pump",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            }
           ]
         },
         {
@@ -9982,420 +10204,237 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
-        },
-        {
-          "name": "Blue C-collar Bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Orange C-collar bag",
-          "items": [
-            {
-              "name": "2'' Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Back Raft with Pump",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical Collar adjustable",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Cervical collar-pediatric",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Headbed",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Spider Strap",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Rope Bag",
-          "items": [
-            {
-              "name": "200 ft rope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Anchor Strap",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Blue Webbing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Carabiners",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Double Pulleys",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Edge Protection",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Leather Gloves",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "MPD",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Patient Harness",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Prussics",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Red Webbing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue 8",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Rescuer Harness",
-              "qty": 3,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Trauma Bag",
-          "items": [
-            {
-              "name": "10 gtt set",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "12x30 trauma dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "16g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "18g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "2\" kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "20g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "22g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "24g IV",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "4\" Kling",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "4x4 dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "5x9 Dressing",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Band-aides",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Bioclusive",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "BP Cuff Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "CAT tourniquet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Coban Dressing",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cold Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Combat Gauze",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Emergency Blanket",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Gloves (S,M,L)",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Hot pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Hypothermic Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 10,
-              "ctrl": false
-            },
-            {
-              "name": "Israeli Bandage",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Lactated Ringers 1000ml",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Lever Lock",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 18g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 23g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle 25g",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Needle Twin Pack",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Normal Saline 10ml flush",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Oral Thermometer",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Ring Cutter",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Saline Lock",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "SAM Splint",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Small Sharps Container",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Stethoscope",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 1cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 3cc",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Tape",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Trauma Sheers",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Triangle Bandage",
-              "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Vacuum Splint Bag",
-          "items": [
-            {
-              "name": "large vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "medium vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "small vacuum splint",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "vacuum pump",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Water Rescue Bag",
-          "items": [
-            {
-              "name": "PFD",
-              "qty": 3,
-              "ctrl": false
-            },
-            {
-              "name": "Rescue Helmet",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Throw Bags",
-              "qty": 2,
-              "ctrl": false
+          ],
+          "bags": [
+            {
+              "name": "Trauma Bag",
+              "items": [
+                {
+                  "name": "10 gtt set",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "12x30 trauma dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "16g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "18g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "2\" kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "20g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "22g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "24g IV",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "4\" Kling",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "4x4 dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "5x9 Dressing",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Band-aides",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bioclusive",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "BP Cuff Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "CAT tourniquet",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Coban Dressing",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cold Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Combat Gauze",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Emergency Blanket",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Gloves (S,M,L)",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hot pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Hypothermic Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 10,
+                  "ctrl": false
+                },
+                {
+                  "name": "Israeli Bandage",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lactated Ringers 1000ml",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Lever Lock",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 18g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 23g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle 25g",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Needle Twin Pack",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Normal Saline 10ml flush",
+                  "qty": 3,
+                  "ctrl": false
+                },
+                {
+                  "name": "Oral Thermometer",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Ring Cutter",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Saline Lock",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "SAM Splint",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Small Sharps Container",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Stethoscope",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 1cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 3cc",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trauma Sheers",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Triangle Bandage",
+                  "qty": 2,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         }

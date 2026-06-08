@@ -33,6 +33,9 @@
       --border:  #D8E6D8;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    button, .unit-btn, .home-btn, .check-btn, .fuel-btn, .yn-btn, .item-btn, .mark-all-btn, .submit-btn, .back-btn, .home-link, .compartment-head, .bag-head {
+      touch-action: manipulation;
+    }
     html, body {
       margin: 0;
       padding: 0;
@@ -41,9 +44,10 @@
       background: var(--bg);
       min-height: 100vh;
       overscroll-behavior-y: contain;
+      -webkit-text-size-adjust: 100%;
     }
     body {
-      padding-bottom: 88px; /* room for status bar + safe area */
+      padding-bottom: 88px;
       padding-bottom: calc(88px + env(safe-area-inset-bottom));
     }
     .screen { display: none; min-height: 100vh; }
@@ -53,29 +57,23 @@
     .home {
       background: linear-gradient(180deg, var(--g-deep) 0%, var(--g-mid) 100%);
       color: var(--white);
-      padding: 32px 20px 40px;
+      padding: 24px 20px 40px;
+      padding-top: calc(24px + env(safe-area-inset-top));
       min-height: 100vh;
       text-align: center;
     }
     .home-logo {
-      width: 160px;
-      height: 160px;
-      margin: 8px auto 16px;
+      width: 220px;
+      max-width: 60%;
+      margin: 0 auto 20px;
     }
-    .home-logo img { width: 100%; height: 100%; display: block; }
-    .home-title {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      margin: 12px 0 4px;
-      text-transform: uppercase;
-    }
+    .home-logo img { width: 100%; height: auto; display: block; }
     .home-sub {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--g-light);
-      font-weight: 500;
+      font-weight: 600;
       margin: 0 0 28px;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
     .home-buttons {
@@ -98,9 +96,9 @@
       background-position: center;
       background-color: var(--g-dark);
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: transform 0.08s;
     }
-    .home-btn:active { transform: scale(0.98); box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
+    .home-btn:active { transform: scale(0.97); }
     .home-btn::before {
       content: '';
       position: absolute; inset: 0;
@@ -208,7 +206,7 @@
       align-items: center;
       justify-content: space-between;
       min-height: 64px;
-      transition: transform 0.1s, background 0.1s;
+      transition: transform 0.05s;
     }
     .unit-btn:active { transform: scale(0.98); background: var(--g-pale); }
     .unit-btn.due-today {
@@ -587,14 +585,16 @@
       margin-bottom: 10px;
     }
     .item-row {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .item-row:last-child { border-bottom: none; }
+    .item-row-main {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
       gap: 10px;
     }
-    .item-row:last-child { border-bottom: none; }
     .item-name {
       flex: 1;
       font-size: 15px;
@@ -631,10 +631,32 @@
       letter-spacing: 0.02em;
     }
     .item-btn.complete.active { background: var(--g-mid); color: var(--white); border-color: var(--g-mid); }
-    .item-btn.incomplete.active { background: var(--bad); color: var(--white); border-color: var(--bad); }
+    .item-btn.abnormal.active { background: var(--warn); color: var(--white); border-color: var(--warn); }
+    .item-detail {
+      margin-top: 8px;
+      padding: 10px;
+      background: var(--warn-bg);
+      border-radius: 8px;
+      border-left: 3px solid var(--warn);
+    }
+    .item-detail textarea {
+      width: 100%;
+      min-height: 50px;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      background: var(--white);
+    }
+    .item-detail textarea:focus {
+      outline: none;
+      border-color: var(--warn);
+    }
     .mark-all-btn {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background: var(--g-pale);
       border: 1px dashed var(--g-accent);
       border-radius: 8px;
@@ -647,6 +669,52 @@
       text-transform: uppercase;
     }
     .mark-all-btn:active { background: var(--g-light); }
+    .mark-all-btn.active {
+      background: var(--g-mid);
+      color: var(--white);
+      border-style: solid;
+      border-color: var(--g-mid);
+    }
+
+    /* Nested bag card inside a compartment */
+    .bag-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .bag-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      cursor: pointer;
+      gap: 8px;
+      background: var(--g-pale);
+    }
+    .bag-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--g-deep);
+    }
+    .bag-icon { font-size: 12px; color: var(--muted); margin-right: 6px; }
+    .bag-counts {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .bag-expand {
+      font-size: 20px;
+      color: var(--muted);
+      transition: transform 0.15s;
+      width: 24px;
+      text-align: center;
+    }
+    .bag-card.open .bag-expand { transform: rotate(180deg); }
+    .bag-body { display: none; padding: 8px 12px 12px; }
+    .bag-card.open .bag-body { display: block; }
+    .lazy-placeholder { padding: 10px; color: var(--muted); font-size: 13px; text-align: center; }
 
     /* Comments box (rescue rig) */
     .comments-box {
@@ -798,14 +866,130 @@
       .home-btn { height: 220px; }
       .tire-grid { grid-template-columns: repeat(3, 1fr); }
     }
+
+    /* ============ ADMIN MODE ============ */
+    .admin-banner {
+      background: var(--info);
+      color: var(--white);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .admin-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .admin-btn {
+      flex: 1;
+      min-width: 130px;
+      padding: 12px;
+      background: var(--white);
+      border: 1.5px solid var(--info);
+      color: var(--info);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      min-height: 44px;
+    }
+    .admin-btn:active { background: var(--g-pale); }
+    .admin-btn.primary { background: var(--info); color: var(--white); }
+    .admin-btn.danger { border-color: var(--bad); color: var(--bad); }
+    .admin-btn.danger.primary { background: var(--bad); color: var(--white); }
+
+    .edit-item-row {
+      display: grid;
+      grid-template-columns: 1fr 80px auto;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+    .edit-item-row input {
+      padding: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      background: var(--bg);
+      min-height: 36px;
+    }
+    .edit-item-row .remove-item {
+      padding: 6px 10px;
+      background: var(--bad-bg);
+      color: var(--bad);
+      border: 1px solid var(--bad);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 36px;
+    }
+    .add-item-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--white);
+      border: 1.5px dashed var(--g-accent);
+      color: var(--g-deep);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      letter-spacing: 0.04em;
+    }
+    .password-prompt {
+      max-width: 320px;
+      margin: 60px auto;
+      padding: 24px;
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .password-prompt h2 {
+      color: var(--g-deep);
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+    .password-prompt input {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      letter-spacing: 0.5em;
+      text-align: center;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-family: inherit;
+    }
+    .password-prompt button {
+      width: 100%;
+      padding: 14px;
+      background: var(--g-deep);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
   </style>
 </head>
 <body>
 
 <!-- ============ HOME SCREEN ============ -->
 <div class="screen home active" id="screen-home">
-  <div class="home-logo"><img src="./logo.png" alt="NCEMS Logo" /></div>
-  <div class="home-title">North Country EMS / FD 13</div>
+  <div class="home-logo"><img src="./logo.png" alt="North Country EMS" /></div>
   <div class="home-sub">Daily Apparatus Check</div>
   <div class="home-buttons">
     <button class="home-btn ambulances" id="home-btn-ambulances" type="button">
@@ -815,7 +999,7 @@
       <div class="home-btn-label">Other Units</div>
     </button>
   </div>
-  <div class="home-footer">v<span id="version-tag">2.0.2</span> · <span id="today-date"></span></div>
+  <div class="home-footer">v<span id="version-tag">2.1.0</span> · <span id="today-date"></span></div>
 </div>
 
 <!-- ============ AMBULANCE PICKER ============ -->
@@ -852,6 +1036,47 @@
     <div class="header-title">Submitted</div>
   </div>
   <div class="success" id="success-body"></div>
+</div>
+
+<!-- ============ ADMIN ============ -->
+<div class="screen" id="screen-admin-login">
+  <div class="header">
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="header-title">Admin Login</div>
+  </div>
+  <div class="password-prompt">
+    <h2>Enter admin password</h2>
+    <input type="password" id="admin-pw" inputmode="numeric" autocomplete="off" maxlength="20" />
+    <button id="admin-pw-submit" type="button">Unlock</button>
+    <p id="admin-pw-error" style="color:var(--bad);font-size:13px;margin-top:10px;display:none;">Wrong password.</p>
+  </div>
+</div>
+
+<div class="screen" id="screen-admin-home">
+  <div class="header">
+    <button class="back-btn" onclick="goHome()">← Done</button>
+    <div class="header-title">Admin · Edit Inventory</div>
+  </div>
+  <div class="admin-banner">⚙ Admin mode — changes persist on this device</div>
+  <div class="picker-wrap" id="admin-home-body"></div>
+</div>
+
+<div class="screen" id="screen-admin-amb">
+  <div class="header">
+    <button class="back-btn" onclick="showAdminHome()">← Admin</button>
+    <div class="header-title" id="admin-amb-title">Edit ambulance</div>
+  </div>
+  <div class="admin-banner">⚙ Admin mode</div>
+  <div class="picker-wrap" id="admin-amb-body"></div>
+</div>
+
+<div class="screen" id="screen-admin-edit">
+  <div class="header">
+    <button class="back-btn" id="admin-edit-back">← Back</button>
+    <div class="header-title" id="admin-edit-title">Edit compartment</div>
+  </div>
+  <div class="admin-banner">⚙ Admin mode</div>
+  <div class="form-wrap" id="admin-edit-body"></div>
 </div>
 
 <!-- ============ STATUS BAR ============ -->
@@ -891,11 +1116,24 @@ async function boot() {
   document.getElementById('home-btn-ambulances').addEventListener('click', showAmbulancePicker);
   document.getElementById('home-btn-others').addEventListener('click', showRescuePicker);
 
+  // Wire up the 5-tap admin entry on the version footer
+  setupAdminTrigger();
+
+  // Wire up admin password submit
+  document.getElementById('admin-pw-submit').addEventListener('click', tryUnlockAdmin);
+  document.getElementById('admin-pw').addEventListener('keydown', e => {
+    if (e.key === 'Enter') tryUnlockAdmin();
+  });
+
   try {
     const res = await fetch(`./units.json?t=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Failed to load units.json: ${res.status}`);
     APP.data = await res.json();
     document.getElementById('version-tag').textContent = APP.data.version || APP.version;
+
+    // Overlay any admin edits from localStorage on top of the base data
+    applyOverrides();
+
     // Initialize EmailJS
     if (APP.data.emailjs && APP.data.emailjs.publicKey && window.emailjs) {
       emailjs.init({ publicKey: APP.data.emailjs.publicKey });
@@ -904,6 +1142,75 @@ async function boot() {
     document.body.insertAdjacentHTML('afterbegin',
       `<div class="error-box">Failed to load units.json: ${err.message}. Check that units.json is uploaded next to index.html.</div>`);
     console.error(err);
+  }
+}
+
+function applyOverrides() {
+  try {
+    const raw = localStorage.getItem('wamboapp_overrides_v1');
+    if (!raw) return;
+    const overrides = JSON.parse(raw);
+    if (overrides.ambulanceCompartments) {
+      // Replace per-unit overrides (admin saves whole compartments structure per unit)
+      Object.keys(overrides.ambulanceCompartments).forEach(unitId => {
+        APP.data.ambulanceCompartments[unitId] = overrides.ambulanceCompartments[unitId];
+      });
+      console.log('Loaded admin overrides for:', Object.keys(overrides.ambulanceCompartments));
+    }
+  } catch (err) {
+    console.warn('Failed to apply overrides:', err);
+  }
+}
+
+function saveOverrides(unitId, compartments) {
+  let overrides = {};
+  try {
+    const raw = localStorage.getItem('wamboapp_overrides_v1');
+    if (raw) overrides = JSON.parse(raw);
+  } catch (e) {}
+  overrides.ambulanceCompartments = overrides.ambulanceCompartments || {};
+  overrides.ambulanceCompartments[unitId] = compartments;
+  localStorage.setItem('wamboapp_overrides_v1', JSON.stringify(overrides));
+  // Update in-memory copy too
+  APP.data.ambulanceCompartments[unitId] = compartments;
+}
+
+function clearAllOverrides() {
+  if (!confirm('Clear ALL admin edits on this device? Inventory will reset to whatever is in units.json on the server. This cannot be undone.')) return;
+  localStorage.removeItem('wamboapp_overrides_v1');
+  alert('Cleared. Reload the page to see the original inventory.');
+}
+
+/* ============================================================
+   ADMIN TRIGGER (5 taps on version footer)
+   ============================================================ */
+let _adminTapCount = 0;
+let _adminTapTimer = null;
+function setupAdminTrigger() {
+  const footer = document.querySelector('.home-footer');
+  if (!footer) return;
+  footer.style.cursor = 'pointer';
+  footer.addEventListener('click', () => {
+    _adminTapCount++;
+    clearTimeout(_adminTapTimer);
+    _adminTapTimer = setTimeout(() => { _adminTapCount = 0; }, 1500);
+    if (_adminTapCount >= 5) {
+      _adminTapCount = 0;
+      document.getElementById('admin-pw').value = '';
+      document.getElementById('admin-pw-error').style.display = 'none';
+      showScreen('admin-login');
+      setTimeout(() => document.getElementById('admin-pw').focus(), 100);
+    }
+  });
+}
+
+function tryUnlockAdmin() {
+  const pw = document.getElementById('admin-pw').value.trim();
+  if (pw === '4321') {
+    document.getElementById('admin-pw').value = '';
+    showAdminHome();
+  } else {
+    document.getElementById('admin-pw-error').style.display = 'block';
   }
 }
 
@@ -1050,6 +1357,10 @@ function startAmbulanceCheck(unitId) {
   const amb = APP.data.ambulances.find(a => a.id === unitId);
   if (!amb) return;
   const comps = APP.data.ambulanceCompartments[unitId];
+  if (!comps) {
+    alert(`No compartment data for ${unitId}. Check units.json.`);
+    return;
+  }
   APP.check = {
     type: 'ambulance',
     unitId,
@@ -1064,7 +1375,8 @@ function startAmbulanceCheck(unitId) {
     tires: ['','','','','',''],
     electronics: {},
     cooler: { answered: false, ok: null, reading: '', photo: null },
-    compartments: {}, // { compName: { status, notes, fixed, photo, items: {itemName: bool} } }
+    // compartments: { compName: { items: {itemName: {status, notes, fixed}}, bags: { bagName: { items: {...} } } } }
+    compartments: {},
     _comps: comps,
   };
   renderAmbulanceCheck();
@@ -1345,57 +1657,246 @@ function renderCoolerSection() {
 }
 
 function renderCompartmentSection(title, type, compartments) {
-  let html = `<div class="section"><div class="section-head">${title} (${compartments.length})</div>`;
+  let html = `<div class="section"><div class="section-head">${escapeHTML(title)} (${compartments.length})</div>`;
   html += `<div class="compartment-list">`;
   compartments.forEach((comp, idx) => {
     const safeId = `${type}-${idx}`;
+    const bags = comp.bags || [];
+    const totalItems = comp.items.length + bags.reduce((n, b) => n + b.items.length, 0);
+    const bagSummary = bags.length ? ` · ${bags.length} bag${bags.length>1?'s':''} inside` : '';
     html += `
-      <div class="compartment-card" data-compartment="${comp.name}" data-type="${type}" id="comp-${safeId}">
-        <div class="compartment-head" onclick="toggleCompartment('${safeId}')">
+      <div class="compartment-card" data-compartment="${escapeAttr(comp.name)}" data-type="${type}" data-idx="${idx}" id="comp-${safeId}">
+        <div class="compartment-head" data-comp-toggle="${safeId}">
           <div class="compartment-head-left">
             <div>
-              <div class="compartment-name">${comp.name}</div>
-              <div class="compartment-counts" id="comp-counts-${safeId}">${comp.items.length} items</div>
+              <div class="compartment-name">${escapeHTML(comp.name)}</div>
+              <div class="compartment-counts" id="comp-counts-${safeId}">${totalItems} item${totalItems!==1?'s':''}${bagSummary}</div>
             </div>
           </div>
           <div class="compartment-expand">▼</div>
         </div>
-        <div class="compartment-body">
-          <div class="compartment-status-row">
-            <button class="check-btn wnl" data-comp-status="wnl">WNL</button>
-            <button class="check-btn bad" data-comp-status="bad">Abnormal</button>
-          </div>
-          <div class="check-detail" id="comp-detail-${safeId}" style="display:none;">
-            <textarea placeholder="What's wrong with this compartment?"></textarea>
-            <label class="fixed-check">
-              <input type="checkbox" data-comp-fixed />
-              Fixed on the spot
-            </label>
-          </div>
-          ${comp.items.length > 0 ? `
-            <button class="mark-all-btn" onclick="markAllItems('${safeId}', '${comp.name}', 'complete')">Mark All Complete</button>
-            <div class="item-list">
-              ${comp.items.map((it, itIdx) => `
-                <div class="item-row" data-item-idx="${itIdx}" data-item-name="${escapeAttr(it.name)}">
-                  <div class="item-name">
-                    ${escapeHTML(it.name)}
-                    <span class="item-qty">×${it.qty}</span>
-                    ${it.ctrl ? '<span class="item-ctrl-badge">CTRL</span>' : ''}
-                  </div>
-                  <div class="item-buttons">
-                    <button class="item-btn complete" data-item-status="complete">✓</button>
-                    <button class="item-btn incomplete" data-item-status="incomplete">✗</button>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          ` : '<p style="color:var(--muted);font-size:13px;text-align:center;padding:10px;">No items tracked.</p>'}
+        <div class="compartment-body" id="comp-body-${safeId}">
+          <div class="lazy-placeholder">Loading…</div>
         </div>
       </div>
     `;
   });
   html += `</div></div>`;
   return html;
+}
+
+/* Lazy-render a compartment's body the first time it's opened. */
+function renderCompartmentBody(safeId, comp) {
+  const body = document.getElementById('comp-body-' + safeId);
+  if (!body || body.dataset.rendered === 'true') return;
+  body.dataset.rendered = 'true';
+
+  let html = '';
+  // Mark All Complete (covers direct items + all nested bag items)
+  html += `<button class="mark-all-btn" type="button" data-mark-all="${escapeAttr(comp.name)}">Mark All Complete</button>`;
+
+  // Direct items in the compartment
+  if (comp.items.length > 0) {
+    html += `<div class="item-list" data-bag-name="">`;
+    comp.items.forEach((it, itIdx) => {
+      html += itemRowHTML(it, comp.name, '', itIdx);
+    });
+    html += `</div>`;
+  }
+
+  // Nested bags
+  if (comp.bags && comp.bags.length > 0) {
+    comp.bags.forEach((bag, bIdx) => {
+      const bagSafeId = `${safeId}-bag-${bIdx}`;
+      html += `
+        <div class="bag-card" id="bag-${bagSafeId}" data-bag-name="${escapeAttr(bag.name)}">
+          <div class="bag-head" data-bag-toggle="${bagSafeId}">
+            <div>
+              <div class="bag-name"><span class="bag-icon">▸</span>${escapeHTML(bag.name)}</div>
+              <div class="bag-counts">${bag.items.length} items</div>
+            </div>
+            <div class="bag-expand">▼</div>
+          </div>
+          <div class="bag-body">
+            <button class="mark-all-btn" type="button" data-mark-all="${escapeAttr(comp.name)}" data-mark-bag="${escapeAttr(bag.name)}">Mark All Complete</button>
+            <div class="item-list" data-bag-name="${escapeAttr(bag.name)}">
+              ${bag.items.map((it, itIdx) => itemRowHTML(it, comp.name, bag.name, itIdx)).join('')}
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+  body.innerHTML = html;
+  wireCompartmentBody(safeId, comp);
+}
+
+function itemRowHTML(it, compName, bagName, idx) {
+  return `
+    <div class="item-row" data-comp="${escapeAttr(compName)}" data-bag="${escapeAttr(bagName)}" data-item="${escapeAttr(it.name)}">
+      <div class="item-row-main">
+        <div class="item-name">
+          ${escapeHTML(it.name)}
+          <span class="item-qty">×${it.qty}</span>
+          ${it.ctrl ? '<span class="item-ctrl-badge">CTRL</span>' : ''}
+        </div>
+        <div class="item-buttons">
+          <button class="item-btn complete" type="button" data-item-status="complete">✓</button>
+          <button class="item-btn abnormal" type="button" data-item-status="abnormal">✗</button>
+        </div>
+      </div>
+      <div class="item-detail" style="display:none;">
+        <textarea placeholder="What's wrong with this item?"></textarea>
+        <label class="fixed-check">
+          <input type="checkbox" data-fixed />
+          Fixed on the spot
+        </label>
+      </div>
+    </div>
+  `;
+}
+
+function wireCompartmentBody(safeId, comp) {
+  const body = document.getElementById('comp-body-' + safeId);
+  if (!body) return;
+
+  // Mark-all-complete buttons (compartment-level and bag-level)
+  body.querySelectorAll('[data-mark-all]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const compName = btn.dataset.markAll;
+      const bagName = btn.dataset.markBag || '';
+      markAllItemsAsComplete(safeId, compName, bagName, btn);
+    });
+  });
+
+  // Bag expand/collapse
+  body.querySelectorAll('[data-bag-toggle]').forEach(head => {
+    head.addEventListener('click', () => {
+      const bagId = head.dataset.bagToggle;
+      document.getElementById('bag-' + bagId).classList.toggle('open');
+    });
+  });
+
+  // Item buttons (complete / abnormal)
+  body.querySelectorAll('.item-row').forEach(row => {
+    const compName = row.dataset.comp;
+    const bagName = row.dataset.bag;
+    const itemName = row.dataset.item;
+    const detail = row.querySelector('.item-detail');
+    const textarea = detail.querySelector('textarea');
+    const fixedBox = detail.querySelector('[data-fixed]');
+
+    row.querySelectorAll('.item-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const status = btn.dataset.itemStatus;
+        row.querySelectorAll('.item-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const state = ensureItemState(compName, bagName, itemName);
+        state.status = status;
+        detail.style.display = (status === 'abnormal') ? 'block' : 'none';
+        updateCompartmentCounts(safeId, comp);
+        updateProgress();
+      });
+    });
+    textarea.addEventListener('input', e => {
+      const state = ensureItemState(compName, bagName, itemName);
+      state.notes = e.target.value;
+    });
+    fixedBox.addEventListener('change', e => {
+      const state = ensureItemState(compName, bagName, itemName);
+      state.fixed = e.target.checked;
+      updateProgress();
+    });
+  });
+}
+
+function ensureItemState(compName, bagName, itemName) {
+  const c = APP.check;
+  c.compartments[compName] = c.compartments[compName] || { items: {}, bags: {} };
+  if (bagName) {
+    c.compartments[compName].bags[bagName] = c.compartments[compName].bags[bagName] || { items: {} };
+    c.compartments[compName].bags[bagName].items[itemName] = c.compartments[compName].bags[bagName].items[itemName] || { status: null, notes: '', fixed: false };
+    return c.compartments[compName].bags[bagName].items[itemName];
+  } else {
+    c.compartments[compName].items[itemName] = c.compartments[compName].items[itemName] || { status: null, notes: '', fixed: false };
+    return c.compartments[compName].items[itemName];
+  }
+}
+
+function markAllItemsAsComplete(safeId, compName, bagName, btn) {
+  const body = document.getElementById('comp-body-' + safeId);
+  // Find item rows matching the bag scope
+  const selector = bagName
+    ? `.item-row[data-bag="${cssEscape(bagName)}"]`
+    : `.item-row[data-bag=""]`;
+  body.querySelectorAll(selector).forEach(row => {
+    const itemName = row.dataset.item;
+    row.querySelectorAll('.item-btn').forEach(b => b.classList.remove('active'));
+    row.querySelector('.item-btn.complete').classList.add('active');
+    row.querySelector('.item-detail').style.display = 'none';
+    const state = ensureItemState(compName, bagName, itemName);
+    state.status = 'complete';
+    state.notes = '';
+    state.fixed = false;
+    // Reset textarea + checkbox visually
+    row.querySelector('textarea').value = '';
+    row.querySelector('[data-fixed]').checked = false;
+  });
+  // Mark the button visually so the user knows it was applied
+  if (btn) {
+    btn.classList.add('active');
+    setTimeout(() => btn.classList.remove('active'), 400);
+  }
+  // Find the compartment so we can update counts
+  const card = document.getElementById('comp-' + safeId);
+  const compData = findCompartmentByName(card.dataset.compartment);
+  if (compData) updateCompartmentCounts(safeId, compData);
+  updateProgress();
+}
+
+function findCompartmentByName(name) {
+  const c = APP.check;
+  if (!c || !c._comps) return null;
+  return [...c._comps.exterior, ...c._comps.interior].find(co => co.name === name);
+}
+
+function updateCompartmentCounts(safeId, comp) {
+  const counts = document.getElementById('comp-counts-' + safeId);
+  if (!counts) return;
+  const compState = APP.check.compartments[comp.name];
+  if (!compState) return;
+  // Tally direct + bag items
+  let touched = 0, complete = 0, abnormal = 0, total = comp.items.length;
+  Object.values(compState.items || {}).forEach(it => {
+    if (it.status) touched++;
+    if (it.status === 'complete') complete++;
+    if (it.status === 'abnormal') abnormal++;
+  });
+  (comp.bags || []).forEach(bag => {
+    total += bag.items.length;
+    const bagState = compState.bags?.[bag.name];
+    if (bagState) {
+      Object.values(bagState.items || {}).forEach(it => {
+        if (it.status) touched++;
+        if (it.status === 'complete') complete++;
+        if (it.status === 'abnormal') abnormal++;
+      });
+    }
+  });
+  if (touched === 0) {
+    const bagSummary = (comp.bags && comp.bags.length) ? ` · ${comp.bags.length} bag${comp.bags.length>1?'s':''} inside` : '';
+    counts.textContent = `${total} item${total!==1?'s':''}${bagSummary}`;
+  } else {
+    counts.textContent = `${complete} ✓ · ${abnormal} ✗ · ${total} total`;
+  }
+  // Card border color
+  const card = document.getElementById('comp-' + safeId);
+  card.classList.toggle('has-flag', abnormal > 0);
+  card.classList.toggle('complete', complete === total && total > 0);
+}
+
+function cssEscape(s) {
+  return String(s).replace(/(["\\])/g, '\\$1');
 }
 
 /* ============================================================
@@ -1491,90 +1992,32 @@ function attachAmbulanceHandlers() {
   document.getElementById('cooler-reading').oninput = e => { APP.check.cooler.reading = e.target.value; };
   document.getElementById('cooler-photo').onchange = e => handlePhoto(e, 'cooler', 'cooler-photo-preview');
 
-  // Compartments
-  document.querySelectorAll('.compartment-card').forEach(card => {
-    const name = card.dataset.compartment;
-    card.querySelectorAll('[data-comp-status]').forEach(btn => {
-      btn.onclick = (e) => {
-        e.stopPropagation();
-        const status = btn.dataset.compStatus;
-        card.querySelectorAll('[data-comp-status]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        APP.check.compartments[name] = APP.check.compartments[name] || { items: {} };
-        APP.check.compartments[name].status = status;
-        const det = card.querySelector('[id^=comp-detail-]');
-        det.style.display = status === 'bad' ? 'block' : 'none';
-        card.classList.toggle('has-flag', status === 'bad');
-        updateCompartmentCard(card, name);
-        updateProgress();
-      };
-    });
-    const detail = card.querySelector('[id^=comp-detail-]');
-    if (detail) {
-      detail.querySelector('textarea').oninput = e => {
-        APP.check.compartments[name] = APP.check.compartments[name] || { items: {} };
-        APP.check.compartments[name].notes = e.target.value;
-      };
-      detail.querySelector('[data-comp-fixed]').onchange = e => {
-        APP.check.compartments[name] = APP.check.compartments[name] || { items: {} };
-        APP.check.compartments[name].fixed = e.target.checked;
-      };
-    }
-    // Item buttons
-    card.querySelectorAll('.item-row').forEach(itemRow => {
-      const itemName = itemRow.dataset.itemName;
-      itemRow.querySelectorAll('.item-btn').forEach(btn => {
-        btn.onclick = () => {
-          const status = btn.dataset.itemStatus;
-          itemRow.querySelectorAll('.item-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          APP.check.compartments[name] = APP.check.compartments[name] || { items: {} };
-          APP.check.compartments[name].items = APP.check.compartments[name].items || {};
-          APP.check.compartments[name].items[itemName] = status === 'complete';
-          updateCompartmentCard(card, name);
-        };
-      });
+  // Compartments — lazy render on first expand
+  document.querySelectorAll('.compartment-head[data-comp-toggle]').forEach(head => {
+    head.addEventListener('click', () => {
+      const safeId = head.dataset.compToggle;
+      const card = document.getElementById('comp-' + safeId);
+      const compName = card.dataset.compartment;
+      const comp = findCompartmentByName(compName);
+      if (comp && !card.classList.contains('open')) {
+        renderCompartmentBody(safeId, comp);
+      }
+      card.classList.toggle('open');
     });
   });
-
-  // Rescue checks (only relevant if this is a rescue check, but reuse the same WNL row handler logic)
-  // (Handled in attachRescueHandlers separately)
 }
 
 function toggleCompartment(safeId) {
+  // Legacy entry point (kept for safety) — defer to the new handler
   const card = document.getElementById('comp-' + safeId);
-  if (card) card.classList.toggle('open');
-}
-
-function markAllItems(safeId, compName, status) {
-  const card = document.getElementById('comp-' + safeId);
-  if (!card) return;
-  card.querySelectorAll('.item-row').forEach(itemRow => {
-    const itemName = itemRow.dataset.itemName;
-    itemRow.querySelectorAll('.item-btn').forEach(b => b.classList.remove('active'));
-    const targetBtn = itemRow.querySelector(`[data-item-status="${status}"]`);
-    if (targetBtn) targetBtn.classList.add('active');
-    APP.check.compartments[compName] = APP.check.compartments[compName] || { items: {} };
-    APP.check.compartments[compName].items = APP.check.compartments[compName].items || {};
-    APP.check.compartments[compName].items[itemName] = status === 'complete';
-  });
-  updateCompartmentCard(card, compName);
-}
-
-function updateCompartmentCard(card, name) {
-  const state = APP.check.compartments[name];
-  if (!state) return;
-  const itemCount = card.querySelectorAll('.item-row').length;
-  const touched = Object.keys(state.items || {}).length;
-  const completed = Object.values(state.items || {}).filter(v => v === true).length;
-  const incomplete = Object.values(state.items || {}).filter(v => v === false).length;
-  const counts = card.querySelector('[id^=comp-counts-]');
-  if (counts) {
-    if (itemCount === 0) counts.textContent = 'No items';
-    else if (touched === 0) counts.textContent = `${itemCount} items`;
-    else counts.textContent = `${completed} complete · ${incomplete} incomplete · ${itemCount} total`;
+  if (card) {
+    const compName = card.dataset.compartment;
+    const comp = findCompartmentByName(compName);
+    if (comp && !card.classList.contains('open')) {
+      renderCompartmentBody(safeId, comp);
+    }
+    card.classList.toggle('open');
   }
-  card.classList.toggle('complete', itemCount > 0 && completed === itemCount);
 }
 
 /* ============================================================
@@ -1634,13 +2077,25 @@ function updateProgress() {
     });
     // Cooler
     total++; if (c.cooler.answered) { done++; if (c.cooler.ok === false) flags++; }
-    // Compartments
+    // Compartments — count total items (direct + nested bag items)
     [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
-      total++;
-      const st = c.compartments[comp.name];
-      if (st?.status) {
-        done++;
-        if (st.status === 'bad' && !st.fixed) flags++;
+      const compItems = comp.items.length + (comp.bags || []).reduce((n, b) => n + b.items.length, 0);
+      total += compItems;
+      const cs = c.compartments[comp.name];
+      if (cs) {
+        Object.values(cs.items || {}).forEach(it => {
+          if (it.status) done++;
+          if (it.status === 'abnormal' && !it.fixed) flags++;
+        });
+        (comp.bags || []).forEach(bag => {
+          const bs = cs.bags?.[bag.name];
+          if (bs) {
+            Object.values(bs.items || {}).forEach(it => {
+              if (it.status) done++;
+              if (it.status === 'abnormal' && !it.fixed) flags++;
+            });
+          }
+        });
       }
     });
   } else if (c.type === 'rescue') {
@@ -1779,25 +2234,69 @@ function buildSummary() {
     // Compartments
     [['EXTERIOR COMPARTMENTS', c._comps.exterior],
      ['INTERIOR COMPARTMENTS', c._comps.interior]].forEach(([title, comps]) => {
-      const checked = comps.filter(comp => c.compartments[comp.name]?.status);
-      if (checked.length === 0) return;
+      const touched = comps.filter(comp => {
+        const cs = c.compartments[comp.name];
+        if (!cs) return false;
+        const directTouched = Object.keys(cs.items || {}).length > 0;
+        const bagTouched = (comp.bags || []).some(b => cs.bags?.[b.name] && Object.keys(cs.bags[b.name].items || {}).length > 0);
+        return directTouched || bagTouched;
+      });
+      if (touched.length === 0) return;
       lines.push(title);
-      checked.forEach(comp => {
-        const st = c.compartments[comp.name];
-        let line = `  - ${comp.name}: ${st.status === 'wnl' ? 'WNL' : 'ABNORMAL'}`;
-        if (st.status === 'bad') {
-          if (st.fixed) line += ' (Fixed)';
-          else { line += ' ⚠'; flagCount++; }
-          if (st.notes) line += ` — ${st.notes}`;
+      touched.forEach(comp => {
+        const cs = c.compartments[comp.name];
+        const abnormal = [];
+        const incomplete = [];
+        // Direct items
+        Object.entries(cs.items || {}).forEach(([itemName, st]) => {
+          if (st.status === 'abnormal') {
+            let line = `      • ${itemName}`;
+            if (st.fixed) line += ' (Fixed on the spot)';
+            else { flagCount++; }
+            if (st.notes) line += ` — ${st.notes}`;
+            abnormal.push(line);
+          }
+        });
+        // Find direct items that weren't touched
+        comp.items.forEach(it => {
+          if (!cs.items?.[it.name]?.status) incomplete.push(`      • ${it.name}`);
+        });
+        // Bag items
+        (comp.bags || []).forEach(bag => {
+          const bs = cs.bags?.[bag.name];
+          if (bs) {
+            Object.entries(bs.items || {}).forEach(([itemName, st]) => {
+              if (st.status === 'abnormal') {
+                let line = `      • ${bag.name} → ${itemName}`;
+                if (st.fixed) line += ' (Fixed on the spot)';
+                else { flagCount++; }
+                if (st.notes) line += ` — ${st.notes}`;
+                abnormal.push(line);
+              }
+            });
+          }
+          bag.items.forEach(it => {
+            if (!bs?.items?.[it.name]?.status) incomplete.push(`      • ${bag.name} → ${it.name}`);
+          });
+        });
+
+        const totalItems = comp.items.length + (comp.bags || []).reduce((n,b) => n + b.items.length, 0);
+        const completeCount = totalItems - abnormal.length - incomplete.length;
+        let header = `  - ${comp.name}: ${completeCount}/${totalItems} complete`;
+        if (abnormal.length) header += `, ${abnormal.length} abnormal ⚠`;
+        if (incomplete.length) header += `, ${incomplete.length} not checked`;
+        lines.push(header);
+        if (abnormal.length) {
+          lines.push(`    Abnormal:`);
+          abnormal.forEach(a => lines.push(a));
+          flagCount += incomplete.length; // not-checked items also count as flags
         }
-        // Item-level
-        const items = st.items || {};
-        const incomplete = Object.entries(items).filter(([n,v]) => v === false).map(([n]) => n);
-        if (incomplete.length > 0) {
-          line += `\n    Missing/incomplete: ${incomplete.join(', ')}`;
-          flagCount += incomplete.length;
+        if (incomplete.length && incomplete.length <= 5) {
+          lines.push(`    Not checked:`);
+          incomplete.forEach(a => lines.push(a));
+        } else if (incomplete.length > 5) {
+          lines.push(`    Not checked: ${incomplete.length} items (see app for full list)`);
         }
-        lines.push(line);
       });
       lines.push('');
     });
@@ -1859,6 +2358,247 @@ function showSuccess(summary) {
   `;
   APP.check = null;
   showScreen('success');
+}
+
+/* ============================================================
+   ADMIN MODE — edit inventory per ambulance, save to localStorage
+   ============================================================ */
+const ADMIN = {
+  unitId: null,        // currently edited unit
+  type: null,          // 'exterior' or 'interior'
+  compIdx: null,       // index into the chosen list
+  bagIdx: null,        // index of bag inside compartment, or null
+  draft: null,         // mutable working copy of {exterior, interior}
+};
+
+function showAdminHome() {
+  const body = document.getElementById('admin-home-body');
+  body.innerHTML = '';
+
+  const intro = document.createElement('p');
+  intro.className = 'picker-intro';
+  intro.textContent = 'Pick an ambulance to edit its inventory.';
+  body.appendChild(intro);
+
+  APP.data.ambulances.forEach(amb => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'unit-btn';
+    btn.innerHTML = `
+      <div>
+        <div>${escapeHTML(amb.name)}</div>
+        <div class="unit-meta">Edit compartments &amp; items</div>
+      </div>
+      <div class="unit-btn-arrow">→</div>
+    `;
+    btn.addEventListener('click', () => showAdminAmb(amb.id));
+    body.appendChild(btn);
+  });
+
+  // Admin actions row
+  const actions = document.createElement('div');
+  actions.className = 'admin-actions';
+  actions.style.marginTop = '24px';
+  actions.innerHTML = `
+    <button class="admin-btn" type="button" id="admin-export-btn">Download units.json</button>
+    <button class="admin-btn danger" type="button" id="admin-clear-btn">Clear all overrides</button>
+  `;
+  body.appendChild(actions);
+  document.getElementById('admin-export-btn').addEventListener('click', exportUnitsJson);
+  document.getElementById('admin-clear-btn').addEventListener('click', clearAllOverrides);
+
+  showScreen('admin-home');
+}
+
+function showAdminAmb(unitId) {
+  // Only reset the draft if we're switching to a different ambulance
+  // (so "back" from the item editor preserves in-progress edits)
+  if (ADMIN.unitId !== unitId || !ADMIN.draft) {
+    ADMIN.unitId = unitId;
+    ADMIN.draft = JSON.parse(JSON.stringify(APP.data.ambulanceCompartments[unitId]));
+  }
+
+  document.getElementById('admin-amb-title').textContent = `Edit ${unitId}`;
+  const body = document.getElementById('admin-amb-body');
+  body.innerHTML = '';
+
+  const intro = document.createElement('p');
+  intro.className = 'picker-intro';
+  intro.textContent = 'Pick a compartment to edit. Bags inside a compartment appear nested.';
+  body.appendChild(intro);
+
+  renderAdminCompartmentList(body, 'exterior', 'Exterior compartments');
+  renderAdminCompartmentList(body, 'interior', 'Interior compartments');
+
+  // Bottom save/discard
+  const actions = document.createElement('div');
+  actions.className = 'admin-actions';
+  actions.style.marginTop = '24px';
+  actions.innerHTML = `
+    <button class="admin-btn primary" type="button" id="admin-save-btn">Save changes</button>
+    <button class="admin-btn" type="button" id="admin-discard-btn">Discard</button>
+  `;
+  body.appendChild(actions);
+  document.getElementById('admin-save-btn').addEventListener('click', () => {
+    saveOverrides(ADMIN.unitId, ADMIN.draft);
+    ADMIN.draft = null;  // clear so next ambulance picks fresh
+    alert(`Saved changes to ${ADMIN.unitId}. They'll show up on this device immediately. Tap "Download units.json" on the admin home to share the changes with other devices.`);
+    showAdminHome();
+  });
+  document.getElementById('admin-discard-btn').addEventListener('click', () => {
+    if (confirm('Discard unsaved changes?')) {
+      ADMIN.draft = null;
+      showAdminHome();
+    }
+  });
+
+  showScreen('admin-amb');
+}
+
+function renderAdminCompartmentList(parent, type, title) {
+  const lbl = document.createElement('div');
+  lbl.className = 'section-label';
+  lbl.textContent = title;
+  parent.appendChild(lbl);
+
+  const list = ADMIN.draft[type];
+  list.forEach((comp, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'unit-btn';
+    const bagCount = (comp.bags || []).length;
+    const totalItems = comp.items.length + (comp.bags || []).reduce((n,b) => n+b.items.length, 0);
+    btn.innerHTML = `
+      <div>
+        <div>${escapeHTML(comp.name)}</div>
+        <div class="unit-meta">${totalItems} items${bagCount ? ` · ${bagCount} bag${bagCount>1?'s':''}` : ''}</div>
+      </div>
+      <div class="unit-btn-arrow">→</div>
+    `;
+    btn.style.fontSize = '17px';
+    btn.style.padding = '14px 16px';
+    btn.style.minHeight = '52px';
+    btn.addEventListener('click', () => showAdminEdit(type, idx, null));
+    parent.appendChild(btn);
+
+    // Nested bag buttons
+    (comp.bags || []).forEach((bag, bIdx) => {
+      const bagBtn = document.createElement('button');
+      bagBtn.type = 'button';
+      bagBtn.className = 'unit-btn';
+      bagBtn.style.fontSize = '15px';
+      bagBtn.style.padding = '12px 14px 12px 36px';
+      bagBtn.style.minHeight = '48px';
+      bagBtn.innerHTML = `
+        <div>
+          <div>↳ ${escapeHTML(bag.name)}</div>
+          <div class="unit-meta">${bag.items.length} items · inside ${escapeHTML(comp.name)}</div>
+        </div>
+        <div class="unit-btn-arrow">→</div>
+      `;
+      bagBtn.addEventListener('click', () => showAdminEdit(type, idx, bIdx));
+      parent.appendChild(bagBtn);
+    });
+  });
+}
+
+function showAdminEdit(type, compIdx, bagIdx) {
+  ADMIN.type = type;
+  ADMIN.compIdx = compIdx;
+  ADMIN.bagIdx = bagIdx;
+  const comp = ADMIN.draft[type][compIdx];
+  const target = (bagIdx === null) ? comp : comp.bags[bagIdx];
+  const targetLabel = (bagIdx === null) ? comp.name : `${comp.name} → ${target.name}`;
+
+  document.getElementById('admin-edit-title').textContent = targetLabel;
+  document.getElementById('admin-edit-back').onclick = () => showAdminAmb(ADMIN.unitId);
+
+  renderAdminEditBody(target, targetLabel);
+  showScreen('admin-edit');
+}
+
+function renderAdminEditBody(target, label) {
+  const body = document.getElementById('admin-edit-body');
+  body.innerHTML = '';
+
+  // Rename row
+  const renameBlock = document.createElement('div');
+  renameBlock.className = 'meta-block';
+  renameBlock.innerHTML = `
+    <div class="meta-row">
+      <label>Name</label>
+      <input type="text" id="admin-rename" value="${escapeAttr(target.name)}" />
+    </div>
+  `;
+  body.appendChild(renameBlock);
+  document.getElementById('admin-rename').addEventListener('input', e => {
+    target.name = e.target.value;
+  });
+
+  // Items section
+  const section = document.createElement('div');
+  section.className = 'section';
+  section.innerHTML = `<div class="section-head">Items (${target.items.length})</div>`;
+  const sectionBody = document.createElement('div');
+  sectionBody.style.padding = '12px 14px';
+  sectionBody.id = 'admin-items-body';
+  section.appendChild(sectionBody);
+  body.appendChild(section);
+
+  function renderItems() {
+    sectionBody.innerHTML = '';
+    target.items.forEach((it, idx) => {
+      const row = document.createElement('div');
+      row.className = 'edit-item-row';
+      row.innerHTML = `
+        <input type="text" placeholder="Item name" value="${escapeAttr(it.name)}" data-field="name" />
+        <input type="number" min="1" placeholder="Qty" value="${it.qty}" data-field="qty" />
+        <button type="button" class="remove-item" data-action="remove">✗</button>
+      `;
+      row.querySelector('[data-field="name"]').addEventListener('input', e => { it.name = e.target.value; });
+      row.querySelector('[data-field="qty"]').addEventListener('input', e => { it.qty = parseInt(e.target.value) || 1; });
+      row.querySelector('[data-action="remove"]').addEventListener('click', () => {
+        if (confirm(`Remove "${it.name}"?`)) {
+          target.items.splice(idx, 1);
+          renderItems();
+          // Update header count
+          section.querySelector('.section-head').textContent = `Items (${target.items.length})`;
+        }
+      });
+      sectionBody.appendChild(row);
+    });
+    const addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'add-item-btn';
+    addBtn.textContent = '+ Add Item';
+    addBtn.addEventListener('click', () => {
+      target.items.push({ name: 'New item', qty: 1, ctrl: false });
+      renderItems();
+      section.querySelector('.section-head').textContent = `Items (${target.items.length})`;
+    });
+    sectionBody.appendChild(addBtn);
+  }
+  renderItems();
+
+  const doneBlock = document.createElement('div');
+  doneBlock.className = 'submit-wrap';
+  doneBlock.innerHTML = `<button class="submit-btn" type="button" id="admin-edit-done">Done editing this section</button>`;
+  body.appendChild(doneBlock);
+  document.getElementById('admin-edit-done').addEventListener('click', () => showAdminAmb(ADMIN.unitId));
+}
+
+function exportUnitsJson() {
+  // Build a fresh units.json combining the original + any overrides currently active
+  const exportData = JSON.parse(JSON.stringify(APP.data));
+  exportData._note = "Generated from admin mode on " + new Date().toISOString();
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'units.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  setTimeout(() => alert('Downloaded units.json. Upload this to the GitHub repo to share these changes with the whole crew.'), 50);
 }
 
 /* ============================================================
