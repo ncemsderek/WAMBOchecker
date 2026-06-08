@@ -815,7 +815,7 @@
       <div class="home-btn-label">Other Units</div>
     </button>
   </div>
-  <div class="home-footer">v<span id="version-tag">2.0.1</span> · <span id="today-date"></span></div>
+  <div class="home-footer">v<span id="version-tag">2.0.2</span> · <span id="today-date"></span></div>
 </div>
 
 <!-- ============ AMBULANCE PICKER ============ -->
@@ -1407,8 +1407,9 @@ function attachAmbulanceHandlers() {
   document.getElementById('walkaround-notes').oninput = e => { APP.check.walkAround.notes = e.target.value; };
   document.getElementById('walkaround-photo').onchange = e => handlePhoto(e, 'walkAround', 'walkaround-photo-preview');
 
-  // WNL rows (mechanical, fluids)
-  document.querySelectorAll('.check-row').forEach(row => {
+  // WNL rows (mechanical, fluids) - filter to only rows with data-key
+  // (walk-around uses .check-row class too but has no data-key)
+  document.querySelectorAll('.check-row[data-key]').forEach(row => {
     const key = row.dataset.key;
     const bucket = row.dataset.bucket;
     const safeKey = key.replace(/[^a-zA-Z0-9]/g, '_');
