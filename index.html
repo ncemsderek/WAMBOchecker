@@ -735,24 +735,37 @@ function bindCompartments(rootSel, stateObj) {
 async function submit() {
   const payload = buildPayload();
   console.log('Submission payload:', payload);
-  if (CONFIG.submitUrl) {
+  if (CONFIG.submitUrl && CONFIG.jsonbinKey) {
     try {
-      await fetch(CONFIG.submitUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+      // Read current bin contents
+      const getRes = await fetch(CONFIG.submitUrl + '/latest', {
+        headers: { 'X-Master-Key': CONFIG.jsonbinKey }
       });
+      if (!getRes.ok) throw new Error('Read failed: HTTP ' + getRes.status);
+      const current = await getRes.json();
+      const submissions = (current.record && current.record.submissions) || [];
+      submissions.push(payload);
+      // Write back
+      const putRes = await fetch(CONFIG.submitUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': CONFIG.jsonbinKey
+        },
+        body: JSON.stringify({ submissions })
+      });
+      if (!putRes.ok) throw new Error('Write failed: HTTP ' + putRes.status);
+      console.log('Submission saved. Total submissions:', submissions.length);
     } catch (e) {
       console.error('Submit failed:', e);
       alert('Submit failed: ' + e.message + '\nPayload logged to console.');
       return;
     }
   } else {
-    console.warn('No CONFIG.submitUrl set — payload only logged, not sent.');
+    console.warn('No submit endpoint configured — payload only logged.');
   }
   go('submitted');
 }
-
 function buildPayload() {
   const u = getUnit();
   return {
