@@ -62,27 +62,107 @@
       min-height: 100vh;
       text-align: center;
     }
-    .home-logo {
-      width: 320px;
-      max-width: 80%;
-      margin: 0 auto 20px;
+    /* ── 3D flip card for logo / admin login ── */
+    .logo-flip-wrap {
+      width: 280px;
+      max-width: 78%;
+      height: 280px;
+      margin: 0 auto 16px;
+      perspective: 900px;
       cursor: pointer;
-      display: block;
     }
-    .home-logo img {
+    .logo-flip-inner {
+      position: relative;
       width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+    .logo-flip-wrap.flipped .logo-flip-inner {
+      transform: rotateY(180deg);
+    }
+    .logo-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-face-front {
       background: transparent;
-      transition: transform 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
     }
-    .home-logo.spinning img {
-      animation: logo-spin 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+    .logo-face-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: transparent;
     }
-    @keyframes logo-spin {
-      0%   { transform: rotate(0deg) scale(1); }
-      50%  { transform: rotate(180deg) scale(1.08); }
-      100% { transform: rotate(360deg) scale(1); }
+    .logo-face-back {
+      transform: rotateY(180deg);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(255,255,255,0.3);
+      flex-direction: column;
+      gap: 10px;
+      padding: 20px;
+    }
+    .logo-back-title {
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .logo-back-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 22px;
+      letter-spacing: 0.4em;
+      text-align: center;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.35);
+      color: var(--white);
+      font-family: inherit;
+      outline: none;
+    }
+    .logo-back-input:focus {
+      border-color: var(--white);
+      background: rgba(0,0,0,0.5);
+    }
+    .logo-back-input::placeholder { color: rgba(255,255,255,0.35); }
+    .logo-back-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--white);
+      color: var(--g-deep);
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      min-height: 44px;
+    }
+    .logo-back-btn:active { background: var(--g-light); }
+    .logo-back-err {
+      color: #ffb3b3;
+      font-size: 12px;
+      font-weight: 600;
+      min-height: 16px;
+      text-align: center;
+    }
+    .logo-flip-hint {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 4px;
+      text-align: center;
+      letter-spacing: 0.05em;
     }
     .home-sub {
       font-size: 14px;
@@ -1122,7 +1202,22 @@
 
 <!-- ============ HOME SCREEN ============ -->
 <div class="screen home active" id="screen-home">
-  <div class="home-logo" id="home-logo" role="button" tabindex="0" aria-label="North Country EMS logo"><img src="./logo.png" alt="North Country EMS" /></div>
+  <div class="logo-flip-wrap" id="logo-flip-wrap">
+    <div class="logo-flip-inner" id="logo-flip-inner">
+      <!-- FRONT: logo -->
+      <div class="logo-face logo-face-front">
+        <img src="./logo.png" alt="North Country EMS" />
+      </div>
+      <!-- BACK: admin login -->
+      <div class="logo-face logo-face-back">
+        <div class="logo-back-title">⚙ Admin Login</div>
+        <input type="password" id="logo-admin-pw" inputmode="numeric" autocomplete="off" maxlength="20" placeholder="••••" class="logo-back-input" />
+        <button class="logo-back-btn" id="logo-admin-submit">Unlock</button>
+        <div class="logo-back-err" id="logo-admin-err"></div>
+      </div>
+    </div>
+  </div>
+  <div class="logo-flip-hint" id="logo-flip-hint">Tap logo to flip</div>
   <div class="home-sub">Daily Apparatus Check</div>
   <div class="home-buttons">
     <button class="home-btn ambulances" id="home-btn-ambulances" type="button">
@@ -1241,7 +1336,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.2.0',
+  version: '2.3.1',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -1337,33 +1432,62 @@ function clearAllOverrides() {
 }
 
 /* ============================================================
-   ADMIN TRIGGER (click logo — spins, then shows login)
+   ADMIN TRIGGER — 3D flip card on logo
    ============================================================ */
-let _adminTapCount = 0;
-let _adminTapTimer = null;
 function setupLogoAdminTrigger() {
-  const logo = document.getElementById('home-logo');
-  if (!logo) return;
-  logo.addEventListener('click', () => {
-    _adminTapCount++;
-    clearTimeout(_adminTapTimer);
-    _adminTapTimer = setTimeout(() => { _adminTapCount = 0; }, 2000);
-    // Spin the logo on every tap
-    logo.classList.remove('spinning');
-    void logo.offsetWidth; // reflow to restart animation
-    logo.classList.add('spinning');
-    logo.addEventListener('animationend', () => logo.classList.remove('spinning'), { once: true });
-    if (_adminTapCount >= 3) {
-      _adminTapCount = 0;
-      clearTimeout(_adminTapTimer);
-      // Wait for spin to finish, then show login
-      setTimeout(() => {
-        document.getElementById('admin-pw').value = '';
-        document.getElementById('admin-pw-error').style.display = 'none';
-        showScreen('admin-login');
-        setTimeout(() => document.getElementById('admin-pw').focus(), 100);
-      }, 550);
+  const wrap = document.getElementById('logo-flip-wrap');
+  const inner = document.getElementById('logo-flip-inner');
+  const pw    = document.getElementById('logo-admin-pw');
+  const btn   = document.getElementById('logo-admin-submit');
+  const err   = document.getElementById('logo-admin-err');
+  const hint  = document.getElementById('logo-flip-hint');
+  if (!wrap) return;
+
+  // Flip on logo tap (front face click; ignore clicks on the back input/button)
+  wrap.addEventListener('click', e => {
+    const isFlipped = wrap.classList.contains('flipped');
+    // If showing front, flip to back
+    if (!isFlipped) {
+      wrap.classList.add('flipped');
+      hint.textContent = 'Tap outside to close';
+      setTimeout(() => { if (pw) pw.focus(); }, 680);
+      return;
     }
+    // If showing back and they clicked the card background (not input/btn), flip back
+    if (e.target === wrap || e.target === inner || e.target.classList.contains('logo-face-back') || e.target.classList.contains('logo-back-title') || e.target.classList.contains('logo-back-err')) {
+      flipLogoBack();
+    }
+  });
+
+  // Tap outside flipped card to close
+  document.addEventListener('click', e => {
+    if (wrap.classList.contains('flipped') && !wrap.contains(e.target)) {
+      flipLogoBack();
+    }
+  });
+
+  function flipLogoBack() {
+    wrap.classList.remove('flipped');
+    hint.textContent = 'Tap logo to flip';
+    if (pw) pw.value = '';
+    if (err) err.textContent = '';
+  }
+
+  function tryLogoLogin() {
+    if (!pw) return;
+    if (pw.value.trim() === '4321') {
+      flipLogoBack();
+      showAdminHome();
+    } else {
+      err.textContent = 'Wrong password.';
+      pw.value = '';
+      pw.focus();
+    }
+  }
+
+  btn.addEventListener('click', tryLogoLogin);
+  pw.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); tryLogoLogin(); }
   });
 }
 
@@ -2230,16 +2354,15 @@ function attachAmbulanceHandlers() {
       e.stopPropagation(); // don't toggle the compartment open/closed
       const compName = btn.dataset.headerMark;
       const safeId = btn.dataset.headerSafeid;
-      const card = document.getElementById('comp-' + safeId);
       const comp = findCompartmentByName(compName);
       if (!comp) return;
       // Ensure body is rendered first (lazy render)
       renderCompartmentBody(safeId, comp);
-      // Then mark everything complete
+      // Mark everything complete
       markAllCompartmentComplete(safeId, comp);
+      // Stay done — don't revert
       btn.classList.add('done');
       btn.textContent = '✓ Done';
-      setTimeout(() => { btn.classList.remove('done'); btn.textContent = '✓ All'; }, 1200);
     });
   });
   document.querySelectorAll('.compartment-head[data-comp-toggle]').forEach(head => {
@@ -2270,19 +2393,57 @@ function toggleCompartment(safeId) {
 }
 
 /* ============================================================
-   PHOTOS
+   PHOTOS — Cloudinary upload (falls back to base64 if not configured)
    ============================================================ */
-function handlePhoto(e, target, previewId) {
+async function uploadPhoto(file) {
+  const cfg = APP.data.cloudinary;
+  if (cfg && cfg.cloudName && cfg.cloudName !== 'YOUR_CLOUD_NAME' && cfg.uploadPreset && cfg.uploadPreset !== 'YOUR_UPLOAD_PRESET') {
+    // Upload to Cloudinary, get back a URL
+    const form = new FormData();
+    form.append('file', file);
+    form.append('upload_preset', cfg.uploadPreset);
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cfg.cloudName}/image/upload`, {
+      method: 'POST',
+      body: form,
+    });
+    if (!res.ok) throw new Error('Cloudinary upload failed: ' + res.status);
+    const data = await res.json();
+    return { url: data.secure_url, type: 'url' };
+  } else {
+    // Fallback: base64 (works but bloats email)
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = ev => resolve({ url: ev.target.result, type: 'base64' });
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+}
+
+async function handlePhoto(e, target, previewId) {
   const file = e.target.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    if (target === 'walkAround') APP.check.walkAround.photo = ev.target.result;
-    else if (target === 'cooler') APP.check.cooler.photo = ev.target.result;
-    const preview = document.getElementById(previewId);
-    if (preview) preview.innerHTML = `<img class="photo-preview" src="${ev.target.result}" />`;
-  };
-  reader.readAsDataURL(file);
+
+  const preview = document.getElementById(previewId);
+  if (preview) preview.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:6px;">Uploading photo…</div>`;
+
+  try {
+    const result = await uploadPhoto(file);
+
+    if (target === 'walkAround') APP.check.walkAround.photo = result;
+    else if (target === 'cooler') APP.check.cooler.photo = result;
+
+    if (preview) {
+      if (result.type === 'url') {
+        preview.innerHTML = `<a href="${result.url}" target="_blank" style="font-size:13px;color:var(--info);">📷 Photo uploaded ↗</a><br><img class="photo-preview" src="${result.url}" style="max-width:200px;max-height:150px;border-radius:6px;border:1px solid var(--border);margin-top:4px;" />`;
+      } else {
+        preview.innerHTML = `<img class="photo-preview" src="${result.url}" style="max-width:200px;max-height:150px;border-radius:6px;border:1px solid var(--border);" /><div style="font-size:11px;color:var(--warn);margin-top:4px;">⚠ Cloudinary not configured — photo in email body (may fail on large files)</div>`;
+      }
+    }
+  } catch(err) {
+    console.error('Photo upload failed:', err);
+    if (preview) preview.innerHTML = `<div style="color:var(--bad);font-size:13px;">Photo upload failed. ${err.message}</div>`;
+  }
 }
 
 /* ============================================================
@@ -2468,194 +2629,253 @@ function buildSummary() {
   const lines = [];
   let flagCount = 0;
 
-  lines.push(`APPARATUS CHECK SUBMISSION`);
-  lines.push(`==========================`);
-  lines.push(`Unit: ${c.unitName}`);
-  lines.push(`Date: ${c.date}`);
-  lines.push(`Crew Initials: ${c.initials}`);
-  lines.push(`Type: ${c.type === 'ambulance' ? 'Ambulance' : 'Rescue Rig'}`);
-  lines.push('');
+  // ── First pass: collect all flags ──────────────────────────────────────
+  const flagLines = [];
+
+  function addFlag(line) { flagLines.push(line); flagCount++; }
 
   if (c.type === 'ambulance') {
-    if (c.mileage) lines.push(`Mileage: ${c.mileage}`);
-    lines.push('');
-    if (c.walkAround.notes) {
-      lines.push('WALK-AROUND NOTES:');
-      lines.push(c.walkAround.notes);
+    // Mechanical + Fluids
+    [...APP.data.mechanicalChecks, ...APP.data.fluidChecks].forEach(item => {
+      const bucketFor = APP.data.mechanicalChecks.includes(item) ? c.mechanical : c.fluids;
+      const v = bucketFor[item];
+      if (v?.status === 'bad' && !v.fixed) {
+        let fl = `  [ ABNORMAL ] ${item}`;
+        if (v.notes) fl += `\n    Notes: ${v.notes}`;
+        addFlag(fl);
+      }
+    });
+    // Fuel
+    if (c.fuel && c.fuel !== 'Full') addFlag(`  [ LOW FUEL ] ${c.fuel} — not Full`);
+    // Tires
+    if (c.tireYN === 'no' && !c.tireFixed) {
+      let fl = `  [ ABNORMAL ] Tire pressure — out of range`;
+      if (c.tireNotes) fl += `\n    Notes: ${c.tireNotes}`;
+      addFlag(fl);
+    }
+    // Electronics
+    APP.data.electronicsDevices.forEach(dev => {
+      if (dev.critical && c.electronics[dev.name] === false) {
+        addFlag(`  [ CRITICAL ] ${dev.name} — not operational`);
+      } else if (c.electronics[dev.name] === false) {
+        addFlag(`  [ ABNORMAL ] ${dev.name} — No`);
+      }
+    });
+    // Cooler
+    if (c.cooler.answered && !c.cooler.ok) {
+      let fl = `  [ ABNORMAL ] Cooler/Fridge — out of range`;
+      if (c.cooler.reading) fl += `\n    Reading: ${c.cooler.reading}°C`;
+      addFlag(fl);
+    }
+    // Operational checks
+    if (c.opChecks) {
+      Object.entries(c.opChecks).forEach(([key, val]) => {
+        if (val === 'no') {
+          const [compName, bagName, itemName] = key.split('||');
+          const label = itemName === '__comp_op__' ? compName : (bagName ? `${bagName} → ${itemName}` : itemName);
+          addFlag(`  [ ABNORMAL ] ${label} — operational check failed`);
+        }
+      });
+    }
+    // Compartment items
+    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+      const cs = c.compartments[comp.name];
+      if (!cs) return;
+      Object.entries(cs.items || {}).forEach(([itemName, st]) => {
+        if (st.status === 'abnormal' && !st.fixed) {
+          let fl = `  [ ABNORMAL ] ${comp.name} — ${itemName}`;
+          if (st.notes) fl += `\n    Notes: ${st.notes}`;
+          addFlag(fl);
+        }
+      });
+      (comp.bags || []).forEach(bag => {
+        const bs = cs.bags?.[bag.name];
+        if (!bs) return;
+        Object.entries(bs.items || {}).forEach(([itemName, st]) => {
+          if (st.status === 'abnormal' && !st.fixed) {
+            let fl = `  [ ABNORMAL ] ${comp.name} → ${bag.name} — ${itemName}`;
+            if (st.notes) fl += `\n    Notes: ${st.notes}`;
+            addFlag(fl);
+          }
+        });
+      });
+    });
+  } else {
+    // Rescue rig flags
+    ['exterior','fluids','interior','operational','cleaning'].forEach(group => {
+      (APP.data.rescueRigChecks[group] || []).forEach(item => {
+        const key = `${group}::${item}`;
+        const v = c.rescueChecks[key];
+        if (v?.status === 'bad' && !v.fixed) {
+          let fl = `  [ ABNORMAL ] ${item}`;
+          if (v.notes) fl += `\n    Notes: ${v.notes}`;
+          addFlag(fl);
+        }
+      });
+    });
+  }
+
+  // ── Build the email ─────────────────────────────────────────────────────
+  const divider = '='.repeat(42);
+  const thinline = '-'.repeat(42);
+
+  lines.push(`APPARATUS CHECK — ${c.unitName}`);
+  lines.push(`Date: ${c.date}   Crew: ${c.initials}   Type: ${c.type === 'ambulance' ? 'Ambulance' : 'Rescue Rig'}`);
+  if (c.mileage) lines.push(`Mileage: ${c.mileage}`);
+  lines.push('');
+
+  // ── FLAGS BLOCK (top, eye-catching) ────────────────────────────────────
+  if (flagCount > 0) {
+    lines.push(divider);
+    lines.push(`⚠⚠⚠  ${flagCount} FLAG${flagCount === 1 ? '' : 'S'} — ACTION REQUIRED  ⚠⚠⚠`);
+    lines.push(divider);
+    flagLines.forEach(l => lines.push(l));
+    lines.push(divider);
+  } else {
+    lines.push(divider);
+    lines.push(`✅  ALL CLEAR — No flags`);
+    lines.push(divider);
+  }
+  lines.push('');
+
+  // ── DETAIL ─────────────────────────────────────────────────────────────
+  lines.push('FULL CHECK DETAIL');
+  lines.push(thinline);
+
+  if (c.type === 'ambulance') {
+    if (c.walkAround?.notes) {
+      lines.push('Walk-Around Notes:');
+      lines.push('  ' + c.walkAround.notes);
+      if (c.walkAround?.photo?.url) lines.push(`  Photo: ${c.walkAround.photo.url}`);
       lines.push('');
     }
-    const sectionsToDump = [
-      ['MECHANICAL & LIGHTS', c.mechanical],
-      ['FLUIDS', c.fluids],
-    ];
-    sectionsToDump.forEach(([title, bucket]) => {
-      const keys = Object.keys(bucket);
-      if (keys.length === 0) return;
-      lines.push(title);
-      keys.forEach(k => {
+
+    // Mechanical + Fluids
+    [['Mechanical & Lights', c.mechanical, APP.data.mechanicalChecks],
+     ['Fluids', c.fluids, APP.data.fluidChecks]].forEach(([title, bucket, keys]) => {
+      const filled = keys.filter(k => bucket[k]?.status);
+      if (!filled.length) return;
+      lines.push(title + ':');
+      filled.forEach(k => {
         const v = bucket[k];
-        let line = `  - ${k}: ${v.status === 'wnl' ? 'WNL' : 'ABNORMAL'}`;
+        let line = `  ${k}: ${v.status === 'wnl' ? 'WNL' : 'ABNORMAL'}`;
         if (v.status === 'bad') {
           if (v.fixed) line += ' (Fixed on the spot)';
-          else { line += ' ⚠'; flagCount++; }
           if (v.notes) line += ` — ${v.notes}`;
         }
         lines.push(line);
       });
       lines.push('');
     });
-    if (c.fuel) {
-      let fl = `FUEL: ${c.fuel}`;
-      if (c.fuel !== 'Full') { fl += ' ⚠ (not Full)'; flagCount++; }
-      lines.push(fl);
-      lines.push('');
-    }
+
+    // Fuel
+    if (c.fuel) { lines.push(`Fuel: ${c.fuel}${c.fuel !== 'Full' ? ' ⚠' : ''}`); lines.push(''); }
+
+    // Tires
     if (c.tireYN) {
-      let tl = `TIRE PRESSURE (75–85 PSI): ${c.tireYN === 'yes' ? 'Yes — All within range' : 'No ⚠'}`;
+      let tl = `Tire Pressure (75-85 PSI): ${c.tireYN === 'yes' ? 'All within range ✓' : 'Out of range ⚠'}`;
       if (c.tireYN === 'no') {
-        flagCount++;
         if (c.tireFixed) tl += ' (Fixed on the spot)';
-        if (c.tireNotes) tl += ` — ${c.tireNotes}`;
+        if (c.tireNotes) tl += `\n  Notes: ${c.tireNotes}`;
       }
-      lines.push(tl);
-      lines.push('');
+      lines.push(tl); lines.push('');
     }
-    if (Object.keys(c.electronics).length) {
-      lines.push('ELECTRONICS:');
-      APP.data.electronicsDevices.forEach(dev => {
+
+    // Electronics
+    const filledElec = APP.data.electronicsDevices.filter(d => c.electronics[d.name] !== undefined);
+    if (filledElec.length) {
+      lines.push('Electronics:');
+      filledElec.forEach(dev => {
         const v = c.electronics[dev.name];
-        if (v === undefined) return;
-        let line = `  - ${dev.name}: ${v ? 'Yes' : 'No'}`;
-        if (dev.critical && !v) { line += ' ⚠ CRITICAL'; flagCount++; }
-        lines.push(line);
+        lines.push(`  ${dev.name}: ${v ? 'Yes ✓' : 'No ⚠'}${dev.critical && !v ? ' [CRITICAL]' : ''}`);
       });
       lines.push('');
     }
+
+    // Cooler
     if (c.cooler.answered) {
-      let line = `COOLER (4–9°C): ${c.cooler.ok ? 'Yes (WNL)' : 'No ⚠'}`;
-      if (!c.cooler.ok) { flagCount++; if (c.cooler.reading) line += ` — reading: ${c.cooler.reading}°C`; }
-      lines.push(line);
-      lines.push('');
+      let cl = `Cooler (4-9°C): ${c.cooler.ok ? 'Yes ✓' : 'Out of range ⚠'}`;
+      if (!c.cooler.ok && c.cooler.reading) cl += `  Reading: ${c.cooler.reading}°C`;
+      if (c.cooler?.photo?.url) cl += `\n  Photo: ${c.cooler.photo.url}`;
+      lines.push(cl); lines.push('');
     }
-    // Operational checks (battery/power)
-    if (c.opChecks && Object.keys(c.opChecks).length > 0) {
-      lines.push('OPERATIONAL CHECKS:');
+
+    // Operational checks
+    if (c.opChecks && Object.keys(c.opChecks).length) {
+      lines.push('Operational Checks:');
       Object.entries(c.opChecks).forEach(([key, val]) => {
         const [compName, bagName, itemName] = key.split('||');
         const label = itemName === '__comp_op__' ? compName : (bagName ? `${bagName} → ${itemName}` : itemName);
-        let line = `  - ${label}: ${val === 'yes' ? 'Yes ✓' : 'No ⚠'}`;
-        if (val === 'no') flagCount++;
-        lines.push(line);
+        lines.push(`  ${label}: ${val === 'yes' ? 'Yes ✓' : 'No ⚠'}`);
       });
       lines.push('');
     }
+
     // Compartments
-    [['EXTERIOR COMPARTMENTS', c._comps.exterior],
-     ['INTERIOR COMPARTMENTS', c._comps.interior]].forEach(([title, comps]) => {
+    [['Exterior Compartments', c._comps.exterior],
+     ['Interior Compartments', c._comps.interior]].forEach(([title, comps]) => {
       const touched = comps.filter(comp => {
         const cs = c.compartments[comp.name];
         if (!cs) return false;
-        const directTouched = Object.keys(cs.items || {}).length > 0;
-        const bagTouched = (comp.bags || []).some(b => cs.bags?.[b.name] && Object.keys(cs.bags[b.name].items || {}).length > 0);
-        return directTouched || bagTouched;
+        return Object.keys(cs.items || {}).length > 0 ||
+          (comp.bags || []).some(b => cs.bags?.[b.name] && Object.keys(cs.bags[b.name].items || {}).length > 0);
       });
-      if (touched.length === 0) return;
-      lines.push(title);
+      if (!touched.length) return;
+      lines.push(title + ':');
       touched.forEach(comp => {
         const cs = c.compartments[comp.name];
-        const abnormal = [];
-        const incomplete = [];
-        // Direct items
-        Object.entries(cs.items || {}).forEach(([itemName, st]) => {
-          if (st.status === 'abnormal') {
-            let line = `      • ${itemName}`;
-            if (st.fixed) line += ' (Fixed on the spot)';
-            else { flagCount++; }
-            if (st.notes) line += ` — ${st.notes}`;
-            abnormal.push(line);
-          }
-        });
-        // Find direct items that weren't touched
-        comp.items.forEach(it => {
-          if (!cs.items?.[it.name]?.status) incomplete.push(`      • ${it.name}`);
-        });
-        // Bag items
+        const totalItems = comp.items.length + (comp.bags || []).reduce((n, b) => n + b.items.length, 0);
+        const allStatuses = [];
+        Object.values(cs.items || {}).forEach(st => allStatuses.push(st.status));
         (comp.bags || []).forEach(bag => {
-          const bs = cs.bags?.[bag.name];
-          if (bs) {
-            Object.entries(bs.items || {}).forEach(([itemName, st]) => {
-              if (st.status === 'abnormal') {
-                let line = `      • ${bag.name} → ${itemName}`;
-                if (st.fixed) line += ' (Fixed on the spot)';
-                else { flagCount++; }
-                if (st.notes) line += ` — ${st.notes}`;
-                abnormal.push(line);
-              }
-            });
-          }
-          bag.items.forEach(it => {
-            if (!bs?.items?.[it.name]?.status) incomplete.push(`      • ${bag.name} → ${it.name}`);
+          Object.values(cs.bags?.[bag.name]?.items || {}).forEach(st => allStatuses.push(st.status));
+        });
+        const complete = allStatuses.filter(s => s === 'complete').length;
+        const abnormal = allStatuses.filter(s => s === 'abnormal').length;
+        const checked = allStatuses.length;
+        lines.push(`  ${comp.name}: ${complete}/${totalItems} complete${abnormal ? `, ${abnormal} abnormal ⚠` : ''}${checked < totalItems ? `, ${totalItems - checked} not checked` : ''}`);
+        // Abnormal items detail
+        Object.entries(cs.items || {}).forEach(([name, st]) => {
+          if (st.status !== 'abnormal') return;
+          lines.push(`    ⚠ ${name}${st.fixed ? ' (Fixed)' : ''}${st.notes ? ' — ' + st.notes : ''}`);
+        });
+        (comp.bags || []).forEach(bag => {
+          Object.entries(cs.bags?.[bag.name]?.items || {}).forEach(([name, st]) => {
+            if (st.status !== 'abnormal') return;
+            lines.push(`    ⚠ ${bag.name} → ${name}${st.fixed ? ' (Fixed)' : ''}${st.notes ? ' — ' + st.notes : ''}`);
           });
         });
-
-        const totalItems = comp.items.length + (comp.bags || []).reduce((n,b) => n + b.items.length, 0);
-        const completeCount = totalItems - abnormal.length - incomplete.length;
-        let header = `  - ${comp.name}: ${completeCount}/${totalItems} complete`;
-        if (abnormal.length) header += `, ${abnormal.length} abnormal ⚠`;
-        if (incomplete.length) header += `, ${incomplete.length} not checked`;
-        lines.push(header);
-        if (abnormal.length) {
-          lines.push(`    Abnormal:`);
-          abnormal.forEach(a => lines.push(a));
-          flagCount += incomplete.length; // not-checked items also count as flags
-        }
-        if (incomplete.length && incomplete.length <= 5) {
-          lines.push(`    Not checked:`);
-          incomplete.forEach(a => lines.push(a));
-        } else if (incomplete.length > 5) {
-          lines.push(`    Not checked: ${incomplete.length} items (see app for full list)`);
-        }
       });
       lines.push('');
     });
+
   } else {
-    // Rescue rig
-    if (c.mileage) lines.push(`Mileage: ${c.mileage}`);
-    lines.push('');
-    const groups = ['exterior','fluids','interior','operational','cleaning'];
-    const groupNames = {
-      exterior: 'EXTERIOR & LIGHTS',
-      fluids: 'FLUIDS & FUEL',
-      interior: 'INTERIOR & EQUIPMENT',
-      operational: 'OPERATIONAL',
-      cleaning: 'CLEANING'
-    };
-    groups.forEach(group => {
+    // Rescue rig detail
+    if (c.mileage) { lines.push(`Mileage: ${c.mileage}`); lines.push(''); }
+    const groupNames = { exterior:'Exterior & Lights', fluids:'Fluids & Fuel', interior:'Interior & Equipment', operational:'Operational', cleaning:'Cleaning' };
+    ['exterior','fluids','interior','operational','cleaning'].forEach(group => {
       const items = APP.data.rescueRigChecks[group];
       const filled = items.filter(item => c.rescueChecks[`${group}::${item}`]?.status);
-      if (filled.length === 0) return;
-      lines.push(groupNames[group]);
+      if (!filled.length) return;
+      lines.push(groupNames[group] + ':');
       filled.forEach(item => {
         const v = c.rescueChecks[`${group}::${item}`];
-        let line = `  - ${item}: ${v.status === 'wnl' ? 'WNL' : 'ABNORMAL'}`;
+        let line = `  ${item}: ${v.status === 'wnl' ? 'WNL' : 'ABNORMAL'}`;
         if (v.status === 'bad') {
           if (v.fixed) line += ' (Fixed)';
-          else { line += ' ⚠'; flagCount++; }
           if (v.notes) line += ` — ${v.notes}`;
         }
         lines.push(line);
       });
       lines.push('');
     });
-    if (c.comments) {
-      lines.push('COMMENTS:');
-      lines.push(c.comments);
-      lines.push('');
-    }
+    if (c.comments) { lines.push('Comments:'); lines.push(c.comments); lines.push(''); }
   }
 
-  lines.push(`Flags: ${flagCount}`);
+  lines.push(thinline);
   lines.push(`Submitted: ${new Date().toLocaleString()}`);
+  lines.push(`Flags: ${flagCount}`);
+
   return { plain: lines.join('\n'), flagCount };
 }
 
