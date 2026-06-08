@@ -64,15 +64,17 @@
       height: 100dvh;
       min-height: 0;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       gap: 8px;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
-    .home.active { display: flex; }
+    /* Only display home when it is the active screen (base .screen rule hides it otherwise) */
+    .home.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
     /* ── 3D flip card for logo / admin login ── */
     .logo-flip-wrap {
       width: 200px;
@@ -1411,7 +1413,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.4.1',
+  version: '2.4.2',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
