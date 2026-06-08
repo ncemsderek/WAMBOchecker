@@ -58,13 +58,9 @@
       text-align: center;
     }
     .home-logo {
-      width: 140px;
-      height: 140px;
+      width: 160px;
+      height: 160px;
       margin: 8px auto 16px;
-      background: var(--white);
-      border-radius: 50%;
-      padding: 6px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
     }
     .home-logo img { width: 100%; height: 100%; display: block; }
     .home-title {
@@ -124,7 +120,7 @@
       text-shadow: 0 2px 8px rgba(0,0,0,0.6);
     }
     .home-btn.ambulances { background-image: url('./ambulance.jpg'); }
-    .home-btn.others { background-image: url('./rescue51.jpg'); }
+    .home-btn.others { background-image: url('./sar51.jpg'); }
 
     .home-footer {
       margin-top: 32px;
@@ -812,14 +808,14 @@
   <div class="home-title">North Country EMS / FD 13</div>
   <div class="home-sub">Daily Apparatus Check</div>
   <div class="home-buttons">
-    <button class="home-btn ambulances" onclick="showAmbulancePicker()">
+    <button class="home-btn ambulances" id="home-btn-ambulances" type="button">
       <div class="home-btn-label">Ambulances</div>
     </button>
-    <button class="home-btn others" onclick="showRescuePicker()">
+    <button class="home-btn others" id="home-btn-others" type="button">
       <div class="home-btn-label">Other Units</div>
     </button>
   </div>
-  <div class="home-footer">v<span id="version-tag">2.0.0</span> · <span id="today-date"></span></div>
+  <div class="home-footer">v<span id="version-tag">2.0.1</span> · <span id="today-date"></span></div>
 </div>
 
 <!-- ============ AMBULANCE PICKER ============ -->
@@ -890,6 +886,11 @@ window.addEventListener('DOMContentLoaded', boot);
 async function boot() {
   document.getElementById('today-date').textContent =
     new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+
+  // Wire up home buttons via addEventListener (robust on mobile)
+  document.getElementById('home-btn-ambulances').addEventListener('click', showAmbulancePicker);
+  document.getElementById('home-btn-others').addEventListener('click', showRescuePicker);
+
   try {
     const res = await fetch(`./units.json?t=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Failed to load units.json: ${res.status}`);
@@ -943,7 +944,8 @@ function hasUnsavedWork() {
             Object.keys(c.electronics || {}).length ||
             c.cooler?.answered ||
             Object.keys(c.compartments || {}).length ||
-            Object.keys(c.rescueChecks || {}).length);
+            Object.keys(c.rescueChecks || {}).length ||
+            c.comments);
 }
 
 /* ============================================================
@@ -951,17 +953,25 @@ function hasUnsavedWork() {
    ============================================================ */
 function showAmbulancePicker() {
   const list = document.getElementById('ambulance-picker-list');
-  list.innerHTML = '<p class="picker-intro">Pick the ambulance you\'re checking today.</p>';
+  list.innerHTML = '';
+  const intro = document.createElement('p');
+  intro.className = 'picker-intro';
+  intro.textContent = "Pick the ambulance you're checking today.";
+  list.appendChild(intro);
+
   APP.data.ambulances.forEach(amb => {
-    list.insertAdjacentHTML('beforeend', `
-      <button class="unit-btn" onclick="startAmbulanceCheck('${amb.id}')">
-        <div>
-          <div>${amb.name}</div>
-          <div class="unit-meta">${amb.type}</div>
-        </div>
-        <div class="unit-btn-arrow">→</div>
-      </button>
-    `);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'unit-btn';
+    btn.innerHTML = `
+      <div>
+        <div>${escapeHTML(amb.name)}</div>
+        <div class="unit-meta">${escapeHTML(amb.type)}</div>
+      </div>
+      <div class="unit-btn-arrow">→</div>
+    `;
+    btn.addEventListener('click', () => startAmbulanceCheck(amb.id));
+    list.appendChild(btn);
   });
   showScreen('ambulance-picker');
 }
@@ -976,35 +986,60 @@ function showRescuePicker() {
   const allRescue = APP.data.allRescueUnits;
   const rest = allRescue.filter(u => !dueToday.includes(u));
 
-  let html = '';
+  list.innerHTML = '';
+
   if (dueToday.length > 0) {
-    html += `<div class="due-banner">Due Today (${today}): ${dueToday.join(', ')}</div>`;
-    html += `<div class="section-label">Scheduled for ${today}</div>`;
+    const banner = document.createElement('div');
+    banner.className = 'due-banner';
+    banner.textContent = `Due Today (${today}): ${dueToday.join(', ')}`;
+    list.appendChild(banner);
+
+    const lbl = document.createElement('div');
+    lbl.className = 'section-label';
+    lbl.textContent = `Scheduled for ${today}`;
+    list.appendChild(lbl);
+
     dueToday.forEach(u => {
-      html += `
-        <button class="unit-btn due-today" onclick="startRescueCheck('${u}')">
-          <div>
-            <div>${u}</div>
-            <div class="unit-meta">Due today</div>
-          </div>
-          <div class="unit-btn-arrow">→</div>
-        </button>`;
-    });
-    html += `<div class="section-label">Other rescue units (ad-hoc)</div>`;
-  } else {
-    html += `<p class="picker-intro">No rigs scheduled for ${today}. Pick any unit to run an ad-hoc check.</p>`;
-  }
-  rest.forEach(u => {
-    html += `
-      <button class="unit-btn" onclick="startRescueCheck('${u}')">
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'unit-btn due-today';
+      btn.innerHTML = `
         <div>
-          <div>${u}</div>
-          <div class="unit-meta">Ad-hoc</div>
+          <div>${escapeHTML(u)}</div>
+          <div class="unit-meta">Due today</div>
         </div>
         <div class="unit-btn-arrow">→</div>
-      </button>`;
+      `;
+      btn.addEventListener('click', () => startRescueCheck(u));
+      list.appendChild(btn);
+    });
+
+    const lbl2 = document.createElement('div');
+    lbl2.className = 'section-label';
+    lbl2.textContent = 'Other rescue units';
+    list.appendChild(lbl2);
+  } else {
+    const intro = document.createElement('p');
+    intro.className = 'picker-intro';
+    intro.textContent = `No rigs scheduled for ${today}. Pick any unit to run a check.`;
+    list.appendChild(intro);
+  }
+
+  rest.forEach(u => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'unit-btn';
+    btn.innerHTML = `
+      <div>
+        <div>${escapeHTML(u)}</div>
+        <div class="unit-meta">Optional</div>
+      </div>
+      <div class="unit-btn-arrow">→</div>
+    `;
+    btn.addEventListener('click', () => startRescueCheck(u));
+    list.appendChild(btn);
   });
-  list.innerHTML = html;
+
   showScreen('rescue-picker');
 }
 
@@ -1071,8 +1106,7 @@ function startRescueCheck(unitName) {
     unitName: unitName,
     date: new Date().toISOString().slice(0,10),
     initials: '',
-    startMileage: '',
-    endMileage: '',
+    mileage: '',
     rescueChecks: {},
     comments: '',
   };
@@ -1095,12 +1129,8 @@ function renderRescueCheck() {
         <input type="text" id="rescue-initials" placeholder="e.g. DB" maxlength="6" />
       </div>
       <div class="meta-row">
-        <label>Start mi</label>
-        <input type="number" id="rescue-start" placeholder="Starting mileage" />
-      </div>
-      <div class="meta-row">
-        <label>End mi</label>
-        <input type="number" id="rescue-end" placeholder="Ending mileage" />
+        <label>Mileage</label>
+        <input type="number" id="rescue-mileage" placeholder="Current mileage" />
       </div>
     </div>
     ${renderRescueGroup('Exterior & Lights', 'exterior', checks.exterior)}
@@ -1133,8 +1163,7 @@ function renderRescueGroup(title, group, items) {
 
 function attachRescueHandlers() {
   document.getElementById('rescue-initials').oninput = e => { APP.check.initials = e.target.value; updateProgress(); };
-  document.getElementById('rescue-start').oninput = e => { APP.check.startMileage = e.target.value; updateProgress(); };
-  document.getElementById('rescue-end').oninput = e => { APP.check.endMileage = e.target.value; updateProgress(); };
+  document.getElementById('rescue-mileage').oninput = e => { APP.check.mileage = e.target.value; updateProgress(); };
   document.getElementById('rescue-comments').oninput = e => { APP.check.comments = e.target.value; };
 
   // Wire up the WNL rows for the rescue check
@@ -1614,8 +1643,9 @@ function updateProgress() {
       }
     });
   } else if (c.type === 'rescue') {
-    total += 3; // initials, start mi, end mi
-    if (c.initials) done++; if (c.startMileage) done++; if (c.endMileage) done++;
+    total += 2; // initials, mileage
+    if (c.initials) done++;
+    if (c.mileage) done++;
     const r = APP.data.rescueRigChecks;
     ['exterior','fluids','interior','operational','cleaning'].forEach(group => {
       r[group].forEach(item => {
@@ -1772,8 +1802,7 @@ function buildSummary() {
     });
   } else {
     // Rescue rig
-    if (c.startMileage) lines.push(`Starting mileage: ${c.startMileage}`);
-    if (c.endMileage) lines.push(`Ending mileage: ${c.endMileage}`);
+    if (c.mileage) lines.push(`Mileage: ${c.mileage}`);
     lines.push('');
     const groups = ['exterior','fluids','interior','operational','cleaning'];
     const groupNames = {
