@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0",
+  "version": "2.2.0",
   "submissionEmail": "d.boyce@northcountryems.org",
   "emailjs": {
     "serviceId": "service_uqfd3sj",
@@ -195,7 +195,8 @@
             {
               "name": "Hurst Jaws of Life",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Water Rescue Bag",
@@ -232,7 +233,8 @@
             {
               "name": "Ambulance Portable Spot Light",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is charged"
             },
             {
               "name": "Dry Chemical Extinguisher",
@@ -349,7 +351,8 @@
             {
               "name": "Sawzall",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Stair Chair",
@@ -768,7 +771,8 @@
             {
               "name": "Lucas",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is full"
             }
           ]
         }
@@ -1255,52 +1259,198 @@
           ]
         },
         {
-          "name": "Airway Adjunct Pocket",
-          "items": [
+          "name": "Airway Bag",
+          "items": [],
+          "bags": [
             {
-              "name": "Adult tube holder",
-              "qty": 1,
-              "ctrl": false
+              "name": "Airway Adjunct Pocket",
+              "items": [
+                {
+                  "name": "Adult tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bulb syringe",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Inline",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Inline med neb",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Meconium Aspirator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "NPA assorted",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Pediatric tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Surgical Lube",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Bulb syringe",
-              "qty": 1,
-              "ctrl": false
+              "name": "Cricothyroidotomy Kit",
+              "items": [
+                {
+                  "name": "4x4 dressing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Decompression Needle",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Scalpel",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trach Tube 6.0",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "ETCO2 Inline",
-              "qty": 2,
-              "ctrl": false
+              "name": "Invasive and Rescue Airway Pocket",
+              "items": [
+                {
+                  "name": "EZ IO Kit",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #3",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #4",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #5",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Video Laryngoscope Kit (CMAC or King Vision)",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Inline med neb",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Meconium Aspirator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "NPA assorted",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Pediatric tube holder",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Surgical Lube",
-              "qty": 1,
-              "ctrl": false
+              "name": "Middle Airway Bag",
+              "items": [
+                {
+                  "name": "BVM Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "BVM Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cmac D Blade guide",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Adult NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Ped NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Adult Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Ped Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Portable O2 With Quick Connect And Regulator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "S Guide Adult/Ped",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -1410,46 +1560,6 @@
             {
               "name": "Syringe 10cc",
               "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Cricothyroidotomy Kit",
-          "items": [
-            {
-              "name": "4x4 dressing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Decompression Needle",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Scalpel",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Trach Tube 6.0",
-              "qty": 1,
               "ctrl": false
             }
           ]
@@ -1614,36 +1724,6 @@
             },
             {
               "name": "Trauma Sheers",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Invasive and Rescue Airway Pocket",
-          "items": [
-            {
-              "name": "EZ IO Kit",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #3",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #4",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #5",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Video Laryngoscope Kit (CMAC or King Vision)",
               "qty": 1,
               "ctrl": false
             }
@@ -2155,76 +2235,6 @@
           ]
         },
         {
-          "name": "Middle Airway Bag",
-          "items": [
-            {
-              "name": "BVM Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "BVM Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cmac D Blade guide",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Adult NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Ped NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Adult Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Ped Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Portable O2 With Quick Connect And Regulator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "S Guide Adult/Ped",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
           "name": "Pediatric I-Gels",
           "items": [
             {
@@ -2277,7 +2287,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "operationalCheck": "Turns on and has suction when not plugged in"
         },
         {
           "name": "Compartment A",
@@ -2689,7 +2700,8 @@
             {
               "name": "Hurst Jaws of Life",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Water Rescue Bag",
@@ -2726,7 +2738,8 @@
             {
               "name": "Ambulance Portable Spot Light",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is charged"
             },
             {
               "name": "Dry Chemical Extinguisher",
@@ -2843,7 +2856,8 @@
             {
               "name": "Sawzall",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Stair Chair",
@@ -3262,7 +3276,8 @@
             {
               "name": "Lucas",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is full"
             }
           ]
         }
@@ -3749,52 +3764,198 @@
           ]
         },
         {
-          "name": "Airway Adjunct Pocket",
-          "items": [
+          "name": "Airway Bag",
+          "items": [],
+          "bags": [
             {
-              "name": "Adult tube holder",
-              "qty": 1,
-              "ctrl": false
+              "name": "Airway Adjunct Pocket",
+              "items": [
+                {
+                  "name": "Adult tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bulb syringe",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Inline",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Inline med neb",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Meconium Aspirator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "NPA assorted",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Pediatric tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Surgical Lube",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Bulb syringe",
-              "qty": 1,
-              "ctrl": false
+              "name": "Cricothyroidotomy Kit",
+              "items": [
+                {
+                  "name": "4x4 dressing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Decompression Needle",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Scalpel",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trach Tube 6.0",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "ETCO2 Inline",
-              "qty": 2,
-              "ctrl": false
+              "name": "Invasive and Rescue Airway Pocket",
+              "items": [
+                {
+                  "name": "EZ IO Kit",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #3",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #4",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #5",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Video Laryngoscope Kit (CMAC or King Vision)",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Inline med neb",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Meconium Aspirator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "NPA assorted",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Pediatric tube holder",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Surgical Lube",
-              "qty": 1,
-              "ctrl": false
+              "name": "Middle Airway Bag",
+              "items": [
+                {
+                  "name": "BVM Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "BVM Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cmac D Blade guide",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Adult NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Ped NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Adult Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Ped Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Portable O2 With Quick Connect And Regulator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "S Guide Adult/Ped",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -3904,46 +4065,6 @@
             {
               "name": "Syringe 10cc",
               "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Cricothyroidotomy Kit",
-          "items": [
-            {
-              "name": "4x4 dressing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Decompression Needle",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Scalpel",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Trach Tube 6.0",
-              "qty": 1,
               "ctrl": false
             }
           ]
@@ -4108,36 +4229,6 @@
             },
             {
               "name": "Trauma Sheers",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Invasive and Rescue Airway Pocket",
-          "items": [
-            {
-              "name": "EZ IO Kit",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #3",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #4",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #5",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Video Laryngoscope Kit (CMAC or King Vision)",
               "qty": 1,
               "ctrl": false
             }
@@ -4649,76 +4740,6 @@
           ]
         },
         {
-          "name": "Middle Airway Bag",
-          "items": [
-            {
-              "name": "BVM Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "BVM Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cmac D Blade guide",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Adult NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Ped NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Adult Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Ped Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Portable O2 With Quick Connect And Regulator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "S Guide Adult/Ped",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
           "name": "Pediatric I-Gels",
           "items": [
             {
@@ -4771,7 +4792,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "operationalCheck": "Turns on and has suction when not plugged in"
         },
         {
           "name": "Compartment A",
@@ -5183,7 +5205,8 @@
             {
               "name": "Hurst Jaws of Life",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Water Rescue Bag",
@@ -5317,7 +5340,8 @@
             {
               "name": "Ambulance Portable Spot Light",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is charged"
             },
             {
               "name": "Bolt Cutters",
@@ -5352,7 +5376,8 @@
             {
               "name": "Sawzall",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Stair Chair",
@@ -5993,7 +6018,8 @@
             {
               "name": "Lucas",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is full"
             },
             {
               "name": "Nitrous Oxide",
@@ -6018,52 +6044,198 @@
           ]
         },
         {
-          "name": "Airway Adjunct Pocket",
-          "items": [
+          "name": "Airway Bag",
+          "items": [],
+          "bags": [
             {
-              "name": "Adult tube holder",
-              "qty": 1,
-              "ctrl": false
+              "name": "Airway Adjunct Pocket",
+              "items": [
+                {
+                  "name": "Adult tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bulb syringe",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Inline",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Inline med neb",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Meconium Aspirator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "NPA assorted",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Pediatric tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Surgical Lube",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Bulb syringe",
-              "qty": 1,
-              "ctrl": false
+              "name": "Cricothyroidotomy Kit",
+              "items": [
+                {
+                  "name": "4x4 dressing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Decompression Needle",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Scalpel",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trach Tube 6.0",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "ETCO2 Inline",
-              "qty": 2,
-              "ctrl": false
+              "name": "Invasive and Rescue Airway Pocket",
+              "items": [
+                {
+                  "name": "EZ IO Kit",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #3",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #4",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #5",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Video Laryngoscope Kit (CMAC or King Vision)",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Inline med neb",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Meconium Aspirator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "NPA assorted",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Pediatric tube holder",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Surgical Lube",
-              "qty": 1,
-              "ctrl": false
+              "name": "Middle Airway Bag",
+              "items": [
+                {
+                  "name": "BVM Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "BVM Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cmac D Blade guide",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Adult NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Ped NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Adult Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Ped Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Portable O2 With Quick Connect And Regulator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "S Guide Adult/Ped",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -6173,46 +6345,6 @@
             {
               "name": "Syringe 10cc",
               "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Cricothyroidotomy Kit",
-          "items": [
-            {
-              "name": "4x4 dressing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Decompression Needle",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Scalpel",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Trach Tube 6.0",
-              "qty": 1,
               "ctrl": false
             }
           ]
@@ -6392,36 +6524,6 @@
             },
             {
               "name": "Tissues",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Invasive and Rescue Airway Pocket",
-          "items": [
-            {
-              "name": "EZ IO Kit",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #3",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #4",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #5",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Video Laryngoscope Kit (CMAC or King Vision)",
               "qty": 1,
               "ctrl": false
             }
@@ -6933,76 +7035,6 @@
           ]
         },
         {
-          "name": "Middle Airway Bag",
-          "items": [
-            {
-              "name": "BVM Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "BVM Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cmac D Blade guide",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Adult NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Ped NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Adult Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Ped Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Portable O2 With Quick Connect And Regulator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "S Guide Adult/Ped",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
           "name": "Pediatric I-Gels",
           "items": [
             {
@@ -7055,7 +7087,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "operationalCheck": "Turns on and has suction when not plugged in"
         },
         {
           "name": "Compartment A",
@@ -7617,7 +7650,8 @@
             {
               "name": "Hurst Jaws of Life",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Rope bag",
@@ -7654,7 +7688,8 @@
             {
               "name": "Ambulance Portable Spot Light",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is charged"
             },
             {
               "name": "Hurst Battery",
@@ -7776,7 +7811,8 @@
             {
               "name": "Sawzall",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Stair Chair",
@@ -8412,7 +8448,8 @@
             {
               "name": "Lucas",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is full"
             },
             {
               "name": "Nitrous Oxide",
@@ -8432,52 +8469,198 @@
           ]
         },
         {
-          "name": "Airway Adjunct Pocket",
-          "items": [
+          "name": "Airway Bag",
+          "items": [],
+          "bags": [
             {
-              "name": "Adult tube holder",
-              "qty": 1,
-              "ctrl": false
+              "name": "Airway Adjunct Pocket",
+              "items": [
+                {
+                  "name": "Adult tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bulb syringe",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Inline",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Inline med neb",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Meconium Aspirator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "NPA assorted",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Pediatric tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Surgical Lube",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Bulb syringe",
-              "qty": 1,
-              "ctrl": false
+              "name": "Cricothyroidotomy Kit",
+              "items": [
+                {
+                  "name": "4x4 dressing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Decompression Needle",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Scalpel",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trach Tube 6.0",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "ETCO2 Inline",
-              "qty": 2,
-              "ctrl": false
+              "name": "Invasive and Rescue Airway Pocket",
+              "items": [
+                {
+                  "name": "EZ IO Kit",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #3",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #4",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #5",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Video Laryngoscope Kit (CMAC or King Vision)",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Inline med neb",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Meconium Aspirator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "NPA assorted",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Pediatric tube holder",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Surgical Lube",
-              "qty": 1,
-              "ctrl": false
+              "name": "Middle Airway Bag",
+              "items": [
+                {
+                  "name": "BVM Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "BVM Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cmac D Blade guide",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Adult NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Ped NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Adult Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Ped Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Portable O2 With Quick Connect And Regulator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "S Guide Adult/Ped",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -8587,76 +8770,6 @@
             {
               "name": "Syringe 10cc",
               "qty": 2,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Cricothyroidotomy Kit",
-          "items": [
-            {
-              "name": "4x4 dressing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Decompression Needle",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Scalpel",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Trach Tube 6.0",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Invasive and Rescue Airway Pocket",
-          "items": [
-            {
-              "name": "EZ IO Kit",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #3",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #4",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #5",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Video Laryngoscope Kit (CMAC or King Vision)",
-              "qty": 1,
               "ctrl": false
             }
           ]
@@ -9167,76 +9280,6 @@
           ]
         },
         {
-          "name": "Middle Airway Bag",
-          "items": [
-            {
-              "name": "BVM Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "BVM Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cmac D Blade guide",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Adult NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Ped NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Adult Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Ped Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Portable O2 With Quick Connect And Regulator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "S Guide Adult/Ped",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
           "name": "Pediatric I-Gels",
           "items": [
             {
@@ -9289,7 +9332,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "operationalCheck": "Turns on and has suction when not plugged in"
         },
         {
           "name": "Compartment A",
@@ -9861,12 +9905,14 @@
             {
               "name": "Ambulance Portable Spot Light",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is charged"
             },
             {
               "name": "Hurst Jaws of Life",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Rope bag",
@@ -10025,7 +10071,8 @@
             {
               "name": "Sawzall",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is good"
             },
             {
               "name": "Stair Chair",
@@ -10951,7 +10998,8 @@
             {
               "name": "Lucas",
               "qty": 1,
-              "ctrl": false
+              "ctrl": false,
+              "operationalCheck": "Turns on and battery is full"
             },
             {
               "name": "Portable O2",
@@ -10966,52 +11014,198 @@
           ]
         },
         {
-          "name": "Airway Adjunct Pocket",
-          "items": [
+          "name": "Airway Bag",
+          "items": [],
+          "bags": [
             {
-              "name": "Adult tube holder",
-              "qty": 1,
-              "ctrl": false
+              "name": "Airway Adjunct Pocket",
+              "items": [
+                {
+                  "name": "Adult tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Bulb syringe",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Inline",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Inline med neb",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Meconium Aspirator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "NPA assorted",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Pediatric tube holder",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Petrolatum Gauze",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Surgical Lube",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Bulb syringe",
-              "qty": 1,
-              "ctrl": false
+              "name": "Cricothyroidotomy Kit",
+              "items": [
+                {
+                  "name": "4x4 dressing",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Alcohol wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Decompression Needle",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Iodine Wipes",
+                  "qty": 4,
+                  "ctrl": false
+                },
+                {
+                  "name": "Scalpel",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Syringe 10cc",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Trach Tube 6.0",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "ETCO2 Inline",
-              "qty": 2,
-              "ctrl": false
+              "name": "Invasive and Rescue Airway Pocket",
+              "items": [
+                {
+                  "name": "EZ IO Kit",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #3",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #4",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "IGel #5",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Video Laryngoscope Kit (CMAC or King Vision)",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             },
             {
-              "name": "Inline med neb",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Meconium Aspirator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "NPA assorted",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Pediatric tube holder",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Petrolatum Gauze",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Surgical Lube",
-              "qty": 1,
-              "ctrl": false
+              "name": "Middle Airway Bag",
+              "items": [
+                {
+                  "name": "BVM Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "BVM Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cmac D Blade guide",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Adult NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "ETCO2 Ped NC",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nasal Cannula Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Adult Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Nebulizer Ped Mask",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Adult",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Non Re-breather Ped",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "Portable O2 With Quick Connect And Regulator",
+                  "qty": 1,
+                  "ctrl": false
+                },
+                {
+                  "name": "S Guide Adult/Ped",
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
             }
           ]
         },
@@ -11126,46 +11320,6 @@
           ]
         },
         {
-          "name": "Cricothyroidotomy Kit",
-          "items": [
-            {
-              "name": "4x4 dressing",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Alcohol wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Decompression Needle",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Iodine Wipes",
-              "qty": 4,
-              "ctrl": false
-            },
-            {
-              "name": "Scalpel",
-              "qty": 2,
-              "ctrl": false
-            },
-            {
-              "name": "Syringe 10cc",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Trach Tube 6.0",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
           "name": "IV Tray Area",
           "items": [
             {
@@ -11175,36 +11329,6 @@
             },
             {
               "name": "Tissues",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
-          "name": "Invasive and Rescue Airway Pocket",
-          "items": [
-            {
-              "name": "EZ IO Kit",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #3",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #4",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "IGel #5",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Video Laryngoscope Kit (CMAC or King Vision)",
               "qty": 1,
               "ctrl": false
             }
@@ -11716,76 +11840,6 @@
           ]
         },
         {
-          "name": "Middle Airway Bag",
-          "items": [
-            {
-              "name": "BVM Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "BVM Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Cmac D Blade guide",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Adult NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "ETCO2 Ped NC",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nasal Cannula Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Adult Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Nebulizer Ped Mask",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Adult",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Non Re-breather Ped",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "Portable O2 With Quick Connect And Regulator",
-              "qty": 1,
-              "ctrl": false
-            },
-            {
-              "name": "S Guide Adult/Ped",
-              "qty": 1,
-              "ctrl": false
-            }
-          ]
-        },
-        {
           "name": "Pediatric I-Gels",
           "items": [
             {
@@ -11838,7 +11892,8 @@
               "qty": 1,
               "ctrl": false
             }
-          ]
+          ],
+          "operationalCheck": "Turns on and has suction when not plugged in"
         },
         {
           "name": "Compartment A",

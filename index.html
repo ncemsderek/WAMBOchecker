@@ -63,11 +63,27 @@
       text-align: center;
     }
     .home-logo {
-      width: 220px;
-      max-width: 60%;
+      width: 320px;
+      max-width: 80%;
       margin: 0 auto 20px;
+      cursor: pointer;
+      display: block;
     }
-    .home-logo img { width: 100%; height: auto; display: block; }
+    .home-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: transparent;
+      transition: transform 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+    .home-logo.spinning img {
+      animation: logo-spin 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+    }
+    @keyframes logo-spin {
+      0%   { transform: rotate(0deg) scale(1); }
+      50%  { transform: rotate(180deg) scale(1.08); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
     .home-sub {
       font-size: 14px;
       color: var(--g-light);
@@ -716,7 +732,124 @@
     .bag-card.open .bag-body { display: block; }
     .lazy-placeholder { padding: 10px; color: var(--muted); font-size: 13px; text-align: center; }
 
-    /* Comments box (rescue rig) */
+    /* Tire Yes/No */
+    .tire-yn-section {
+      padding: 12px 14px;
+    }
+    .tire-yn-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .tire-yn-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .tire-yn-row .yn-buttons { display: flex; gap: 6px; }
+
+    /* Operational check (Yes/No) for specific items */
+    .op-check-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--g-pale);
+      border-bottom: 1px solid var(--border);
+      gap: 10px;
+    }
+    .op-check-label {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--g-deep);
+      font-style: italic;
+    }
+    .op-check-row .yn-buttons { display: flex; gap: 6px; }
+
+    /* Compartment mark-all in header (no expand needed) */
+    .comp-header-mark-btn {
+      padding: 6px 12px;
+      background: var(--g-mid);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      min-height: 34px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .comp-header-mark-btn:active { background: var(--g-accent); }
+    .comp-header-mark-btn.done {
+      background: var(--g-accent);
+    }
+
+    /* Confirmation modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal-box {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .modal-box h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      color: var(--g-deep);
+    }
+    .modal-box p {
+      font-size: 15px;
+      color: var(--text);
+      margin: 0 0 8px;
+      line-height: 1.5;
+    }
+    .modal-box .modal-warn {
+      background: var(--warn-bg);
+      border-left: 3px solid var(--warn);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: var(--warn);
+      font-weight: 600;
+      margin: 12px 0;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .modal-actions button {
+      flex: 1;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      min-height: 48px;
+    }
+    .modal-confirm { background: var(--g-deep); color: var(--white); }
+    .modal-cancel { background: var(--bg); color: var(--text); border: 1.5px solid var(--border) !important; }
+    .modal-confirm:active { background: var(--g-mid); }
+    .modal-cancel:active { background: var(--g-light); }
     .comments-box {
       padding: 14px;
     }
@@ -989,7 +1122,7 @@
 
 <!-- ============ HOME SCREEN ============ -->
 <div class="screen home active" id="screen-home">
-  <div class="home-logo"><img src="./logo.png" alt="North Country EMS" /></div>
+  <div class="home-logo" id="home-logo" role="button" tabindex="0" aria-label="North Country EMS logo"><img src="./logo.png" alt="North Country EMS" /></div>
   <div class="home-sub">Daily Apparatus Check</div>
   <div class="home-buttons">
     <button class="home-btn ambulances" id="home-btn-ambulances" type="button">
@@ -1079,6 +1212,19 @@
   <div class="form-wrap" id="admin-edit-body"></div>
 </div>
 
+<!-- ============ CONFIRMATION MODAL ============ -->
+<div class="modal-overlay hidden" id="submit-modal">
+  <div class="modal-box">
+    <h3>Submit Apparatus Check</h3>
+    <p id="modal-body-text">By submitting, you confirm that you have checked all equipment and all items are complete as noted.</p>
+    <div class="modal-warn" id="modal-incomplete-warn" style="display:none;"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="modal-cancel-btn">Go Back</button>
+      <button class="modal-confirm" id="modal-confirm-btn">Submit</button>
+    </div>
+  </div>
+</div>
+
 <!-- ============ STATUS BAR ============ -->
 <div class="status-bar" id="status-bar">
   <div class="status-text">
@@ -1095,7 +1241,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.0.0',
+  version: '2.2.0',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -1116,13 +1262,22 @@ async function boot() {
   document.getElementById('home-btn-ambulances').addEventListener('click', showAmbulancePicker);
   document.getElementById('home-btn-others').addEventListener('click', showRescuePicker);
 
-  // Wire up the 5-tap admin entry on the version footer
-  setupAdminTrigger();
+  // Wire up the logo: click triggers admin spin + entry
+  setupLogoAdminTrigger();
 
   // Wire up admin password submit
   document.getElementById('admin-pw-submit').addEventListener('click', tryUnlockAdmin);
   document.getElementById('admin-pw').addEventListener('keydown', e => {
     if (e.key === 'Enter') tryUnlockAdmin();
+  });
+
+  // Wire up submit modal
+  document.getElementById('modal-cancel-btn').addEventListener('click', () => {
+    document.getElementById('submit-modal').classList.add('hidden');
+  });
+  document.getElementById('modal-confirm-btn').addEventListener('click', () => {
+    document.getElementById('submit-modal').classList.add('hidden');
+    submitCheck();
   });
 
   try {
@@ -1182,24 +1337,32 @@ function clearAllOverrides() {
 }
 
 /* ============================================================
-   ADMIN TRIGGER (5 taps on version footer)
+   ADMIN TRIGGER (click logo — spins, then shows login)
    ============================================================ */
 let _adminTapCount = 0;
 let _adminTapTimer = null;
-function setupAdminTrigger() {
-  const footer = document.querySelector('.home-footer');
-  if (!footer) return;
-  footer.style.cursor = 'pointer';
-  footer.addEventListener('click', () => {
+function setupLogoAdminTrigger() {
+  const logo = document.getElementById('home-logo');
+  if (!logo) return;
+  logo.addEventListener('click', () => {
     _adminTapCount++;
     clearTimeout(_adminTapTimer);
-    _adminTapTimer = setTimeout(() => { _adminTapCount = 0; }, 1500);
-    if (_adminTapCount >= 5) {
+    _adminTapTimer = setTimeout(() => { _adminTapCount = 0; }, 2000);
+    // Spin the logo on every tap
+    logo.classList.remove('spinning');
+    void logo.offsetWidth; // reflow to restart animation
+    logo.classList.add('spinning');
+    logo.addEventListener('animationend', () => logo.classList.remove('spinning'), { once: true });
+    if (_adminTapCount >= 3) {
       _adminTapCount = 0;
-      document.getElementById('admin-pw').value = '';
-      document.getElementById('admin-pw-error').style.display = 'none';
-      showScreen('admin-login');
-      setTimeout(() => document.getElementById('admin-pw').focus(), 100);
+      clearTimeout(_adminTapTimer);
+      // Wait for spin to finish, then show login
+      setTimeout(() => {
+        document.getElementById('admin-pw').value = '';
+        document.getElementById('admin-pw-error').style.display = 'none';
+        showScreen('admin-login');
+        setTimeout(() => document.getElementById('admin-pw').focus(), 100);
+      }, 550);
     }
   });
 }
@@ -1247,7 +1410,7 @@ function hasUnsavedWork() {
   return !!(c.initials || c.mileage || c.walkAround?.notes ||
             Object.keys(c.mechanical || {}).length ||
             Object.keys(c.fluids || {}).length ||
-            c.fuel || (c.tires && c.tires.some(t => t)) ||
+            c.fuel || c.tireYN ||
             Object.keys(c.electronics || {}).length ||
             c.cooler?.answered ||
             Object.keys(c.compartments || {}).length ||
@@ -1372,7 +1535,9 @@ function startAmbulanceCheck(unitId) {
     mechanical: {},
     fluids: {},
     fuel: null,
-    tires: ['','','','','',''],
+    tireYN: null,
+    tireNotes: '',
+    tireFixed: false,
     electronics: {},
     cooler: { answered: false, ok: null, reading: '', photo: null },
     // compartments: { compName: { items: {itemName: {status, notes, fixed}}, bags: { bagName: { items: {...} } } } }
@@ -1402,7 +1567,7 @@ function renderAmbulanceCheck() {
     ${renderCompartmentSection('Exterior Compartments', 'exterior', c._comps.exterior)}
     ${renderCompartmentSection('Interior Compartments', 'interior', c._comps.interior)}
     <div class="submit-wrap">
-      <button class="submit-btn" id="submit-btn" onclick="submitCheck()">Submit Check</button>
+      <button class="submit-btn" id="submit-btn" onclick="showSubmitModal()">Submit Check</button>
     </div>
   `;
   attachAmbulanceHandlers();
@@ -1457,7 +1622,7 @@ function renderRescueCheck() {
       </div>
     </div>
     <div class="submit-wrap">
-      <button class="submit-btn" onclick="submitCheck()">Submit Check</button>
+      <button class="submit-btn" onclick="showSubmitModal()">Submit Check</button>
     </div>
   `;
   attachRescueHandlers();
@@ -1598,17 +1763,29 @@ function renderFuelSection() {
 }
 
 function renderTireSection() {
-  let html = `<div class="section"><div class="section-head">Tire Pressure (PSI)</div><div class="tire-grid">`;
-  APP.data.tirePositions.forEach((pos, idx) => {
-    html += `
-      <div class="tire-cell" id="tire-cell-${idx}">
-        <label>${pos.label}</label>
-        <div class="range">${pos.min}–${pos.max} PSI</div>
-        <input type="number" data-tire="${idx}" data-min="${pos.min}" data-max="${pos.max}" inputmode="numeric" />
-      </div>`;
-  });
-  html += `</div></div>`;
-  return html;
+  return `
+    <div class="section">
+      <div class="section-head">Tire Pressure</div>
+      <div class="section-body">
+        <div class="tire-yn-section">
+          <div class="tire-yn-label">Is tire pressure between 75–85 PSI on all tires?</div>
+          <div class="tire-yn-row">
+            <div class="yn-buttons">
+              <button class="yn-btn yes" data-tire-yn="yes" style="min-width:80px;">Yes</button>
+              <button class="yn-btn no" data-tire-yn="no" style="min-width:80px;">No</button>
+            </div>
+          </div>
+          <div id="tire-detail" style="display:none; margin-top:10px; padding:10px; background:var(--warn-bg); border-radius:8px; border-left:3px solid var(--warn);">
+            <textarea id="tire-notes" placeholder="Which tire(s) are out of range? Note the readings." style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
+            <label class="fixed-check" style="margin-top:8px;">
+              <input type="checkbox" id="tire-fixed" />
+              Fixed on the spot
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function renderElectronicsSection() {
@@ -1673,6 +1850,7 @@ function renderCompartmentSection(title, type, compartments) {
               <div class="compartment-counts" id="comp-counts-${safeId}">${totalItems} item${totalItems!==1?'s':''}${bagSummary}</div>
             </div>
           </div>
+          <button class="comp-header-mark-btn" type="button" data-header-mark="${escapeAttr(comp.name)}" data-header-safeid="${safeId}" title="Mark all items complete">✓ All</button>
           <div class="compartment-expand">▼</div>
         </div>
         <div class="compartment-body" id="comp-body-${safeId}">
@@ -1694,6 +1872,18 @@ function renderCompartmentBody(safeId, comp) {
   let html = '';
   // Mark All Complete (covers direct items + all nested bag items)
   html += `<button class="mark-all-btn" type="button" data-mark-all="${escapeAttr(comp.name)}">Mark All Complete</button>`;
+
+  // Compartment-level operational check (e.g. Portable Suction)
+  if (comp.operationalCheck) {
+    html += `
+      <div class="op-check-row" data-op-comp="${escapeAttr(comp.name)}" data-op-bag="" data-op-item="__comp_op__">
+        <div class="op-check-label">🔋 ${escapeHTML(comp.operationalCheck)}</div>
+        <div class="yn-buttons">
+          <button class="yn-btn yes" data-op-yn="yes" style="min-width:60px;">Yes</button>
+          <button class="yn-btn no" data-op-yn="no" style="min-width:60px;">No</button>
+        </div>
+      </div>`;
+  }
 
   // Direct items in the compartment
   if (comp.items.length > 0) {
@@ -1732,7 +1922,16 @@ function renderCompartmentBody(safeId, comp) {
 }
 
 function itemRowHTML(it, compName, bagName, idx) {
+  const opCheck = it.operationalCheck ? `
+    <div class="op-check-row" data-op-comp="${escapeAttr(compName)}" data-op-bag="${escapeAttr(bagName)}" data-op-item="${escapeAttr(it.name)}">
+      <div class="op-check-label">🔋 ${escapeHTML(it.operationalCheck)}</div>
+      <div class="yn-buttons">
+        <button class="yn-btn yes" data-op-yn="yes" style="min-width:60px;">Yes</button>
+        <button class="yn-btn no" data-op-yn="no" style="min-width:60px;">No</button>
+      </div>
+    </div>` : '';
   return `
+    ${opCheck}
     <div class="item-row" data-comp="${escapeAttr(compName)}" data-bag="${escapeAttr(bagName)}" data-item="${escapeAttr(it.name)}">
       <div class="item-row-main">
         <div class="item-name">
@@ -1759,6 +1958,28 @@ function itemRowHTML(it, compName, bagName, idx) {
 function wireCompartmentBody(safeId, comp) {
   const body = document.getElementById('comp-body-' + safeId);
   if (!body) return;
+
+  // Operational check buttons (battery/power checks)
+  body.querySelectorAll('.op-check-row').forEach(row => {
+    const compName = row.dataset.opComp;
+    const bagName = row.dataset.opBag;
+    const itemName = row.dataset.opItem;
+    row.querySelectorAll('[data-op-yn]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        row.querySelectorAll('[data-op-yn]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const val = btn.dataset.opYn;
+        // Store in a dedicated opChecks bucket
+        const c = APP.check;
+        c.opChecks = c.opChecks || {};
+        const key = `${compName}||${bagName}||${itemName}`;
+        c.opChecks[key] = val;
+        if (val === 'no') row.style.background = 'var(--warn-bg)';
+        else row.style.background = '';
+        updateProgress();
+      });
+    });
+  });
 
   // Mark-all-complete buttons (compartment-level and bag-level)
   body.querySelectorAll('[data-mark-all]').forEach(btn => {
@@ -1821,6 +2042,15 @@ function ensureItemState(compName, bagName, itemName) {
     c.compartments[compName].items[itemName] = c.compartments[compName].items[itemName] || { status: null, notes: '', fixed: false };
     return c.compartments[compName].items[itemName];
   }
+}
+
+function markAllCompartmentComplete(safeId, comp) {
+  // Mark direct items
+  markAllItemsAsComplete(safeId, comp.name, '', null);
+  // Mark all bag items
+  (comp.bags || []).forEach(bag => {
+    markAllItemsAsComplete(safeId, comp.name, bag.name, null);
+  });
 }
 
 function markAllItemsAsComplete(safeId, compName, bagName, btn) {
@@ -1946,20 +2176,21 @@ function attachAmbulanceHandlers() {
     };
   });
 
-  // Tires
-  document.querySelectorAll('[data-tire]').forEach(input => {
-    input.oninput = e => {
-      const idx = parseInt(e.target.dataset.tire);
-      APP.check.tires[idx] = e.target.value;
-      const min = parseFloat(e.target.dataset.min);
-      const max = parseFloat(e.target.dataset.max);
-      const v = parseFloat(e.target.value);
-      const cell = document.getElementById('tire-cell-' + idx);
-      if (!isNaN(v) && (v < min || v > max)) cell.classList.add('bad');
-      else cell.classList.remove('bad');
+  // Tires — Yes/No
+  document.querySelectorAll('[data-tire-yn]').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('[data-tire-yn]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const val = btn.dataset.tireYn;
+      APP.check.tireYN = val;
+      document.getElementById('tire-detail').style.display = val === 'no' ? 'block' : 'none';
       updateProgress();
     };
   });
+  const tireNotesEl = document.getElementById('tire-notes');
+  const tireFixedEl = document.getElementById('tire-fixed');
+  if (tireNotesEl) tireNotesEl.oninput = e => { APP.check.tireNotes = e.target.value; };
+  if (tireFixedEl) tireFixedEl.onchange = e => { APP.check.tireFixed = e.target.checked; updateProgress(); };
 
   // Electronics
   document.querySelectorAll('[data-device]').forEach(row => {
@@ -1993,6 +2224,24 @@ function attachAmbulanceHandlers() {
   document.getElementById('cooler-photo').onchange = e => handlePhoto(e, 'cooler', 'cooler-photo-preview');
 
   // Compartments — lazy render on first expand
+  // Also wire header-level Mark All Complete buttons (no expand needed)
+  document.querySelectorAll('[data-header-mark]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation(); // don't toggle the compartment open/closed
+      const compName = btn.dataset.headerMark;
+      const safeId = btn.dataset.headerSafeid;
+      const card = document.getElementById('comp-' + safeId);
+      const comp = findCompartmentByName(compName);
+      if (!comp) return;
+      // Ensure body is rendered first (lazy render)
+      renderCompartmentBody(safeId, comp);
+      // Then mark everything complete
+      markAllCompartmentComplete(safeId, comp);
+      btn.classList.add('done');
+      btn.textContent = '✓ Done';
+      setTimeout(() => { btn.classList.remove('done'); btn.textContent = '✓ All'; }, 1200);
+    });
+  });
   document.querySelectorAll('.compartment-head[data-comp-toggle]').forEach(head => {
     head.addEventListener('click', () => {
       const safeId = head.dataset.compToggle;
@@ -2058,15 +2307,12 @@ function updateProgress() {
     });
     // Fuel
     total++; if (c.fuel) { done++; if (c.fuel !== 'Full') flags++; }
-    // Tires
-    APP.data.tirePositions.forEach((pos, i) => {
-      total++;
-      if (c.tires[i]) {
-        done++;
-        const v = parseFloat(c.tires[i]);
-        if (!isNaN(v) && (v < pos.min || v > pos.max)) flags++;
-      }
-    });
+    // Tires — Yes/No
+    total++;
+    if (c.tireYN) {
+      done++;
+      if (c.tireYN === 'no' && !c.tireFixed) flags++;
+    }
     // Electronics
     APP.data.electronicsDevices.forEach(dev => {
       total++;
@@ -2123,15 +2369,74 @@ function updateProgress() {
 }
 
 /* ============================================================
-   SUBMIT
+   SUBMIT MODAL
    ============================================================ */
-async function submitCheck() {
+function showSubmitModal() {
   const c = APP.check;
   if (!c) return;
   if (!c.initials) {
     alert('Please enter your initials before submitting.');
     return;
   }
+
+  // Calculate completion percentage
+  let total = 0, done = 0;
+  if (c.type === 'ambulance') {
+    total += 2; if (c.initials) done++; if (c.mileage) done++;
+    [...APP.data.mechanicalChecks, ...APP.data.fluidChecks].forEach(item => {
+      total++;
+      const bucketFor = APP.data.mechanicalChecks.includes(item) ? c.mechanical : c.fluids;
+      if (bucketFor[item]?.status) done++;
+    });
+    total++; if (c.fuel) done++;
+    total++; if (c.tireYN) done++;
+    APP.data.electronicsDevices.forEach(dev => {
+      total++;
+      if (c.electronics[dev.name] !== undefined) done++;
+    });
+    total++; if (c.cooler.answered) done++;
+    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+      const compItems = comp.items.length + (comp.bags || []).reduce((n, b) => n + b.items.length, 0);
+      total += compItems;
+      const cs = c.compartments[comp.name];
+      if (cs) {
+        Object.values(cs.items || {}).forEach(it => { if (it.status) done++; });
+        (comp.bags || []).forEach(bag => {
+          const bs = cs.bags?.[bag.name];
+          if (bs) Object.values(bs.items || {}).forEach(it => { if (it.status) done++; });
+        });
+      }
+    });
+  } else {
+    total += 2; if (c.initials) done++; if (c.mileage) done++;
+    ['exterior','fluids','interior','operational','cleaning'].forEach(group => {
+      (APP.data.rescueRigChecks[group] || []).forEach(item => {
+        total++;
+        if (c.rescueChecks[`${group}::${item}`]?.status) done++;
+      });
+    });
+  }
+
+  const pct = total === 0 ? 100 : Math.round((done / total) * 100);
+  const isComplete = pct === 100;
+
+  const warnEl = document.getElementById('modal-incomplete-warn');
+  if (isComplete) {
+    warnEl.style.display = 'none';
+  } else {
+    warnEl.style.display = 'block';
+    warnEl.textContent = `⚠ This check is only ${pct}% complete. You or your partner are responsible for completing the remaining items at the earliest convenient time.`;
+  }
+
+  document.getElementById('submit-modal').classList.remove('hidden');
+}
+
+/* ============================================================
+   SUBMIT
+   ============================================================ */
+async function submitCheck() {
+  const c = APP.check;
+  if (!c) return;
 
   const btn = document.querySelector('.submit-btn');
   btn.disabled = true;
@@ -2205,15 +2510,16 @@ function buildSummary() {
       lines.push(fl);
       lines.push('');
     }
-    lines.push('TIRE PRESSURES:');
-    APP.data.tirePositions.forEach((pos, i) => {
-      const v = c.tires[i];
-      let line = `  - ${pos.label}: ${v || '—'} PSI (range ${pos.min}–${pos.max})`;
-      const n = parseFloat(v);
-      if (!isNaN(n) && (n < pos.min || n > pos.max)) { line += ' ⚠'; flagCount++; }
-      lines.push(line);
-    });
-    lines.push('');
+    if (c.tireYN) {
+      let tl = `TIRE PRESSURE (75–85 PSI): ${c.tireYN === 'yes' ? 'Yes — All within range' : 'No ⚠'}`;
+      if (c.tireYN === 'no') {
+        flagCount++;
+        if (c.tireFixed) tl += ' (Fixed on the spot)';
+        if (c.tireNotes) tl += ` — ${c.tireNotes}`;
+      }
+      lines.push(tl);
+      lines.push('');
+    }
     if (Object.keys(c.electronics).length) {
       lines.push('ELECTRONICS:');
       APP.data.electronicsDevices.forEach(dev => {
@@ -2229,6 +2535,18 @@ function buildSummary() {
       let line = `COOLER (4–9°C): ${c.cooler.ok ? 'Yes (WNL)' : 'No ⚠'}`;
       if (!c.cooler.ok) { flagCount++; if (c.cooler.reading) line += ` — reading: ${c.cooler.reading}°C`; }
       lines.push(line);
+      lines.push('');
+    }
+    // Operational checks (battery/power)
+    if (c.opChecks && Object.keys(c.opChecks).length > 0) {
+      lines.push('OPERATIONAL CHECKS:');
+      Object.entries(c.opChecks).forEach(([key, val]) => {
+        const [compName, bagName, itemName] = key.split('||');
+        const label = itemName === '__comp_op__' ? compName : (bagName ? `${bagName} → ${itemName}` : itemName);
+        let line = `  - ${label}: ${val === 'yes' ? 'Yes ✓' : 'No ⚠'}`;
+        if (val === 'no') flagCount++;
+        lines.push(line);
+      });
       lines.push('');
     }
     // Compartments
