@@ -1,5 +1,5 @@
 {
-  "version": "2.4.1",
+  "version": "2.6.0",
   "submissionEmail": "d.boyce@northcountryems.org",
   "emailjs": {
     "serviceId": "service_uqfd3sj",
@@ -12496,23 +12496,23 @@
   },
   "unitNotices": {
     "M25A": {
-      "text": "\u26a0 REMINDER: Must activate engine brake every time you drive",
+      "text": "\u26a0 M25A: Must activate engine brake every time you drive",
       "style": "warn"
     },
     "M25B": {
-      "text": "\u26a0 REMINDER: Must activate engine brake every time you drive",
+      "text": "\u26a0 M25B: Must activate engine brake every time you drive",
       "style": "warn"
     },
     "M19": {
-      "text": "\u26a0 REMINDER: Must activate engine brake every time you drive",
+      "text": "\u26a0 M19: Must activate engine brake every time you drive",
       "style": "warn"
     },
     "M14": {
-      "text": "\u26a0 REMINDER: Must activate engine brake every time you drive",
+      "text": "\u26a0 M14: Must activate engine brake every time you drive",
       "style": "warn"
     },
     "M18": {
-      "text": "Engine brake is automatically on",
+      "text": "M18: Engine brake is automatically on",
       "style": "info"
     }
   }

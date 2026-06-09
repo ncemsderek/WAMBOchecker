@@ -905,6 +905,15 @@
       width: 90px; padding: 10px; font-size: 18px; letter-spacing: 0.15em;
       text-align: center; border: 1.5px solid var(--bad); border-radius: 8px; font-family: inherit;
     }
+    .red-tag-confirm {
+      padding: 12px 14px; font-size: 14px; font-weight: 800; cursor: pointer;
+      border: 1.5px solid var(--bad); border-radius: 8px;
+      background: #fff; color: var(--bad); white-space: nowrap; font-family: inherit;
+    }
+    .red-tag-confirm.done { background: var(--g-accent); border-color: var(--g-accent); color: #fff; }
+    .red-tag-row.confirmed { background: var(--g-pale); border-color: var(--g-accent); }
+    .red-tag-row.confirmed .red-tag-label { color: var(--g-deep); }
+    .red-tag-row.confirmed .red-tag-input { border-color: var(--g-accent); }
 
     /* controlled meds box */
     .ctrl-box { margin: 12px 0; padding: 14px; border: 2px solid var(--info); border-radius: 10px; background: #EAF1F8; }
@@ -1413,7 +1422,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.4.2',
+  version: '2.6.0',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -1991,11 +2000,17 @@ function attachRescueHandlers() {
     row.querySelectorAll('.check-btn').forEach(btn => {
       btn.onclick = () => {
         const status = btn.dataset.status;
+        const wasActive = btn.classList.contains('active');
         row.querySelectorAll('.check-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        APP.check.rescueChecks[key] = APP.check.rescueChecks[key] || {};
-        APP.check.rescueChecks[key].status = status;
-        document.getElementById('detail-' + safeKey).style.display = status === 'bad' ? 'block' : 'none';
+        if (wasActive) {
+          if (APP.check.rescueChecks[key]) APP.check.rescueChecks[key].status = null;
+          document.getElementById('detail-' + safeKey).style.display = 'none';
+        } else {
+          btn.classList.add('active');
+          APP.check.rescueChecks[key] = APP.check.rescueChecks[key] || {};
+          APP.check.rescueChecks[key].status = status;
+          document.getElementById('detail-' + safeKey).style.display = status === 'bad' ? 'block' : 'none';
+        }
         updateProgress();
       };
     });
@@ -2346,17 +2361,56 @@ function repaintCompartmentRestored(safeId, comp) {
   // Red tags
   body.querySelectorAll('.red-tag-input').forEach(inp => {
     const v = c.redTags?.[inp.dataset.redtagFor];
-    if (v) inp.value = v;
+    if (v) { inp.value = v; setRedTagConfirmed(inp.closest('.red-tag-row'), true); }
   });
   updateCompartmentCounts(safeId, comp);
 }
 
 function redTagHTML(name) {
+  const unitId = APP.check?.unitId || '';
+  const remembered = getRememberedRedTag(unitId, name);
+  const current = APP.check?.redTags?.[name] || '';
+  const shown = current || remembered;
+  const confirmed = !!current;
+  // If we have a number on file for this unit+bag, show it pre-filled with a one-tap Confirm.
+  if (remembered) {
+    return `
+      <div class="red-tag-row${confirmed ? ' confirmed' : ''}" data-redtag-name="${escapeAttr(name)}">
+        <div class="red-tag-label">🔴 Red Tag # (last 4):</div>
+        <input type="text" class="red-tag-input" inputmode="numeric" maxlength="4" placeholder="0000" value="${escapeAttr(shown)}" data-redtag-for="${escapeAttr(name)}" />
+        <button type="button" class="red-tag-confirm${confirmed ? ' done' : ''}" data-redtag-confirm="${escapeAttr(name)}">${confirmed ? '✓ Confirmed' : 'Confirm'}</button>
+      </div>`;
+  }
+  // First time on this unit+bag: type it in (it gets remembered on submit).
   return `
     <div class="red-tag-row" data-redtag-name="${escapeAttr(name)}">
       <div class="red-tag-label">🔴 Red Tag # (last 4):</div>
-      <input type="text" class="red-tag-input" inputmode="numeric" maxlength="4" placeholder="0000" data-redtag-for="${escapeAttr(name)}" />
+      <input type="text" class="red-tag-input" inputmode="numeric" maxlength="4" placeholder="0000" value="${escapeAttr(shown)}" data-redtag-for="${escapeAttr(name)}" />
     </div>`;
+}
+
+/* Remembered red tags — survive across checks so crews just confirm next time */
+const REDTAG_STORE = 'wamboapp_redtags_v1';
+function loadRedTagStore() {
+  try { return JSON.parse(localStorage.getItem(REDTAG_STORE) || '{}'); } catch (e) { return {}; }
+}
+function getRememberedRedTag(unitId, name) {
+  if (!unitId) return '';
+  return loadRedTagStore()[`${unitId}::${name}`] || '';
+}
+function persistRedTags(c) {
+  if (!c || !c.redTags) return;
+  const s = loadRedTagStore();
+  Object.entries(c.redTags).forEach(([name, val]) => {
+    if (val && val.length) s[`${c.unitId}::${name}`] = val;
+  });
+  try { localStorage.setItem(REDTAG_STORE, JSON.stringify(s)); } catch (e) {}
+}
+function setRedTagConfirmed(row, on) {
+  if (!row) return;
+  row.classList.toggle('confirmed', on);
+  const b = row.querySelector('.red-tag-confirm');
+  if (b) { b.classList.toggle('done', on); b.textContent = on ? '✓ Confirmed' : 'Confirm'; }
 }
 
 function opCheckHTML(compName, bagName, itemName, label) {
@@ -2409,16 +2463,20 @@ function wireCompartmentBody(safeId, comp) {
     const itemName = row.dataset.opItem;
     row.querySelectorAll('[data-op-yn]').forEach(btn => {
       btn.addEventListener('click', () => {
+        const wasActive = btn.classList.contains('active');
         row.querySelectorAll('[data-op-yn]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const val = btn.dataset.opYn;
-        // Store in a dedicated opChecks bucket
         const c = APP.check;
         c.opChecks = c.opChecks || {};
         const key = `${compName}||${bagName}||${itemName}`;
-        c.opChecks[key] = val;
-        if (val === 'no') row.style.background = 'var(--warn-bg)';
-        else row.style.background = '';
+        if (wasActive) {
+          delete c.opChecks[key];
+          row.style.background = '';
+        } else {
+          btn.classList.add('active');
+          const val = btn.dataset.opYn;
+          c.opChecks[key] = val;
+          row.style.background = (val === 'no') ? 'var(--warn-bg)' : '';
+        }
         updateProgress(); saveAutosave();
       });
     });
@@ -2429,12 +2487,18 @@ function wireCompartmentBody(safeId, comp) {
     const label = row.dataset.specialLabel;
     row.querySelectorAll('[data-special-yn]').forEach(btn => {
       btn.addEventListener('click', () => {
+        const wasActive = btn.classList.contains('active');
         row.querySelectorAll('[data-special-yn]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const val = btn.dataset.specialYn;
         APP.check.gurney = APP.check.gurney || {};
-        APP.check.gurney[label] = val;
-        row.classList.toggle('special-bad', val === 'no');
+        if (wasActive) {
+          delete APP.check.gurney[label];
+          row.classList.remove('special-bad');
+        } else {
+          btn.classList.add('active');
+          const val = btn.dataset.specialYn;
+          APP.check.gurney[label] = val;
+          row.classList.toggle('special-bad', val === 'no');
+        }
         updateProgress(); saveAutosave();
       });
     });
@@ -2447,6 +2511,22 @@ function wireCompartmentBody(safeId, comp) {
       e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
       APP.check.redTags = APP.check.redTags || {};
       APP.check.redTags[name] = e.target.value;
+      setRedTagConfirmed(e.target.closest('.red-tag-row'), !!e.target.value);
+      saveAutosave();
+    });
+  });
+
+  // Red tag Confirm buttons (accept the remembered number with one tap)
+  body.querySelectorAll('[data-redtag-confirm]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const name = btn.dataset.redtagConfirm;
+      const row = btn.closest('.red-tag-row');
+      const inp = row.querySelector('.red-tag-input');
+      const val = (inp.value || '').replace(/[^0-9]/g, '').slice(0, 4);
+      inp.value = val;
+      APP.check.redTags = APP.check.redTags || {};
+      APP.check.redTags[name] = val;
+      setRedTagConfirmed(row, !!val);
       saveAutosave();
     });
   });
@@ -2484,11 +2564,17 @@ function wireCompartmentBody(safeId, comp) {
     row.querySelectorAll('.item-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const status = btn.dataset.itemStatus;
+        const wasActive = btn.classList.contains('active');
         row.querySelectorAll('.item-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         const state = ensureItemState(compName, bagName, itemName);
-        state.status = status;
-        detail.style.display = (status === 'abnormal') ? 'block' : 'none';
+        if (wasActive) {
+          state.status = null;
+          detail.style.display = 'none';
+        } else {
+          btn.classList.add('active');
+          state.status = status;
+          detail.style.display = (status === 'abnormal') ? 'block' : 'none';
+        }
         updateCompartmentCounts(safeId, comp);
         updateProgress(); saveAutosave();
       });
@@ -2626,11 +2712,17 @@ function attachAmbulanceHandlers() {
     row.querySelectorAll('.check-btn').forEach(btn => {
       btn.onclick = () => {
         const status = btn.dataset.status;
+        const wasActive = btn.classList.contains('active');
         row.querySelectorAll('.check-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        APP.check[bucket][key] = APP.check[bucket][key] || {};
-        APP.check[bucket][key].status = status;
-        document.getElementById('detail-' + safeKey).style.display = status === 'bad' ? 'block' : 'none';
+        if (wasActive) {
+          if (APP.check[bucket][key]) APP.check[bucket][key].status = null;
+          document.getElementById('detail-' + safeKey).style.display = 'none';
+        } else {
+          btn.classList.add('active');
+          APP.check[bucket][key] = APP.check[bucket][key] || {};
+          APP.check[bucket][key].status = status;
+          document.getElementById('detail-' + safeKey).style.display = status === 'bad' ? 'block' : 'none';
+        }
         updateProgress(); saveAutosave();
       };
     });
@@ -2650,9 +2742,14 @@ function attachAmbulanceHandlers() {
   // Fuel
   document.querySelectorAll('.fuel-btn').forEach(btn => {
     btn.onclick = () => {
+      const wasActive = btn.classList.contains('active');
       document.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      APP.check.fuel = btn.dataset.fuel;
+      if (wasActive) {
+        APP.check.fuel = null;
+      } else {
+        btn.classList.add('active');
+        APP.check.fuel = btn.dataset.fuel;
+      }
       updateProgress(); saveAutosave();
     };
   });
@@ -2660,11 +2757,17 @@ function attachAmbulanceHandlers() {
   // Tires — Yes/No
   document.querySelectorAll('[data-tire-yn]').forEach(btn => {
     btn.onclick = () => {
-      document.querySelectorAll('[data-tire-yn]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
       const val = btn.dataset.tireYn;
-      APP.check.tireYN = val;
-      document.getElementById('tire-detail').style.display = val === 'no' ? 'block' : 'none';
+      const wasActive = btn.classList.contains('active');
+      document.querySelectorAll('[data-tire-yn]').forEach(b => b.classList.remove('active'));
+      if (wasActive) {
+        APP.check.tireYN = null;
+        document.getElementById('tire-detail').style.display = 'none';
+      } else {
+        btn.classList.add('active');
+        APP.check.tireYN = val;
+        document.getElementById('tire-detail').style.display = val === 'no' ? 'block' : 'none';
+      }
       updateProgress(); saveAutosave();
     };
   });
@@ -2676,11 +2779,17 @@ function attachAmbulanceHandlers() {
   // Oxygen — Yes/No
   document.querySelectorAll('[data-oxygen-yn]').forEach(btn => {
     btn.onclick = () => {
-      document.querySelectorAll('[data-oxygen-yn]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
       const val = btn.dataset.oxygenYn;
-      APP.check.oxygenYN = val;
-      document.getElementById('oxygen-detail').style.display = val === 'no' ? 'block' : 'none';
+      const wasActive = btn.classList.contains('active');
+      document.querySelectorAll('[data-oxygen-yn]').forEach(b => b.classList.remove('active'));
+      if (wasActive) {
+        APP.check.oxygenYN = null;
+        document.getElementById('oxygen-detail').style.display = 'none';
+      } else {
+        btn.classList.add('active');
+        APP.check.oxygenYN = val;
+        document.getElementById('oxygen-detail').style.display = val === 'no' ? 'block' : 'none';
+      }
       updateProgress(); saveAutosave();
     };
   });
@@ -2693,11 +2802,18 @@ function attachAmbulanceHandlers() {
   document.querySelectorAll('[data-cooler-yn]').forEach(btn => {
     btn.onclick = () => {
       const val = btn.dataset.coolerYn;
+      const wasActive = btn.classList.contains('active');
       document.querySelectorAll('[data-cooler-yn]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      APP.check.cooler.answered = true;
-      APP.check.cooler.ok = val === 'yes';
-      document.getElementById('cooler-detail').style.display = val === 'no' ? 'block' : 'none';
+      if (wasActive) {
+        APP.check.cooler.answered = false;
+        APP.check.cooler.ok = null;
+        document.getElementById('cooler-detail').style.display = 'none';
+      } else {
+        btn.classList.add('active');
+        APP.check.cooler.answered = true;
+        APP.check.cooler.ok = val === 'yes';
+        document.getElementById('cooler-detail').style.display = val === 'no' ? 'block' : 'none';
+      }
       updateProgress(); saveAutosave();
     };
   });
@@ -2981,6 +3097,7 @@ async function submitCheck() {
       to_email: APP.data.submissionEmail || 'd.boyce@northcountryems.org',
     };
     await emailjs.send(APP.data.emailjs.serviceId, APP.data.emailjs.templateId, params);
+    persistRedTags(c);
     clearAutosave();
     showSuccess(summary);
   } catch (err) {
