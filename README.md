@@ -1,6 +1,6 @@
 # NCEMS Apparatus Check App (WAMBOchecker)
 
-**Version 2.13.0 · 2026-06-11**
+**Version 2.13.1 · 2026-06-11**
 
 Daily apparatus check app for **North Country EMS / Clark Fire District 13**. Replaces Vector Solutions Check It. Single-file HTML + JSON, no build step, hosted on GitHub Pages. Built field-first: big tap targets, gloved-hand friendly, forest green throughout.
 
@@ -88,6 +88,7 @@ Tap the home-screen logo — it flips to an admin login. Admins can rename/add/r
 
 ## Version history
 
+- **2.13.1** — fix: the flag bar / "click to review" now renders and opens the compartment (and bag) holding a flagged item, so it scrolls into view even when that compartment was never opened
 - **2.13.0** — added an "Unable to fix" box beside "Fixed on the spot" everywhere; unable-to-fix items are listed at the top of the report email for immediate admin review; flag bar now reads "click to review"; "✓ to Complete" / bag "✓ All" open the nest and surface the red tag # box + battery checks (optional, never blocks submit)
 - **2.12.0** — suction check moved to top of Portable Suction; battery checks no longer block submit (partner may do them); red * propagates to compartment headers; "✓ to Complete" opens and prompts for unanswered red tags/battery/fridge-temp checks; Comp 5 restored to nested Blue + Orange c-collar bags with their own red tags
 - **2.11.0** — flag-cycling: tap the flag count (or recap above Submit) to step through flagged items; status bar gap fix; "✓ to Complete" / "✓ All Done" labels; sealed badge layout fix; change-request emails include paste-ready JSON

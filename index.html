@@ -1446,7 +1446,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.13.0',
+  version: '2.13.1',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -3477,10 +3477,19 @@ function collectFlaggedEls() {
 
 /* Tap the flag text (or the submit recap) repeatedly to cycle through flagged items. */
 function cycleToNextFlag() {
+  // Render any not-yet-opened compartment bodies so their flagged rows exist in the DOM
+  document.querySelectorAll('.compartment-card').forEach(card => {
+    const body = card.querySelector('.compartment-body');
+    if (!body || body.dataset.rendered === 'true') return;
+    const comp = findCompartmentByName(card.dataset.compartment);
+    if (comp) renderCompartmentBody(body.id.replace('comp-body-', ''), comp);
+  });
   const flagged = collectFlaggedEls();
   if (!flagged.length) return;
   APP.flagCycle = ((APP.flagCycle ?? -1) + 1) % flagged.length;
   const el = flagged[APP.flagCycle];
+  // Open the compartment/bag holding it so it is actually visible, not display:none
+  revealForPrompt(el);
   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   // brief highlight so the eye lands on it
   el.style.transition = 'outline 0.2s';
