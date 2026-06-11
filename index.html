@@ -867,11 +867,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       padding: 10px 14px;
       background: var(--g-pale);
       border-bottom: 1px solid var(--border);
       gap: 10px;
     }
+    .op-check-row .op-detail { flex-basis: 100%; }
+    .req-star { color: var(--bad); font-weight: 900; margin-left: 3px; }
     .op-check-label {
       flex: 1;
       font-size: 14px;
@@ -1071,7 +1074,7 @@
       z-index: 20;
       display: none;
     }
-    .status-bar.visible { display: block; }
+    .status-bar.visible { display: block; cursor: pointer; }
     .status-text {
       font-size: 13px;
       font-weight: 600;
@@ -1422,7 +1425,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.8.0',
+  version: '2.10.0',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -1449,9 +1452,13 @@ async function boot() {
     if (t) APP.lastTouched = t.closest('.item-row, .check-row, .yn-row, .op-check-row, .fuel-row, .red-tag-row') || t;
   }, true);
   document.getElementById('status-bar').addEventListener('click', () => {
-    if (APP.lastTouched && document.body.contains(APP.lastTouched)) {
-      APP.lastTouched.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    let target = (APP.lastTouched && document.body.contains(APP.lastTouched)) ? APP.lastTouched : null;
+    if (!target) {
+      // Fall back to the first unanswered row on the page
+      target = [...document.querySelectorAll('#check-body .check-row[data-key], #check-body .item-row, #check-body .yn-row')]
+        .find(row => row.querySelectorAll('.active').length === 0 && !row.closest('.op-detail'));
     }
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
   // Wire up home buttons via addEventListener (robust on mobile)
@@ -1533,6 +1540,94 @@ function clearAllOverrides() {
   if (!confirm('Clear ALL admin edits on this device? Inventory will reset to whatever is in units.json on the server. This cannot be undone.')) return;
   localStorage.removeItem('wamboapp_overrides_v1');
   alert('Cleared. Reload the page to see the original inventory.');
+}
+
+/* Email this device's admin edits as a readable change request.
+   Diffs the local overrides against the LIVE units.json on the server,
+   so the email shows exactly what needs changing in the repo. */
+async function emailOverridesDiff() {
+  let overrides;
+  try { overrides = JSON.parse(localStorage.getItem('wamboapp_overrides_v1') || 'null'); } catch (e) {}
+  if (!overrides || !overrides.ambulanceCompartments || !Object.keys(overrides.ambulanceCompartments).length) {
+    alert('No admin edits on this device — nothing to email.');
+    return;
+  }
+
+  const btn = document.getElementById('admin-email-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+  try {
+    // Fresh server copy so the diff reflects what's actually live
+    const res = await fetch(`./units.json?t=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Could not load server units.json');
+    const server = await res.json();
+
+    const flatten = (unit) => {
+      // { "Compartment::bag::item": qty } across exterior+interior(+cab)
+      const map = {};
+      const groups = [...(unit.exterior || []), ...(unit.interior || [])];
+      if (unit.cabArea) groups.push(unit.cabArea);
+      groups.forEach(comp => {
+        (comp.items || []).forEach(it => { map[`${comp.name}::${''}::${it.name}`] = it.qty; });
+        (comp.bags || []).forEach(bag => {
+          (bag.items || []).forEach(it => { map[`${comp.name}::${bag.name}::${it.name}`] = it.qty; });
+        });
+      });
+      return map;
+    };
+    const labelOf = (key) => {
+      const [comp, bag, item] = key.split('::');
+      return bag ? `${comp} → ${bag} — ${item}` : `${comp} — ${item}`;
+    };
+
+    let lines = [];
+    Object.entries(overrides.ambulanceCompartments).forEach(([unitId, edited]) => {
+      const base = server.ambulanceCompartments?.[unitId];
+      if (!base) { lines.push(`${unitId}: (unit not found in server units.json)`); return; }
+      const a = flatten(base), b = flatten(edited);
+      const unitLines = [];
+      Object.keys(b).forEach(k => {
+        if (!(k in a)) unitLines.push(`  + ADD    ${labelOf(k)} (x${b[k]})`);
+        else if (a[k] !== b[k]) unitLines.push(`  ~ QTY    ${labelOf(k)}: x${a[k]} → x${b[k]}`);
+      });
+      Object.keys(a).forEach(k => {
+        if (!(k in b)) unitLines.push(`  - REMOVE ${labelOf(k)} (was x${a[k]})`);
+      });
+      if (unitLines.length) lines.push(`${unitId}:\n` + unitLines.join('\n'));
+    });
+
+    if (!lines.length) {
+      alert('Your device\'s edits already match the live units.json — nothing to email.');
+      if (btn) { btn.disabled = false; btn.textContent = '📧 Email changes to admin'; }
+      return;
+    }
+
+    const senderNotes = (document.getElementById('admin-email-notes')?.value || '').trim();
+    const message =
+      `ADMIN CHANGE REQUEST — WAMBOchecker\n` +
+      `From device, ${new Date().toLocaleString()}\n\n` +
+      (senderNotes ? `NOTES FROM SENDER:\n${senderNotes}\n\n` : '') +
+      `Apply these inventory changes to units.json in the repo:\n\n` +
+      lines.join('\n\n') +
+      `\n\n(Sent from admin mode. The full edited units.json can also be exported on the sending device via "Download units.json".)`;
+
+    await emailjs.send(APP.data.emailjs.serviceId, APP.data.emailjs.templateId, {
+      unit_id: 'ADMIN CHANGES',
+      check_date: new Date().toISOString().slice(0, 10),
+      check_type: 'admin',
+      initials: 'ADMIN',
+      message,
+      flags_count: 0,
+      to_email: APP.data.submissionEmail || 'd.boyce@northcountryems.org',
+    });
+
+    alert('Change request emailed. The edits still need to be applied to units.json in GitHub to go fleet-wide.');
+  } catch (err) {
+    console.error('Email diff failed:', err);
+    alert('Could not send: ' + (err.text || err.message || 'unknown error'));
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '📧 Email changes to admin'; }
+  }
 }
 
 /* ============================================================
@@ -2198,7 +2293,7 @@ function oxygenInlineHTML() {
         </div>
       </div>
       <div id="oxygen-detail" style="display:none; margin-top:10px; padding:10px; background:var(--warn-bg); border-radius:8px; border-left:3px solid var(--warn);">
-        <textarea id="oxygen-notes" placeholder="Note the actual O2 reading and which tank." style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
+        <textarea id="oxygen-notes" placeholder="Note the actual O2 reading." style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
         <label class="fixed-check" style="margin-top:8px;">
           <input type="checkbox" id="oxygen-fixed" />
           Swapped / Fixed on the spot
@@ -2220,6 +2315,9 @@ function coolerInlineHTML() {
         </div>
       </div>
       <div class="cooler-detail" id="cooler-detail" style="display:none;">
+        <div style="margin-bottom:10px;padding:10px;background:#FBEAEA;border-left:3px solid var(--bad);border-radius:8px;font-weight:800;color:var(--bad);">
+          ⚠ TELL BC IMMEDIATELY — medications may have to be replaced.
+        </div>
         <div class="meta-row">
           <label>Reading</label>
           <input type="number" id="cooler-reading" placeholder="°C" step="0.1" />
@@ -2257,7 +2355,7 @@ function renderCompartmentCard(safeId, comp, type, idx = 0) {
         <div class="compartment-head" data-comp-toggle="${safeId}">
           <div class="compartment-head-left">
             <div>
-              <div class="compartment-name">${escapeHTML(comp.name)}</div>
+              <div class="compartment-name">${escapeHTML(comp.name)}${(comp.redTag || comp.operationalCheck) ? '<span class="req-star">*</span>' : ''}</div>
               <div class="compartment-counts" id="comp-counts-${safeId}">${totalItems} item${totalItems!==1?'s':''}${bagSummary}</div>
             </div>
           </div>
@@ -2343,7 +2441,7 @@ function renderCompartmentBody(safeId, comp) {
         <div class="bag-card" id="bag-${bagSafeId}" data-bag-name="${escapeAttr(bag.name)}">
           <div class="bag-head" data-bag-toggle="${bagSafeId}">
             <div>
-              <div class="bag-name"><span class="bag-icon">▸</span>${escapeHTML(bag.name)}</div>
+              <div class="bag-name"><span class="bag-icon">▸</span>${escapeHTML(bag.name)}${bag.redTag ? '<span class="req-star">*</span>' : ''}</div>
               <div class="bag-counts">${bag.items.length} items</div>
             </div>
             <button class="comp-header-mark-btn" type="button" data-bag-mark="${escapeAttr(bag.name)}" data-bag-mark-comp="${escapeAttr(comp.name)}" data-bag-mark-safeid="${safeId}">✓ All</button>
@@ -2509,7 +2607,7 @@ function itemRowHTML(it, compName, bagName, idx) {
     <div class="item-row" data-comp="${escapeAttr(compName)}" data-bag="${escapeAttr(bagName)}" data-item="${escapeAttr(it.name)}">
       <div class="item-row-main">
         <div class="item-name">
-          ${escapeHTML(it.name)}
+          ${escapeHTML(it.name)}${it.operationalCheck ? '<span class="req-star">*</span>' : ''}
           <span class="item-qty">×${it.qty}</span>
           ${it.controlled ? '<span class="item-ctrl-badge">CTRL</span>' : ''}
         </div>
@@ -3651,11 +3749,15 @@ function showAdminHome() {
   actions.className = 'admin-actions';
   actions.style.marginTop = '24px';
   actions.innerHTML = `
+    <label style="display:block;font-weight:800;font-size:13px;color:var(--g-deep);margin-bottom:6px;">Notes for admin (optional — sent with change requests)</label>
+    <textarea id="admin-email-notes" placeholder="Why these changes? e.g. 'New Hurst battery spare added to all rigs per Chief'" style="width:100%;min-height:70px;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;background:var(--white);margin-bottom:10px;"></textarea>
     <button class="admin-btn" type="button" id="admin-export-btn">Download units.json</button>
+    <button class="admin-btn" type="button" id="admin-email-btn">📧 Email changes to admin</button>
     <button class="admin-btn danger" type="button" id="admin-clear-btn">Clear all overrides</button>
   `;
   body.appendChild(actions);
   document.getElementById('admin-export-btn').addEventListener('click', exportUnitsJson);
+  document.getElementById('admin-email-btn').addEventListener('click', emailOverridesDiff);
   document.getElementById('admin-clear-btn').addEventListener('click', clearAllOverrides);
 
   showScreen('admin-home');

@@ -1,6 +1,6 @@
 # NCEMS Apparatus Check App (WAMBOchecker)
 
-**Version 2.8.0 · 2026-06-11**
+**Version 2.10.0 · 2026-06-11**
 
 Daily apparatus check app for **North Country EMS / Clark Fire District 13**. Replaces Vector Solutions Check It. Single-file HTML + JSON, no build step, hosted on GitHub Pages. Built field-first: big tap targets, gloved-hand friendly, forest green throughout.
 
@@ -87,6 +87,8 @@ Tap the home-screen logo — it flips to an admin login. Admins can rename/add/r
 
 ## Version history
 
+- **2.10.0** — op-check notes render below the YesNo row; red * markers on red-tag bags and mandatory battery checks; fridge out-of-range BC warning; progress-bar tap fallback; admin notes field on change-request emails
+- **2.9.0** — admin "Email changes to admin" button: diffs device edits against the live units.json and emails an apply-this change list
 - **2.8.0** — 90%/5 PM deferred send + dual initials; mandatory battery checks with notes; fridge temp nested in Fridge; O2 check nested in Comp 1; Cab moved to mechanical area; full interior walk reorder; Comp 3/4/5/A/B/C item reorders; C-Collar bags merged; gurney converted to check items; sealed transmission badge (M25A/B); jump-to-interior; progress-bar jump-back; picker header cleanup
 - **2.7.0** — interior area walk order applied across all five ambos
 - **2.6.0** — unit-named engine brake notices; tap-again to un-select any button
