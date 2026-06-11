@@ -1,5 +1,5 @@
 {
-  "version": "2.11.0",
+  "version": "2.12.0",
   "submissionEmail": "d.boyce@northcountryems.org",
   "emailjs": {
     "serviceId": "service_uqfd3sj",
@@ -395,7 +395,7 @@
           "name": "Compartment 5",
           "items": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "C-Collar Bags",
               "qty": 3,
               "ctrl": false
             },
@@ -412,37 +412,73 @@
           ],
           "bags": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "Blue C-collar Bag",
               "redTag": true,
               "items": [
                 {
-                  "name": "2'' Tape",
-                  "qty": 3,
+                  "name": "2\" Tape",
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Back Raft with Pump",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical Collar adjustable",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical collar-pediatric",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Headbed",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Spider Strap",
-                  "qty": 3,
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "redTag": true,
+              "items": [
+                {
+                  "name": "2\" Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
                   "ctrl": false
                 }
               ]
@@ -2918,7 +2954,7 @@
           "name": "Compartment 5",
           "items": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "C-Collar Bags",
               "qty": 3,
               "ctrl": false
             },
@@ -2935,37 +2971,73 @@
           ],
           "bags": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "Blue C-collar Bag",
               "redTag": true,
               "items": [
                 {
-                  "name": "2'' Tape",
-                  "qty": 3,
+                  "name": "2\" Tape",
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Back Raft with Pump",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical Collar adjustable",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical collar-pediatric",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Headbed",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Spider Strap",
-                  "qty": 3,
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "redTag": true,
+              "items": [
+                {
+                  "name": "2\" Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
                   "ctrl": false
                 }
               ]
@@ -5466,7 +5538,7 @@
           "name": "Compartment 5",
           "items": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "C-Collar Bags",
               "qty": 3,
               "ctrl": false
             },
@@ -5483,37 +5555,73 @@
           ],
           "bags": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "Blue C-collar Bag",
               "redTag": true,
               "items": [
                 {
-                  "name": "2'' Tape",
-                  "qty": 3,
+                  "name": "2\" Tape",
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Back Raft with Pump",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical Collar adjustable",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical collar-pediatric",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Headbed",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Spider Strap",
-                  "qty": 3,
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "redTag": true,
+              "items": [
+                {
+                  "name": "2\" Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
                   "ctrl": false
                 }
               ]
@@ -7915,7 +8023,7 @@
           "name": "Compartment 5",
           "items": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "C-Collar Bags",
               "qty": 3,
               "ctrl": false
             },
@@ -7927,37 +8035,73 @@
           ],
           "bags": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "Blue C-collar Bag",
               "redTag": true,
               "items": [
                 {
-                  "name": "2'' Tape",
-                  "qty": 3,
+                  "name": "2\" Tape",
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Back Raft with Pump",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical Collar adjustable",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical collar-pediatric",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Headbed",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Spider Strap",
-                  "qty": 3,
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "redTag": true,
+              "items": [
+                {
+                  "name": "2\" Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
                   "ctrl": false
                 }
               ]
@@ -10194,7 +10338,7 @@
           "name": "Compartment 5",
           "items": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "C-Collar Bags",
               "qty": 2,
               "ctrl": false
             },
@@ -10211,37 +10355,73 @@
           ],
           "bags": [
             {
-              "name": "C-Collar Bags (check all)",
+              "name": "Blue C-collar Bag",
               "redTag": true,
               "items": [
                 {
-                  "name": "2'' Tape",
-                  "qty": 3,
+                  "name": "2\" Tape",
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Back Raft with Pump",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical Collar adjustable",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Cervical collar-pediatric",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Headbed",
-                  "qty": 3,
+                  "qty": 1,
                   "ctrl": false
                 },
                 {
                   "name": "Spider Strap",
-                  "qty": 3,
+                  "qty": 1,
+                  "ctrl": false
+                }
+              ]
+            },
+            {
+              "name": "Orange C-collar bag",
+              "redTag": true,
+              "items": [
+                {
+                  "name": "2\" Tape",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Back Raft with Pump",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical Collar adjustable",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Cervical collar-pediatric",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Headbed",
+                  "qty": 2,
+                  "ctrl": false
+                },
+                {
+                  "name": "Spider Strap",
+                  "qty": 2,
                   "ctrl": false
                 }
               ]

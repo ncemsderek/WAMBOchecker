@@ -1430,7 +1430,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.11.0',
+  version: '2.12.0',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -2371,6 +2371,15 @@ function renderCompartmentSection(title, type, compartments) {
   return html;
 }
 
+// True if anything in this compartment needs special attention (red tag / battery / fridge temp)
+function compNeedsStar(comp) {
+  if (comp.redTag || comp.operationalCheck) return true;
+  if (comp.name === 'Fridge') return true; // nested temp check
+  if ((comp.items || []).some(it => it.operationalCheck)) return true;
+  if ((comp.bags || []).some(bag => bag.redTag || (bag.items || []).some(it => it.operationalCheck))) return true;
+  return false;
+}
+
 function renderCompartmentCard(safeId, comp, type, idx = 0) {
   const bags = comp.bags || [];
   const totalItems = comp.items.length + bags.reduce((n, b) => n + b.items.length, 0);
@@ -2384,7 +2393,7 @@ function renderCompartmentCard(safeId, comp, type, idx = 0) {
         <div class="compartment-head" data-comp-toggle="${safeId}">
           <div class="compartment-head-left">
             <div>
-              <div class="compartment-name">${escapeHTML(comp.name)}${(comp.redTag || comp.operationalCheck) ? '<span class="req-star">*</span>' : ''}</div>
+              <div class="compartment-name">${escapeHTML(comp.name)}${compNeedsStar(comp) ? '<span class="req-star">*</span>' : ''}</div>
               <div class="compartment-counts" id="comp-counts-${safeId}">${totalItems} item${totalItems!==1?'s':''}${bagSummary}</div>
             </div>
           </div>
@@ -2405,6 +2414,11 @@ function renderCompartmentBody(safeId, comp) {
   body.dataset.rendered = 'true';
 
   let html = '';
+
+  // Compartment-level operational check (e.g. Portable Suction) — at the very top
+  if (comp.operationalCheck) {
+    html += opCheckHTML(comp.name, '', '__comp_op__', comp.operationalCheck);
+  }
 
   // ── Gurney special checks (Yes/No rows, no items) ──
   if (comp.specialChecks && comp.specialChecks.length) {
@@ -2443,10 +2457,6 @@ function renderCompartmentBody(safeId, comp) {
     html = coolerInlineHTML() + html;
   }
 
-  // Compartment-level operational check (e.g. Portable Suction) — rendered AFTER items
-  if (comp.operationalCheck) {
-    html += opCheckHTML(comp.name, '', '__comp_op__', comp.operationalCheck);
-  }
 
   // ── Controlled meds disclaimer box (e.g. Med Vault) ──
   if (comp.controlledDisclaimer) {
@@ -2871,6 +2881,59 @@ function ensureItemState(compName, bagName, itemName) {
   }
 }
 
+/* After "✓ to Complete": if the compartment holds red tags, battery checks, or the fridge
+   temp check that are still unanswered, open it and ask the crew to handle them individually. */
+function promptSpecialChecks(safeId, comp) {
+  const c = APP.check;
+  const body = document.getElementById('comp-body-' + safeId);
+  const card = document.getElementById('comp-' + safeId);
+  if (!body || !card) return;
+
+  const needs = [];   // [label, element]
+  const redTagEl = name => [...body.querySelectorAll('.red-tag-row')].find(r => r.dataset.redtagName === name);
+
+  // Red tags (compartment-level + bags) with no number entered
+  if (comp.redTag && !c.redTags?.[comp.name]) {
+    needs.push([`Red tag # for ${comp.name}`, redTagEl(comp.name)]);
+  }
+  (comp.bags || []).forEach(bag => {
+    if (bag.redTag && !c.redTags?.[bag.name]) {
+      needs.push([`Red tag # for ${bag.name}`, redTagEl(bag.name)]);
+    }
+  });
+  // Battery/operational checks not answered
+  const opEl = key => [...body.querySelectorAll('.op-check-row[data-op-comp]')].find(r =>
+    `${r.dataset.opComp}||${r.dataset.opBag}||${r.dataset.opItem}` === key);
+  comp.items.forEach(it => {
+    const key = `${comp.name}||${''}||${it.name}`;
+    if (it.operationalCheck && !c.opChecks?.[key]) needs.push([`${it.name}: ${it.operationalCheck}`, opEl(key)]);
+  });
+  (comp.bags || []).forEach(bag => bag.items.forEach(it => {
+    const key = `${comp.name}||${bag.name}||${it.name}`;
+    if (it.operationalCheck && !c.opChecks?.[key]) needs.push([`${it.name}: ${it.operationalCheck}`, opEl(key)]);
+  }));
+  if (comp.operationalCheck && !c.opChecks?.[`${comp.name}||${''}||__comp_op__`]) {
+    needs.push([`${comp.name}: ${comp.operationalCheck}`, opEl(`${comp.name}||${''}||__comp_op__`)]);
+  }
+  // Fridge temp
+  if (comp.name === 'Fridge' && !c.cooler?.answered) {
+    needs.push(['Fridge reading between 4–9°C? (Yes/No)', body.querySelector('[data-cooler]')]);
+  }
+
+  if (!needs.length) return;
+
+  card.classList.add('open');
+  const bullet = '\n\u2022 ';
+  alert('\u26a0 ' + comp.name + ' still needs your attention:\n' + bullet + needs.map(n => n[0]).join(bullet) +
+        '\n\nPlease double-check these individually \u2014 they are not covered by "\u2713 to Complete".');
+  const target = needs[0][1];
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.style.outline = '3px solid var(--warn)';
+    setTimeout(() => { target.style.outline = ''; }, 2000);
+  }
+}
+
 function markAllCompartmentComplete(safeId, comp) {
   // Mark direct items
   markAllItemsAsComplete(safeId, comp.name, '', null);
@@ -3069,6 +3132,7 @@ function attachAmbulanceHandlers() {
       btn.classList.add('done');
       btn.textContent = '✓ All Done';
       saveAutosave();
+      promptSpecialChecks(safeId, comp);
     });
   });
   document.querySelectorAll('.compartment-head[data-comp-toggle]').forEach(head => {
@@ -3350,43 +3414,11 @@ function computeCompletionPct() {
   return total === 0 ? 100 : Math.round((done / total) * 100);
 }
 
-// Battery/operational checks are mandatory before submit
-function missingOpChecks() {
-  const c = APP.check;
-  if (!c || c.type !== 'ambulance') return [];
-  const missing = [];
-  allComps(c).forEach(comp => {
-    comp.items.forEach(it => {
-      if (it.operationalCheck && !c.opChecks?.[`${comp.name}||${''}||${it.name}`]) {
-        missing.push(`${comp.name} — ${it.name}`);
-      }
-    });
-    (comp.bags || []).forEach(bag => {
-      bag.items.forEach(it => {
-        if (it.operationalCheck && !c.opChecks?.[`${comp.name}||${bag.name}||${it.name}`]) {
-          missing.push(`${comp.name} → ${bag.name} — ${it.name}`);
-        }
-      });
-    });
-    if (comp.operationalCheck && !c.opChecks?.[`${comp.name}||${''}||__comp_op__`]) {
-      missing.push(`${comp.name} — power/suction check`);
-    }
-  });
-  return missing;
-}
-
 function showSubmitModal() {
   const c = APP.check;
   if (!c) return;
   if (!c.initials) {
     alert('Please enter your initials before submitting.');
-    return;
-  }
-
-  // Battery/operational checks are mandatory
-  const missing = missingOpChecks();
-  if (missing.length) {
-    alert(`⚠ ${missing.length} battery/operational check${missing.length > 1 ? 's' : ''} unanswered — these are required before submitting:\n\n• ` + missing.join('\n• '));
     return;
   }
 
