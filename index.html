@@ -1065,7 +1065,7 @@
     /* Bottom status bar */
     .status-bar {
       position: fixed;
-      bottom: 0; left: 0; right: 0;
+      bottom: -1px; left: 0; right: 0;
       background: var(--g-deep);
       color: var(--white);
       padding: 12px 16px;
@@ -1075,6 +1075,11 @@
       display: none;
     }
     .status-bar.visible { display: block; cursor: pointer; }
+    .status-bar::after { /* bleed below the bar so scroll bounce never shows a gap */
+      content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 80px; background: var(--g-deep);
+    }
+    #status-flags { text-decoration: underline; font-weight: 800; }
+    html, body { overscroll-behavior-y: none; }
     .status-text {
       font-size: 13px;
       font-weight: 600;
@@ -1425,7 +1430,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.10.0',
+  version: '2.11.0',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -1451,6 +1456,10 @@ async function boot() {
     const t = e.target.closest('.item-btn, .check-btn, .yn-btn, .fuel-btn, .red-tag-confirm');
     if (t) APP.lastTouched = t.closest('.item-row, .check-row, .yn-row, .op-check-row, .fuel-row, .red-tag-row') || t;
   }, true);
+  document.getElementById('status-flags').addEventListener('click', e => {
+    e.stopPropagation();
+    cycleToNextFlag();
+  });
   document.getElementById('status-bar').addEventListener('click', () => {
     let target = (APP.lastTouched && document.body.contains(APP.lastTouched)) ? APP.lastTouched : null;
     if (!target) {
@@ -1603,12 +1612,31 @@ async function emailOverridesDiff() {
     }
 
     const senderNotes = (document.getElementById('admin-email-notes')?.value || '').trim();
+
+    // Paste-ready JSON of the changed units (EmailJS caps message size, so guard at ~35KB)
+    let jsonBlock = '';
+    const changedUnits = Object.keys(overrides.ambulanceCompartments);
+    const payload = JSON.stringify(
+      Object.fromEntries(changedUnits.map(u => [u, overrides.ambulanceCompartments[u]]))
+    );
+    if (payload.length <= 35000) {
+      jsonBlock =
+        `\n\n========== PASTE-READY JSON ==========\n` +
+        `Replace these keys inside "ambulanceCompartments" in units.json:\n\n` +
+        payload +
+        `\n======================================`;
+    } else {
+      jsonBlock =
+        `\n\n(Full JSON too large to email — on the sending device, tap "Download units.json" and upload that file to the repo instead.)`;
+    }
+
     const message =
       `ADMIN CHANGE REQUEST — WAMBOchecker\n` +
       `From device, ${new Date().toLocaleString()}\n\n` +
       (senderNotes ? `NOTES FROM SENDER:\n${senderNotes}\n\n` : '') +
       `Apply these inventory changes to units.json in the repo:\n\n` +
       lines.join('\n\n') +
+      jsonBlock +
       `\n\n(Sent from admin mode. The full edited units.json can also be exported on the sending device via "Download units.json".)`;
 
     await emailjs.send(APP.data.emailjs.serviceId, APP.data.emailjs.templateId, {
@@ -2021,6 +2049,7 @@ function renderAmbulanceCheck() {
     ${renderCompartmentSection('Exterior Compartments', 'exterior', c._comps.exterior)}
     ${renderCompartmentSection('Interior Compartments', 'interior', c._comps.interior)}
     <div class="submit-wrap">
+      <button type="button" id="submit-flags" style="display:none;width:100%;margin-bottom:10px;padding:12px;font-family:inherit;font-size:15px;font-weight:800;color:var(--warn);background:var(--warn-bg);border:1.5px solid var(--warn);border-radius:10px;cursor:pointer;" onclick="cycleToNextFlag()"></button>
       <button class="submit-btn" id="submit-btn" onclick="showSubmitModal()">Submit Check</button>
     </div>
   `;
@@ -2206,9 +2235,9 @@ function renderFluidsSection() {
   let html = `<div class="section"><div class="section-head">Fluids</div><div class="section-body">`;
   APP.data.fluidChecks.forEach(item => {
     if (isSealedTransmission(item)) {
-      html += `<div class="check-row" style="align-items:center;">
-        <div class="check-label">${escapeHTML(item)}</div>
-        <span style="font-size:13px;font-weight:700;color:var(--info);background:#EAF2F8;border:1px solid var(--info);border-radius:8px;padding:6px 10px;white-space:nowrap;">Sealed — not needed</span>
+      html += `<div class="check-row" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <div class="check-label" style="flex:1;">${escapeHTML(item)}</div>
+        <span style="font-size:13px;font-weight:700;color:var(--info);background:#EAF2F8;border:1px solid var(--info);border-radius:8px;padding:6px 10px;white-space:nowrap;flex-shrink:0;margin-left:auto;">Sealed — not needed</span>
       </div>`;
       return;
     }
@@ -2348,7 +2377,7 @@ function renderCompartmentCard(safeId, comp, type, idx = 0) {
   const bagSummary = bags.length ? ` · ${bags.length} bag${bags.length>1?'s':''} inside` : '';
   const hasItems = comp.items.length > 0 || (comp.bags && comp.bags.length > 0);
   const markBtn = hasItems
-    ? `<button class="comp-header-mark-btn" type="button" data-header-mark="${escapeAttr(comp.name)}" data-header-safeid="${safeId}" title="Mark all items complete">ALL COMPLETE</button>`
+    ? `<button class="comp-header-mark-btn" type="button" data-header-mark="${escapeAttr(comp.name)}" data-header-safeid="${safeId}" title="Mark all items complete">✓ to Complete</button>`
     : '';
   return `
       <div class="compartment-card" data-compartment="${escapeAttr(comp.name)}" data-type="${type}" data-idx="${idx}" id="comp-${safeId}">
@@ -3038,7 +3067,7 @@ function attachAmbulanceHandlers() {
       markAllCompartmentComplete(safeId, comp);
       // Stay done — don't revert
       btn.classList.add('done');
-      btn.textContent = '✓ ALL DONE';
+      btn.textContent = '✓ All Done';
       saveAutosave();
     });
   });
@@ -3211,8 +3240,68 @@ function updateProgress() {
   const pct = total === 0 ? 0 : Math.round((done / total) * 100);
   const label = c.type === 'ambulance' ? 'Ambulance check' : 'Rescue check';
   document.getElementById('status-label').textContent = `${label} is ${pct}% complete`;
-  document.getElementById('status-flags').textContent = flags > 0 ? `⚠ ${flags} flag${flags===1?'':'s'}` : '';
+  document.getElementById('status-flags').textContent = flags > 0
+    ? `⚠ ${flags} flagged item${flags===1?'':'s'} — tap to fix before submitting`
+    : '';
   document.getElementById('status-fill').style.width = pct + '%';
+  // Flags recap next to the Submit button
+  const sf = document.getElementById('submit-flags');
+  if (sf) {
+    if (flags > 0) {
+      sf.style.display = 'block';
+      sf.textContent = `⚠ ${flags} flagged item${flags===1?'':'s'} — tap to review`;
+    } else {
+      sf.style.display = 'none';
+    }
+  }
+}
+
+/* Collect every currently-flagged element on the page (abnormal/no without "fixed"). */
+function collectFlaggedEls() {
+  const els = [];
+  const root = document.getElementById('check-body');
+  if (!root) return els;
+  // WNL rows marked Abnormal, not fixed
+  root.querySelectorAll('.check-row[data-key]').forEach(row => {
+    if (row.querySelector('.check-btn.bad.active')) {
+      const fx = row.parentElement.querySelector(`#detail-${row.dataset.key.replace(/[^a-zA-Z0-9]/g,'_')} [data-fixed]`) ||
+                 row.querySelector('[data-fixed]');
+      const fixed = fx ? fx.checked : false;
+      if (!fixed) els.push(row);
+    }
+  });
+  // Item rows marked ✗, not fixed
+  root.querySelectorAll('.item-row').forEach(row => {
+    if (row.querySelector('.item-btn.abnormal.active') && !row.querySelector('[data-fixed]:checked')) els.push(row);
+  });
+  // Op checks answered No, not fixed
+  root.querySelectorAll('.op-check-row[data-op-comp]').forEach(row => {
+    if (row.querySelector('[data-op-yn="no"].active') && !row.querySelector('[data-op-fixed]:checked')) els.push(row);
+  });
+  // Oxygen / cooler / tires answered No (oxygen+tire honor their fixed boxes)
+  const oxyNo = root.querySelector('[data-oxygen-yn="no"].active');
+  if (oxyNo && !document.getElementById('oxygen-fixed')?.checked) els.push(oxyNo.closest('.op-check-row') || oxyNo);
+  const coolNo = root.querySelector('[data-cooler-yn="no"].active');
+  if (coolNo) els.push(coolNo.closest('.op-check-row') || coolNo);
+  const tireNo = root.querySelector('[data-tire-yn="no"].active');
+  if (tireNo && !document.getElementById('tire-fixed')?.checked) els.push(tireNo.closest('.yn-row') || tireNo);
+  // Low fuel
+  const fuelBtn = root.querySelector('.fuel-btn.active:not(.full)');
+  if (fuelBtn) els.push(fuelBtn.closest('.section') || fuelBtn);
+  return els;
+}
+
+/* Tap the flag text (or the submit recap) repeatedly to cycle through flagged items. */
+function cycleToNextFlag() {
+  const flagged = collectFlaggedEls();
+  if (!flagged.length) return;
+  APP.flagCycle = ((APP.flagCycle ?? -1) + 1) % flagged.length;
+  const el = flagged[APP.flagCycle];
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // brief highlight so the eye lands on it
+  el.style.transition = 'outline 0.2s';
+  el.style.outline = '3px solid var(--warn)';
+  setTimeout(() => { el.style.outline = ''; }, 1400);
 }
 
 /* ============================================================
