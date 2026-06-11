@@ -1320,7 +1320,7 @@
 <div class="screen" id="screen-ambulance-picker">
   <div class="header">
     <button class="back-btn" onclick="goHome()">← Back</button>
-    <div class="header-title">Pick an Ambulance</div>
+    <div class="header-title"></div>
   </div>
   <div class="picker-wrap" id="ambulance-picker-list"></div>
 </div>
@@ -1422,7 +1422,7 @@
    APP STATE
    ============================================================ */
 const APP = {
-  version: '2.7.0',
+  version: '2.8.0',
   data: null,        // loaded units.json
   screen: 'home',
   check: null,       // current in-progress check
@@ -1438,6 +1438,21 @@ window.addEventListener('DOMContentLoaded', boot);
 async function boot() {
   document.getElementById('today-date').textContent =
     new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+
+  // Deferred reports: send anything held past 5 PM, and re-check every minute
+  flushPendingSubmissions();
+  setInterval(flushPendingSubmissions, 60 * 1000);
+
+  // Track the last check element the user touched; tapping the progress bar jumps back to it
+  document.addEventListener('click', e => {
+    const t = e.target.closest('.item-btn, .check-btn, .yn-btn, .fuel-btn, .red-tag-confirm');
+    if (t) APP.lastTouched = t.closest('.item-row, .check-row, .yn-row, .op-check-row, .fuel-row, .red-tag-row') || t;
+  }, true);
+  document.getElementById('status-bar').addEventListener('click', () => {
+    if (APP.lastTouched && document.body.contains(APP.lastTouched)) {
+      APP.lastTouched.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
 
   // Wire up home buttons via addEventListener (robust on mobile)
   document.getElementById('home-btn-ambulances').addEventListener('click', showAmbulancePicker);
@@ -1474,6 +1489,9 @@ async function boot() {
     if (APP.data.emailjs && APP.data.emailjs.publicKey && window.emailjs) {
       emailjs.init({ publicKey: APP.data.emailjs.publicKey });
     }
+
+    // Now that data + email are ready, send any reports held past 5 PM
+    flushPendingSubmissions();
   } catch (err) {
     document.body.insertAdjacentHTML('afterbegin',
       `<div class="error-box">Failed to load units.json: ${err.message}. Check that units.json is uploaded next to index.html.</div>`);
@@ -1882,6 +1900,7 @@ function startAmbulanceCheck(unitId) {
     // compartments: { compName: { items: {itemName: {status, notes, fixed}}, bags: { bagName: { items: {...} } } } }
     compartments: {},
     _comps: comps,
+    _cabArea: comps.cabArea || null,
   };
   renderAmbulanceCheck();
   showScreen('check');
@@ -1900,11 +1919,10 @@ function renderAmbulanceCheck() {
     ${renderMetaBlock()}
     ${renderWalkAroundSection()}
     ${renderMechanicalSection()}
+    ${renderCabSection()}
     ${renderFluidsSection()}
     ${renderFuelSection()}
     ${renderTireSection()}
-    ${renderOxygenSection()}
-    ${renderCoolerSection()}
     ${renderCompartmentSection('Exterior Compartments', 'exterior', c._comps.exterior)}
     ${renderCompartmentSection('Interior Compartments', 'interior', c._comps.interior)}
     <div class="submit-wrap">
@@ -1912,6 +1930,18 @@ function renderAmbulanceCheck() {
     </div>
   `;
   attachAmbulanceHandlers();
+}
+
+// Cab items render right after Mechanical (moved out of interior walk)
+function renderCabSection() {
+  const cab = APP.check?._cabArea;
+  if (!cab) return '';
+  const safeId = 'cabarea';
+  return `
+    <div class="section"><div class="section-head">Cab</div>
+    <div class="compartment-list">
+      ${renderCompartmentCard(safeId, cab, 'cab')}
+    </div></div>`;
 }
 
 function renderUnitNotice() {
@@ -2040,6 +2070,7 @@ function renderMetaBlock() {
         <label>Mileage</label>
         <input type="number" id="meta-mileage" placeholder="Starting mileage" />
       </div>
+      <button type="button" class="comp-header-mark-btn" style="width:100%;margin-top:10px;" onclick="document.getElementById('section-comp-interior')?.scrollIntoView({behavior:'smooth'})">⤵ Jump to Interior</button>
     </div>
   `;
 }
@@ -2071,9 +2102,21 @@ function renderMechanicalSection() {
   return html;
 }
 
+function isSealedTransmission(item) {
+  return item === 'Transmission fluid' &&
+    (APP.data.sealedTransmission || []).includes(APP.check?.unitId);
+}
+
 function renderFluidsSection() {
   let html = `<div class="section"><div class="section-head">Fluids</div><div class="section-body">`;
   APP.data.fluidChecks.forEach(item => {
+    if (isSealedTransmission(item)) {
+      html += `<div class="check-row" style="align-items:center;">
+        <div class="check-label">${escapeHTML(item)}</div>
+        <span style="font-size:13px;font-weight:700;color:var(--info);background:#EAF2F8;border:1px solid var(--info);border-radius:8px;padding:6px 10px;white-space:nowrap;">Sealed — not needed</span>
+      </div>`;
+      return;
+    }
     html += renderWNLRow(item, item, 'fluids');
   });
   html += `</div></div>`;
@@ -2142,53 +2185,49 @@ function renderTireSection() {
   `;
 }
 
-function renderOxygenSection() {
+// Renders INSIDE Compartment 1, nested under the Ambulance Main O2 item
+function oxygenInlineHTML() {
   const o = APP.data.oxygenCheck || { label: 'Is main O2 above 500 PSI?', minPsi: 500 };
   return `
-    <div class="section">
-      <div class="section-head">Oxygen Level</div>
-      <div class="section-body">
-        <div class="yn-row" data-oxygen>
-          <div class="yn-label">${escapeHTML(o.label)}</div>
-          <div class="yn-buttons">
-            <button class="yn-btn yes" data-oxygen-yn="yes">Yes</button>
-            <button class="yn-btn no" data-oxygen-yn="no">No</button>
-          </div>
+    <div class="op-check-row" data-oxygen style="display:block;">
+      <div class="yn-row">
+        <div class="yn-label">🫁 ${escapeHTML(o.label)}</div>
+        <div class="yn-buttons">
+          <button class="yn-btn yes" data-oxygen-yn="yes">Yes</button>
+          <button class="yn-btn no" data-oxygen-yn="no">No</button>
         </div>
-        <div id="oxygen-detail" style="display:none; margin-top:10px; padding:10px; background:var(--warn-bg); border-radius:8px; border-left:3px solid var(--warn);">
-          <textarea id="oxygen-notes" placeholder="Note the actual O2 reading and which tank." style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
-          <label class="fixed-check" style="margin-top:8px;">
-            <input type="checkbox" id="oxygen-fixed" />
-            Swapped / Fixed on the spot
-          </label>
-        </div>
+      </div>
+      <div id="oxygen-detail" style="display:none; margin-top:10px; padding:10px; background:var(--warn-bg); border-radius:8px; border-left:3px solid var(--warn);">
+        <textarea id="oxygen-notes" placeholder="Note the actual O2 reading and which tank." style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
+        <label class="fixed-check" style="margin-top:8px;">
+          <input type="checkbox" id="oxygen-fixed" />
+          Swapped / Fixed on the spot
+        </label>
       </div>
     </div>
   `;
 }
 
-function renderCoolerSection() {
+// Renders INSIDE the Fridge compartment body
+function coolerInlineHTML() {
   return `
-    <div class="section">
-      <div class="section-head">Cooler / Fridge</div>
-      <div class="section-body">
-        <div class="yn-row" data-cooler>
-          <div class="yn-label">Reading between 4°C and 9°C?</div>
-          <div class="yn-buttons">
-            <button class="yn-btn yes" data-cooler-yn="yes">Yes</button>
-            <button class="yn-btn no" data-cooler-yn="no">No</button>
-          </div>
+    <div class="op-check-row" data-cooler style="display:block;">
+      <div class="yn-row">
+        <div class="yn-label">🌡 Reading between 4°C and 9°C?</div>
+        <div class="yn-buttons">
+          <button class="yn-btn yes" data-cooler-yn="yes">Yes</button>
+          <button class="yn-btn no" data-cooler-yn="no">No</button>
         </div>
-        <div class="cooler-detail" id="cooler-detail" style="display:none;">
-          <div class="meta-row">
-            <label>Reading</label>
-            <input type="number" id="cooler-reading" placeholder="°C" step="0.1" />
-          </div>
-          <div class="photo-input">
-            <label for="cooler-photo">📷 Photo of thermometer</label>
-            <input type="file" id="cooler-photo" accept="image/*" capture="environment" />
-            <div id="cooler-photo-preview"></div>
-          </div>
+      </div>
+      <div class="cooler-detail" id="cooler-detail" style="display:none;">
+        <div class="meta-row">
+          <label>Reading</label>
+          <input type="number" id="cooler-reading" placeholder="°C" step="0.1" />
+        </div>
+        <div class="photo-input">
+          <label for="cooler-photo">📷 Photo of thermometer</label>
+          <input type="file" id="cooler-photo" accept="image/*" capture="environment" />
+          <div id="cooler-photo-preview"></div>
         </div>
       </div>
     </div>
@@ -2196,18 +2235,24 @@ function renderCoolerSection() {
 }
 
 function renderCompartmentSection(title, type, compartments) {
-  let html = `<div class="section"><div class="section-head">${escapeHTML(title)} (${compartments.length})</div>`;
+  let html = `<div class="section" id="section-comp-${type}"><div class="section-head">${escapeHTML(title)} (${compartments.length})</div>`;
   html += `<div class="compartment-list">`;
   compartments.forEach((comp, idx) => {
-    const safeId = `${type}-${idx}`;
-    const bags = comp.bags || [];
-    const totalItems = comp.items.length + bags.reduce((n, b) => n + b.items.length, 0);
-    const bagSummary = bags.length ? ` · ${bags.length} bag${bags.length>1?'s':''} inside` : '';
-    const hasItems = comp.items.length > 0 || (comp.bags && comp.bags.length > 0);
-    const markBtn = hasItems
-      ? `<button class="comp-header-mark-btn" type="button" data-header-mark="${escapeAttr(comp.name)}" data-header-safeid="${safeId}" title="Mark all items complete">ALL COMPLETE</button>`
-      : '';
-    html += `
+    html += renderCompartmentCard(`${type}-${idx}`, comp, type, idx);
+  });
+  html += `</div></div>`;
+  return html;
+}
+
+function renderCompartmentCard(safeId, comp, type, idx = 0) {
+  const bags = comp.bags || [];
+  const totalItems = comp.items.length + bags.reduce((n, b) => n + b.items.length, 0);
+  const bagSummary = bags.length ? ` · ${bags.length} bag${bags.length>1?'s':''} inside` : '';
+  const hasItems = comp.items.length > 0 || (comp.bags && comp.bags.length > 0);
+  const markBtn = hasItems
+    ? `<button class="comp-header-mark-btn" type="button" data-header-mark="${escapeAttr(comp.name)}" data-header-safeid="${safeId}" title="Mark all items complete">ALL COMPLETE</button>`
+    : '';
+  return `
       <div class="compartment-card" data-compartment="${escapeAttr(comp.name)}" data-type="${type}" data-idx="${idx}" id="comp-${safeId}">
         <div class="compartment-head" data-comp-toggle="${safeId}">
           <div class="compartment-head-left">
@@ -2224,9 +2269,6 @@ function renderCompartmentSection(title, type, compartments) {
         </div>
       </div>
     `;
-  });
-  html += `</div></div>`;
-  return html;
 }
 
 /* Lazy-render a compartment's body the first time it's opened. */
@@ -2263,8 +2305,15 @@ function renderCompartmentBody(safeId, comp) {
     html += `<div class="item-list" data-bag-name="">`;
     comp.items.forEach((it, itIdx) => {
       html += itemRowHTML(it, comp.name, '', itIdx);
+      // Nest the main O2 level check under the Ambulance Main O2 item
+      if (/ambulance main\s*o?0?2/i.test(it.name)) html += oxygenInlineHTML();
     });
     html += `</div>`;
+  }
+
+  // Fridge gets the temp check nested at the top of its body
+  if (comp.name === 'Fridge') {
+    html = coolerInlineHTML() + html;
   }
 
   // Compartment-level operational check (e.g. Portable Suction) — rendered AFTER items
@@ -2342,13 +2391,35 @@ function repaintCompartmentRestored(safeId, comp) {
   });
   // Op checks
   body.querySelectorAll('.op-check-row').forEach(row => {
+    if (!row.dataset.opComp) return; // skip oxygen/cooler inline rows
     const key = `${row.dataset.opComp}||${row.dataset.opBag}||${row.dataset.opItem}`;
     const val = c.opChecks?.[key];
     if (val) {
       row.querySelectorAll('[data-op-yn]').forEach(b => b.classList.toggle('active', b.dataset.opYn === val));
       if (val === 'no') row.style.background = 'var(--warn-bg)';
+      const det = row.querySelector('.op-detail');
+      if (det) {
+        det.style.display = val === 'no' ? 'block' : 'none';
+        const ta = det.querySelector('[data-op-notes]'); if (ta) ta.value = c.opNotes?.[key] || '';
+        const fx = det.querySelector('[data-op-fixed]'); if (fx) fx.checked = !!c.opFixed?.[key];
+      }
     }
   });
+  // Nested oxygen check (Compartment 1)
+  if (c.oxygenYN && body.querySelector('[data-oxygen-yn]')) {
+    body.querySelectorAll('[data-oxygen-yn]').forEach(b => b.classList.toggle('active', b.dataset.oxygenYn === c.oxygenYN));
+    const od = body.querySelector('#oxygen-detail');
+    if (od) od.style.display = c.oxygenYN === 'no' ? 'block' : 'none';
+    const on = body.querySelector('#oxygen-notes'); if (on) on.value = c.oxygenNotes || '';
+    const of = body.querySelector('#oxygen-fixed'); if (of) of.checked = !!c.oxygenFixed;
+  }
+  // Nested cooler check (Fridge)
+  if (c.cooler?.answered && body.querySelector('[data-cooler-yn]')) {
+    body.querySelectorAll('[data-cooler-yn]').forEach(b => b.classList.toggle('active', b.dataset.coolerYn === (c.cooler.ok ? 'yes' : 'no')));
+    const cd = body.querySelector('#cooler-detail');
+    if (cd) cd.style.display = c.cooler.ok ? 'none' : 'block';
+    const cr = body.querySelector('#cooler-reading'); if (cr) cr.value = c.cooler.reading || '';
+  }
   // Gurney special checks
   body.querySelectorAll('[data-special-comp]').forEach(row => {
     const label = row.dataset.specialLabel;
@@ -2421,6 +2492,13 @@ function opCheckHTML(compName, bagName, itemName, label) {
         <button class="yn-btn yes" data-op-yn="yes" style="min-width:60px;">Yes</button>
         <button class="yn-btn no" data-op-yn="no" style="min-width:60px;">No</button>
       </div>
+      <div class="op-detail" style="display:none; flex-basis:100%; margin-top:10px; padding:10px; background:var(--warn-bg); border-radius:8px; border-left:3px solid var(--warn);">
+        <textarea data-op-notes placeholder="What's wrong? (battery dead, won't turn on, etc.)" style="width:100%;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;background:var(--white);"></textarea>
+        <label class="fixed-check" style="margin-top:8px;">
+          <input type="checkbox" data-op-fixed />
+          Swapped / Fixed on the spot
+        </label>
+      </div>
     </div>`;
 }
 
@@ -2456,6 +2534,54 @@ function wireCompartmentBody(safeId, comp) {
   const body = document.getElementById('comp-body-' + safeId);
   if (!body) return;
 
+  // Nested Oxygen check (lives under Ambulance Main O2 in Compartment 1)
+  body.querySelectorAll('[data-oxygen-yn]').forEach(btn => {
+    btn.onclick = () => {
+      const val = btn.dataset.oxygenYn;
+      const wasActive = btn.classList.contains('active');
+      body.querySelectorAll('[data-oxygen-yn]').forEach(b => b.classList.remove('active'));
+      const od = body.querySelector('#oxygen-detail');
+      if (wasActive) {
+        APP.check.oxygenYN = null;
+        if (od) od.style.display = 'none';
+      } else {
+        btn.classList.add('active');
+        APP.check.oxygenYN = val;
+        if (od) od.style.display = val === 'no' ? 'block' : 'none';
+      }
+      updateProgress(); saveAutosave();
+    };
+  });
+  const o2n = body.querySelector('#oxygen-notes');
+  const o2f = body.querySelector('#oxygen-fixed');
+  if (o2n) o2n.oninput = e => { APP.check.oxygenNotes = e.target.value; saveAutosave(); };
+  if (o2f) o2f.onchange = e => { APP.check.oxygenFixed = e.target.checked; updateProgress(); saveAutosave(); };
+
+  // Nested Cooler/Fridge temp check (lives in the Fridge compartment)
+  body.querySelectorAll('[data-cooler-yn]').forEach(btn => {
+    btn.onclick = () => {
+      const val = btn.dataset.coolerYn;
+      const wasActive = btn.classList.contains('active');
+      body.querySelectorAll('[data-cooler-yn]').forEach(b => b.classList.remove('active'));
+      const cd = body.querySelector('#cooler-detail');
+      if (wasActive) {
+        APP.check.cooler.answered = false;
+        APP.check.cooler.ok = null;
+        if (cd) cd.style.display = 'none';
+      } else {
+        btn.classList.add('active');
+        APP.check.cooler.answered = true;
+        APP.check.cooler.ok = val === 'yes';
+        if (cd) cd.style.display = val === 'no' ? 'block' : 'none';
+      }
+      updateProgress(); saveAutosave();
+    };
+  });
+  const clr = body.querySelector('#cooler-reading');
+  const clp = body.querySelector('#cooler-photo');
+  if (clr) clr.oninput = e => { APP.check.cooler.reading = e.target.value; saveAutosave(); };
+  if (clp) clp.onchange = e => handlePhoto(e, 'cooler', 'cooler-photo-preview');
+
   // Operational check buttons (battery/power checks)
   body.querySelectorAll('.op-check-row').forEach(row => {
     const compName = row.dataset.opComp;
@@ -2468,17 +2594,30 @@ function wireCompartmentBody(safeId, comp) {
         const c = APP.check;
         c.opChecks = c.opChecks || {};
         const key = `${compName}||${bagName}||${itemName}`;
+        const det = row.querySelector('.op-detail');
         if (wasActive) {
           delete c.opChecks[key];
           row.style.background = '';
+          if (det) det.style.display = 'none';
         } else {
           btn.classList.add('active');
           const val = btn.dataset.opYn;
           c.opChecks[key] = val;
           row.style.background = (val === 'no') ? 'var(--warn-bg)' : '';
+          if (det) det.style.display = (val === 'no') ? 'block' : 'none';
         }
         updateProgress(); saveAutosave();
       });
+    });
+    // Op detail: notes + swapped/fixed
+    const opKey = `${compName}||${bagName}||${itemName}`;
+    const opNotes = row.querySelector('[data-op-notes]');
+    const opFixed = row.querySelector('[data-op-fixed]');
+    if (opNotes) opNotes.addEventListener('input', e => {
+      const c = APP.check; c.opNotes = c.opNotes || {}; c.opNotes[opKey] = e.target.value; saveAutosave();
+    });
+    if (opFixed) opFixed.addEventListener('change', e => {
+      const c = APP.check; c.opFixed = c.opFixed || {}; c.opFixed[opKey] = e.target.checked; updateProgress(); saveAutosave();
     });
   });
 
@@ -2645,10 +2784,18 @@ function markAllItemsAsComplete(safeId, compName, bagName, btn) {
   updateProgress();
 }
 
+function allComps(c) {
+  const a = [...c._comps.exterior, ...c._comps.interior];
+  if (c._cabArea) a.push(c._cabArea);
+  return a;
+}
+
 function findCompartmentByName(name) {
   const c = APP.check;
   if (!c || !c._comps) return null;
-  return [...c._comps.exterior, ...c._comps.interior].find(co => co.name === name);
+  const all = allComps(c);
+  if (c._cabArea) all.push(c._cabArea);
+  return all.find(co => co.name === name);
 }
 
 function updateCompartmentCounts(safeId, comp) {
@@ -2776,49 +2923,7 @@ function attachAmbulanceHandlers() {
   if (tireNotesEl) tireNotesEl.oninput = e => { APP.check.tireNotes = e.target.value; saveAutosave(); };
   if (tireFixedEl) tireFixedEl.onchange = e => { APP.check.tireFixed = e.target.checked; updateProgress(); saveAutosave(); };
 
-  // Oxygen — Yes/No
-  document.querySelectorAll('[data-oxygen-yn]').forEach(btn => {
-    btn.onclick = () => {
-      const val = btn.dataset.oxygenYn;
-      const wasActive = btn.classList.contains('active');
-      document.querySelectorAll('[data-oxygen-yn]').forEach(b => b.classList.remove('active'));
-      if (wasActive) {
-        APP.check.oxygenYN = null;
-        document.getElementById('oxygen-detail').style.display = 'none';
-      } else {
-        btn.classList.add('active');
-        APP.check.oxygenYN = val;
-        document.getElementById('oxygen-detail').style.display = val === 'no' ? 'block' : 'none';
-      }
-      updateProgress(); saveAutosave();
-    };
-  });
-  const o2NotesEl = document.getElementById('oxygen-notes');
-  const o2FixedEl = document.getElementById('oxygen-fixed');
-  if (o2NotesEl) o2NotesEl.oninput = e => { APP.check.oxygenNotes = e.target.value; saveAutosave(); };
-  if (o2FixedEl) o2FixedEl.onchange = e => { APP.check.oxygenFixed = e.target.checked; updateProgress(); saveAutosave(); };
-
-  // Cooler
-  document.querySelectorAll('[data-cooler-yn]').forEach(btn => {
-    btn.onclick = () => {
-      const val = btn.dataset.coolerYn;
-      const wasActive = btn.classList.contains('active');
-      document.querySelectorAll('[data-cooler-yn]').forEach(b => b.classList.remove('active'));
-      if (wasActive) {
-        APP.check.cooler.answered = false;
-        APP.check.cooler.ok = null;
-        document.getElementById('cooler-detail').style.display = 'none';
-      } else {
-        btn.classList.add('active');
-        APP.check.cooler.answered = true;
-        APP.check.cooler.ok = val === 'yes';
-        document.getElementById('cooler-detail').style.display = val === 'no' ? 'block' : 'none';
-      }
-      updateProgress(); saveAutosave();
-    };
-  });
-  document.getElementById('cooler-reading').oninput = e => { APP.check.cooler.reading = e.target.value; saveAutosave(); };
-  document.getElementById('cooler-photo').onchange = e => handlePhoto(e, 'cooler', 'cooler-photo-preview');
+  // Oxygen + Cooler now live inside Compartment 1 and Fridge — wired in wireCompartmentBody().
 
   // Compartments — lazy render on first expand
   // Also wire header-level Mark All Complete buttons (no expand needed)
@@ -2933,6 +3038,7 @@ function updateProgress() {
     total += 2; if (c.initials) done++; if (c.mileage) done++;
     // Mechanical + Fluids
     [...APP.data.mechanicalChecks, ...APP.data.fluidChecks].forEach(item => {
+      if (isSealedTransmission(item)) return;
       total++;
       const bucketFor = APP.data.mechanicalChecks.includes(item) ? c.mechanical : c.fluids;
       if (bucketFor[item]?.status) {
@@ -2957,7 +3063,7 @@ function updateProgress() {
     // Cooler
     total++; if (c.cooler.answered) { done++; if (c.cooler.ok === false) flags++; }
     // Compartments — count total items (direct + nested bag items) + special checks
-    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+    allComps(c).forEach(comp => {
       // Gurney-style special checks
       if (comp.specialChecks && comp.specialChecks.length) {
         comp.specialChecks.forEach(sc => {
@@ -2985,8 +3091,8 @@ function updateProgress() {
         });
       }
     });
-    // Operational checks (battery/power) flag if No
-    Object.values(c.opChecks || {}).forEach(v => { if (v === 'no') flags++; });
+    // Operational checks (battery/power) flag if No and not fixed
+    Object.entries(c.opChecks || {}).forEach(([k, v]) => { if (v === 'no' && !c.opFixed?.[k]) flags++; });
   } else if (c.type === 'rescue') {
     total += 2; // initials, mileage
     if (c.initials) done++;
@@ -3014,19 +3120,14 @@ function updateProgress() {
 /* ============================================================
    SUBMIT MODAL
    ============================================================ */
-function showSubmitModal() {
+function computeCompletionPct() {
   const c = APP.check;
-  if (!c) return;
-  if (!c.initials) {
-    alert('Please enter your initials before submitting.');
-    return;
-  }
-
-  // Calculate completion percentage
+  if (!c) return 0;
   let total = 0, done = 0;
   if (c.type === 'ambulance') {
     total += 2; if (c.initials) done++; if (c.mileage) done++;
     [...APP.data.mechanicalChecks, ...APP.data.fluidChecks].forEach(item => {
+      if (isSealedTransmission(item)) return;
       total++;
       const bucketFor = APP.data.mechanicalChecks.includes(item) ? c.mechanical : c.fluids;
       if (bucketFor[item]?.status) done++;
@@ -3035,7 +3136,7 @@ function showSubmitModal() {
     total++; if (c.tireYN) done++;
     total++; if (c.oxygenYN) done++;
     total++; if (c.cooler.answered) done++;
-    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+    allComps(c).forEach(comp => {
       if (comp.specialChecks && comp.specialChecks.length) {
         comp.specialChecks.forEach(sc => { total++; if (c.gurney?.[sc.label]) done++; });
       }
@@ -3059,24 +3160,109 @@ function showSubmitModal() {
       });
     });
   }
+  return total === 0 ? 100 : Math.round((done / total) * 100);
+}
 
-  const pct = total === 0 ? 100 : Math.round((done / total) * 100);
+// Battery/operational checks are mandatory before submit
+function missingOpChecks() {
+  const c = APP.check;
+  if (!c || c.type !== 'ambulance') return [];
+  const missing = [];
+  allComps(c).forEach(comp => {
+    comp.items.forEach(it => {
+      if (it.operationalCheck && !c.opChecks?.[`${comp.name}||${''}||${it.name}`]) {
+        missing.push(`${comp.name} — ${it.name}`);
+      }
+    });
+    (comp.bags || []).forEach(bag => {
+      bag.items.forEach(it => {
+        if (it.operationalCheck && !c.opChecks?.[`${comp.name}||${bag.name}||${it.name}`]) {
+          missing.push(`${comp.name} → ${bag.name} — ${it.name}`);
+        }
+      });
+    });
+    if (comp.operationalCheck && !c.opChecks?.[`${comp.name}||${''}||__comp_op__`]) {
+      missing.push(`${comp.name} — power/suction check`);
+    }
+  });
+  return missing;
+}
+
+function showSubmitModal() {
+  const c = APP.check;
+  if (!c) return;
+  if (!c.initials) {
+    alert('Please enter your initials before submitting.');
+    return;
+  }
+
+  // Battery/operational checks are mandatory
+  const missing = missingOpChecks();
+  if (missing.length) {
+    alert(`⚠ ${missing.length} battery/operational check${missing.length > 1 ? 's' : ''} unanswered — these are required before submitting:\n\n• ` + missing.join('\n• '));
+    return;
+  }
+
+  const pct = computeCompletionPct();
   const isComplete = pct === 100;
 
   const warnEl = document.getElementById('modal-incomplete-warn');
   if (isComplete) {
     warnEl.style.display = 'none';
-  } else {
+  } else if (pct >= 90) {
     warnEl.style.display = 'block';
     warnEl.textContent = `⚠ This check is only ${pct}% complete. You or your partner are responsible for completing the remaining items at the earliest convenient time.`;
+  } else {
+    warnEl.style.display = 'block';
+    warnEl.textContent = `⚠ This check is only ${pct}% complete (below 90%). The report will be held and sent automatically at 5:00 PM today so you or your partner can finish first.`;
   }
 
   document.getElementById('submit-modal').classList.remove('hidden');
 }
 
 /* ============================================================
-   SUBMIT
+   SUBMIT — sends now if ≥90% complete, otherwise holds until 5 PM
    ============================================================ */
+const PENDING_STORE = 'wamboapp_pending_v1';
+const INITIALS_STORE = 'wamboapp_initials_v1';
+
+function loadJSON(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch (e) { return fallback; }
+}
+
+// Log initials per unit+date so a second submitter shows both sets
+function logInitials(unitId, date, initials) {
+  const s = loadJSON(INITIALS_STORE, {});
+  const k = `${unitId}::${date}`;
+  s[k] = s[k] || [];
+  if (initials && !s[k].includes(initials)) s[k].push(initials);
+  try { localStorage.setItem(INITIALS_STORE, JSON.stringify(s)); } catch (e) {}
+  return s[k];
+}
+
+async function sendReport(params) {
+  await emailjs.send(APP.data.emailjs.serviceId, APP.data.emailjs.templateId, params);
+}
+
+// Send any held reports once it's 5:00 PM or later on their queue date (or any day after)
+async function flushPendingSubmissions() {
+  if (!APP.data) return; // units.json not loaded yet — interval/boot will retry
+  const pending = loadJSON(PENDING_STORE, []);
+  if (!pending.length) return;
+  const now = new Date();
+  const remaining = [];
+  for (const p of pending) {
+    const due = new Date(p.date + 'T17:00:00');
+    if (now >= due) {
+      try { await sendReport(p.params); }
+      catch (e) { console.error('Deferred send failed, keeping in queue:', e); remaining.push(p); }
+    } else {
+      remaining.push(p);
+    }
+  }
+  try { localStorage.setItem(PENDING_STORE, JSON.stringify(remaining)); } catch (e) {}
+}
+
 async function submitCheck() {
   const c = APP.check;
   if (!c) return;
@@ -3087,19 +3273,33 @@ async function submitCheck() {
 
   try {
     const summary = buildSummary();
+    const crew = logInitials(c.unitId, c.date, c.initials);
+    const crewLine = crew.join(' + ');
     const params = {
       unit_id: c.unitName,
       check_date: c.date,
       check_type: c.type,
-      initials: c.initials,
-      message: summary.plain,
+      initials: crewLine,
+      message: (crew.length > 1 ? `Submitted by: ${crewLine}\n\n` : '') + summary.plain,
       flags_count: summary.flagCount,
       to_email: APP.data.submissionEmail || 'd.boyce@northcountryems.org',
     };
-    await emailjs.send(APP.data.emailjs.serviceId, APP.data.emailjs.templateId, params);
-    persistRedTags(c);
-    clearAutosave();
-    showSuccess(summary);
+
+    const pct = computeCompletionPct();
+    if (pct >= 90) {
+      await sendReport(params);
+      persistRedTags(c);
+      clearAutosave();
+      showSuccess(summary, false);
+    } else {
+      // Hold until 5 PM — replace any earlier held report for this unit+date
+      const pending = loadJSON(PENDING_STORE, []).filter(p => !(p.unitId === c.unitId && p.date === c.date));
+      pending.push({ unitId: c.unitId, date: c.date, params });
+      localStorage.setItem(PENDING_STORE, JSON.stringify(pending));
+      persistRedTags(c);
+      clearAutosave();
+      showSuccess(summary, true);
+    }
   } catch (err) {
     console.error('Submit failed:', err);
     alert('Submit failed: ' + (err.text || err.message || 'unknown error') + '\n\nThe check data is still in the app — try submitting again, or take a screenshot.');
@@ -3144,7 +3344,7 @@ function buildSummary() {
       addFlag(fl);
     }
     // Gurney special checks
-    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+    allComps(c).forEach(comp => {
       if (!comp.specialChecks) return;
       comp.specialChecks.forEach(sc => {
         if (c.gurney?.[sc.label] === 'no') addFlag(`  [ ABNORMAL ] ${comp.name} — ${sc.label}: No`);
@@ -3159,15 +3359,17 @@ function buildSummary() {
     // Operational checks
     if (c.opChecks) {
       Object.entries(c.opChecks).forEach(([key, val]) => {
-        if (val === 'no') {
+        if (val === 'no' && !c.opFixed?.[key]) {
           const [compName, bagName, itemName] = key.split('||');
           const label = itemName === '__comp_op__' ? compName : (bagName ? `${bagName} → ${itemName}` : itemName);
-          addFlag(`  [ ABNORMAL ] ${label} — operational check failed`);
+          let fl = `  [ ABNORMAL ] ${label} — operational check failed`;
+          if (c.opNotes?.[key]) fl += `\n    Notes: ${c.opNotes[key]}`;
+          addFlag(fl);
         }
       });
     }
     // Compartment items
-    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+    allComps(c).forEach(comp => {
       const cs = c.compartments[comp.name];
       if (!cs) return;
       Object.entries(cs.items || {}).forEach(([itemName, st]) => {
@@ -3290,7 +3492,7 @@ function buildSummary() {
     }
 
     // Gurney / special checks
-    [...c._comps.exterior, ...c._comps.interior].forEach(comp => {
+    allComps(c).forEach(comp => {
       if (!comp.specialChecks) return;
       const any = comp.specialChecks.some(sc => c.gurney?.[sc.label]);
       if (!any) return;
@@ -3322,7 +3524,8 @@ function buildSummary() {
     }
 
     // Compartments
-    [['Exterior Compartments', c._comps.exterior],
+    [['Cab', c._cabArea ? [c._cabArea] : []],
+     ['Exterior Compartments', c._comps.exterior],
      ['Interior Compartments', c._comps.interior]].forEach(([title, comps]) => {
       const touched = comps.filter(comp => {
         const cs = c.compartments[comp.name];
@@ -3389,12 +3592,12 @@ function buildSummary() {
   return { plain: lines.join('\n'), flagCount };
 }
 
-function showSuccess(summary) {
+function showSuccess(summary, queued = false) {
   const c = APP.check;
   document.getElementById('success-body').innerHTML = `
-    <div class="success-icon">${summary.flagCount === 0 ? '✅' : '⚠️'}</div>
-    <h2>Check Submitted</h2>
-    <p>Sent to ${APP.data.submissionEmail}.</p>
+    <div class="success-icon">${queued ? '🕔' : (summary.flagCount === 0 ? '✅' : '⚠️')}</div>
+    <h2>${queued ? 'Check Saved — Sends at 5:00 PM' : 'Check Submitted'}</h2>
+    <p>${queued ? 'Below 90% complete, so the report is held and will send automatically at 5:00 PM today. Keep this app installed — it sends the next time the app is open at or after 5 PM. Submitting again before then replaces it.' : `Sent to ${APP.data.submissionEmail}.`}</p>
     <div class="success-summary">
       <div class="row"><span>Unit</span><strong>${c.unitName}</strong></div>
       <div class="row"><span>Date</span><strong>${formatDate(c.date)}</strong></div>
