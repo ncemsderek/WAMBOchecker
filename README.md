@@ -1,6 +1,6 @@
 # NCEMS Apparatus Check App (WAMBOchecker)
 
-**Version 2.12.0 · 2026-06-11**
+**Version 2.13.0 · 2026-06-11**
 
 Daily apparatus check app for **North Country EMS / Clark Fire District 13**. Replaces Vector Solutions Check It. Single-file HTML + JSON, no build step, hosted on GitHub Pages. Built field-first: big tap targets, gloved-hand friendly, forest green throughout.
 
@@ -28,8 +28,9 @@ Ambulances: **M25A, M25B** (identical layout), **M19, M18, M14**. M12 is retired
 
 - Mechanical/fluid checks are **WNL / Abnormal**. Item checks are **Complete / Abnormal** (✓ / ✗). Two states only.
 - Any button can be **tapped again to un-select it** (mistake recovery).
-- "Fixed on the spot" lives inside the Abnormal slide-down — fixed issues don't flag.
-- **Battery/operational checks are mandatory** — submit is blocked until every one is answered. A "No" opens a notes box with Swapped / Fixed on the spot.
+- Inside the Abnormal slide-down there are two boxes: **"Fixed on the spot"** (clears the flag) and **"Unable to fix"** (keeps the flag *and* lists the item in an **UNABLE TO FIX — IMMEDIATE ADMIN REVIEW** block at the very top of the report email). The two are mutually exclusive.
+- Battery/operational checks are **not** required to submit (a partner may have done them). A "No" opens a notes box with Swapped / Fixed on the spot / Unable to fix.
+- **"✓ to Complete"** (compartment) and **"✓ All"** (bag) open the nest and surface any unanswered **red tag # (last 4)** box and battery checks with a reminder — you can fill them in or skip; nothing is blocked.
 - The main O2 level check (above 500 PSI) is nested under Ambulance Main O2 in Compartment 1.
 - **Red tags**: bags with red tags remember the last-entered last-4 per unit — next check it's pre-filled with a one-tap **Confirm** button.
 - M25A/M25B have sealed transmissions — shown as "Sealed — not needed," excluded from completion %.
@@ -87,6 +88,7 @@ Tap the home-screen logo — it flips to an admin login. Admins can rename/add/r
 
 ## Version history
 
+- **2.13.0** — added an "Unable to fix" box beside "Fixed on the spot" everywhere; unable-to-fix items are listed at the top of the report email for immediate admin review; flag bar now reads "click to review"; "✓ to Complete" / bag "✓ All" open the nest and surface the red tag # box + battery checks (optional, never blocks submit)
 - **2.12.0** — suction check moved to top of Portable Suction; battery checks no longer block submit (partner may do them); red * propagates to compartment headers; "✓ to Complete" opens and prompts for unanswered red tags/battery/fridge-temp checks; Comp 5 restored to nested Blue + Orange c-collar bags with their own red tags
 - **2.11.0** — flag-cycling: tap the flag count (or recap above Submit) to step through flagged items; status bar gap fix; "✓ to Complete" / "✓ All Done" labels; sealed badge layout fix; change-request emails include paste-ready JSON
 - **2.10.0** — op-check notes render below the YesNo row; red * markers on red-tag bags and mandatory battery checks; fridge out-of-range BC warning; progress-bar tap fallback; admin notes field on change-request emails
